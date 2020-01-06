@@ -38,7 +38,7 @@ Note that we will be using `punchpkg`...
         |___/                           
 
 using nodes from ./nodes sources
-1000
+Hello punch
 
 Execution took 0.18007254600524902 seconds
 ```
@@ -101,7 +101,7 @@ punchlinectl -p full/path/to/job.pl -r pyspark
         |___/                           
 
 using nodes from ./nodes sources
-1000
+Hello punch
 
 Execution took 0.18007254600524902 seconds
 ```

@@ -19,12 +19,12 @@ class ComplexAlgorithm(AbstractNode):
     # We expect that this node subscribe to a stream and is going to output a stream of data
     @AbstractNode.declare_map_dataframe_input()
     @AbstractNode.declare_map_dataframe_output()
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         # Decorators on this constructor are used to by our job editor
 
-    def complex_logic(self, param1: int):
-        return param1 * 100
+    def complex_logic(self, param1: str) -> str:
+        return "Hello {}".format("punch")
 
     def execute(self, input_data: InputHolder, output_data: OutputHolder) -> None:
         """ This method is executed by the engine
@@ -32,5 +32,5 @@ class ComplexAlgorithm(AbstractNode):
          * to subscribed node data: input_data
          * to publish data of any type: output_data
         """
-        results: List[int] = self.complex_logic(int(self.settings.get("param1")))  # do something with your list...
+        results: List[str] = self.complex_logic(self.settings.get("param1"))  # do something with your list...
         output_data.set(results)  # here we submit it to the next node !

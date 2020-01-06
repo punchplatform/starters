@@ -9,7 +9,7 @@
 				}
 			]
 			settings: {
-				param1: 100
+				param1: punch
 			}
 		}
 		{
