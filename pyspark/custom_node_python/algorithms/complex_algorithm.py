@@ -24,7 +24,7 @@ class ComplexAlgorithm(AbstractNode):
         # Decorators on this constructor are used to by our job editor
 
     def complex_logic(self, param1: str) -> str:
-        return "Hello {}".format("punch")
+        return "Hello {}".format(param1)
 
     def execute(self, input_data: InputHolder, output_data: OutputHolder) -> None:
         """ This method is executed by the engine
