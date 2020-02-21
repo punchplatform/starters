@@ -19,7 +19,7 @@ Note that we will be using `punchpkg`...
 
 # To begin, we will make our node available to our shells and editor
 
-    >  eval "$(_punchpkg_COMPLETE=source punchpkg)"     # for auto completion
+    >  eval "$(_PUNCHPKG_COMPLETE=source punchpkg)"     # for auto completion
     > punchpkg pyspark link-external-nodes $(pwd)     #  note: pwd here is rootdir of this README.txt
     > punchpkg pyspark list-external-nodes    # check if node was linked properly
     > punchpkg pyspark install-dependencies $(pwd)/complex_algorithm_dependencies   # install custom dependencies needed by your module (note: if the given module is not available on PyPI, please convert your module to PEX and use the same command on your PEX file !)
