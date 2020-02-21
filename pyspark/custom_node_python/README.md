@@ -83,9 +83,9 @@ punchpkg pyspark list-nodes
 
 # Executing a node
 # either use our PL editor or use our shell punchlinectl
-punchlinectl -p full/path/to/job.pl -r pyspark
+punchlinectl start -p full/path/to/job.punchline
 
->   punchlinectl -p full_job.pl -v -r pyspark
+>   punchlinectl start -p full_job.punchline -v
 
  ____                       _      _      _
 |  _ \  _   _  _ __    ___ | |__  | |    (_) _ __    ___ 
