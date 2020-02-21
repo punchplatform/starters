@@ -23,7 +23,7 @@ Note that we will be using `punchpkg`...
     > punchpkg pyspark link-external-nodes $(pwd)     #  note: pwd here is rootdir of this README.txt
     > punchpkg pyspark list-external-nodes    # check if node was linked properly
     > punchpkg pyspark install-dependencies $(pwd)/complex_algorithm_dependencies   # install custom dependencies needed by your module (note: if the given module is not available on PyPI, please convert your module to PEX and use the same command on your PEX file !)
-    > punchlinectl -p $(pwd)/full_job.pl -r pyspark
+    > punchlinectl start -p $(pwd)/full_job.punchline
 
 |  _ \  _   _  _ __    ___ | |__  | |    (_) _ __    ___ 
 | |_) || | | || '_ \  / __|| '_ \ | |    | || '_ \  / _ \

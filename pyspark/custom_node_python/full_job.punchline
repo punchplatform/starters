@@ -1,5 +1,10 @@
 {
-	job: [
+	name: helloworld
+	channe: default
+	version: "6.0"
+	tenant: default
+	runtime: pyspark
+	dag: [
 		{
 			type: complex_algorithm
 			component: step1
