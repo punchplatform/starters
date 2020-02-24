@@ -72,7 +72,11 @@ cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependen
 
     ```java
     {
-    job:
+    tenant: default
+    channel: default
+    version: "6.0"
+    runtime: spark
+    dag:
     [
         {
             type: elastic_batch_input
