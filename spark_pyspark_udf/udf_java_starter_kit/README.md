@@ -12,6 +12,8 @@ Note, although the UDF is coded using java, you should be able to use it within 
 
 ## Demonstration
 
+![](../../resources/udf/helloworld_udf.gif)
+
 The UDF function in this repository takes as input a String which follows the following pattern:
 
 >   "[1.0, 2, 5.5, 8.6]"
