@@ -8,6 +8,9 @@
 
 # Quick Start
 
+![](../../resources/pyspark/helloworld.gif)
+
+
 Note that we will be using `punchpkg`...
 
 ```sh
