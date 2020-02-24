@@ -1,0 +1,60 @@
+{
+    tenant: default
+    channel: default
+    version: "6.0"
+    runtime: spark
+    dag: [
+        {
+            type: dataset_generator
+            component: dummy
+            settings: {
+                input_data: [
+                    { 
+                        field1: "[1, 2, 3, 4]"
+                    }
+                ]
+            }
+            publish: [
+                {
+                    stream: data
+                }
+            ]
+        }
+        {
+            type: sql
+            component: processor
+            settings: {
+                statement_list: [
+                    {
+                        output_table_name: processed
+                        statement: SELECT field1 from dummy_data
+                    }
+                ]
+            }
+            subscribe: [
+                {
+                    stream: data
+                    component: dummy
+                }
+            ]
+            publish: [
+                {
+                    stream: processed
+                }
+            ]
+        }
+        {
+            type: show
+            component: stdout
+            settings: {
+                truncate: false
+            }
+            subscribe: [
+                {
+                    component: processor
+                    stream: processed
+                }
+            ]
+        }
+    ]
+}
