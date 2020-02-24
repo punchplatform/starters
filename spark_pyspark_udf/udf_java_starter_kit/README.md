@@ -49,55 +49,26 @@ mkdir -p $PUNCHPLATFORM_CONF_DIR/../external/spark-${SPARK_VERSION}-bin-hadoop2.
 cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependencies.jar $PUNCHPLATFORM_CONF_DIR/../external/spark-${SPARK_VERSION}-bin-hadoop2.7/punchplatform/analytics/job/custom/
 ```
 
-#### Using the UDF function within a pipeline
+#### Using the UDF function hello world
 
-1.  Start your standalone
-    ```sh
-    punchplatform-standalone.sh --start
-    ```
-2.  You should run with `punchctl` our `apache_httpd`
-    ```sh
-    punchctl start --channel apache_httpd
-    ````
-3.  Use our punchplatform-log-injector.sh to fill your elasticsearch index
-    ```sh
-    punchplatform-log-injector.sh -c $PUNCHPLATFORM_CONF_DIR/resources/injector/mytenant/apache_httpd_injector.json
-    ```
-4.  Go to src/test/resources
-    ```sh
-    cd src/test/resources
-    ```
+#### before using our custom udf function 
 
-    We are going to execute with `punchlinectl` the below configuration pipeline.
+Let's run the configuration below:
 
-    ```java
-    {
+```json
+{
     tenant: default
     channel: default
     version: "6.0"
     runtime: spark
-    dag:
-    [
+    dag: [
         {
-            type: elastic_batch_input
-            component: input
-            settings: 
-            {
-                cluster_name: es_search
-                nodes: [
-                    localhost
-                ]
-                index: mytenant-events-*
-                output_columns : [
-                    {
-                    field: init.host.ip
-                    alias : init_host_ip
-                    type : string
-                    }
-                    {
-                    field: session.out.byte
-                    alias : session_out_byte
-                    type : integer
+            type: dataset_generator
+            component: dummy
+            settings: {
+                input_data: [
+                    { 
+                        field1: "[1, 2, 3, 4]"
                     }
                 ]
             }
@@ -105,142 +76,175 @@ cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependen
                 {
                     stream: data
                 }
-            ]
-        }
-        {
-            type: file_model_input
-            component: model_loader
-            settings: 
-            {
-                file_path: model.bin
-            }
-            publish: [ 
-                { 
-                stream: model
-                } 
-            ]
-            subscribe: []
-        }
-        {
-            type: mllib_model
-            component: executor
-            settings: {}
-            publish: [
-                { 
-                stream: data 
-                }
-            ]
-            subscribe: [
-            {
-                component: input
-                stream: data
-                alias: input_data
-            }
-            {
-                component: model_loader
-                stream: model
-                alias: model
-            }
             ]
         }
         {
             type: sql
-            component: sql
+            component: processor
             settings: {
                 register_udf: [
                     {
-                    function_name: myStrToArrayStr
-                    class_name: org.thales.punch.udf.starter.kit.StrToArrayString
-                    schema_ddl: ARRAY<STRING>
+                        class_name: org.thales.punch.udf.starter.kit.StrToArrayString
+                        function_name: punch_convertor
+                        schema_ddl: ARRAY<STRING>
                     }
                 ]
                 statement_list: [
                     {
-                    output_table_name: extract_analytics_json
-                    statement: SELECT json_tuple(output,'analytics') AS output_analytics, init_host_ip, session_out_byte, init_host_ip_tokenized, init_host_ip_hashed, full_vector, features AS source_features, prediction AS source_prediction FROM executor_data
-                    }
-                    {
-                    output_table_name: features_prediction_as_string
-                    statement: SELECT json_tuple(output_analytics, 'features', 'prediction'), init_host_ip, init_host_ip_tokenized, session_out_byte, init_host_ip_hashed, source_features, source_prediction FROM extract_analytics_json
-                    }
-                    {
-                    output_table_name: cast_columns_to_proper_types
-                    statement: SELECT myStrToArrayStr(c0) AS output_features, CAST(c1 AS INTEGER) AS output_prediction, init_host_ip, init_host_ip_tokenized, session_out_byte, init_host_ip_hashed, source_features, source_prediction FROM features_prediction_as_string
+                        output_table_name: processed
+                        statement: SELECT punch_convertor(field1) from dummy_data
                     }
                 ]
             }
             subscribe: [
                 {
-                    component: executor
                     stream: data
+                    component: dummy
                 }
             ]
             publish: [
                 {
-                    stream: extract_analytics_json
-                }
-                {
-                    stream: features_prediction_as_string
-                }
-                {
-                    stream: cast_columns_to_proper_types
+                    stream: processed
                 }
             ]
         }
         {
             type: show
-            component: show
+            component: stdout
             settings: {
-                show_schema: true
                 truncate: false
             }
             subscribe: [
                 {
-                    component: sql
-                    stream: cast_columns_to_proper_types
+                    component: processor
+                    stream: processed
                 }
             ]
         }
     ]
-    spark_settings:
-        {
-        spark.files: ./model.bin
-        spark.executor.memory: 1g
-        spark.executor.cores: "2"
-        spark.executor.instances: "2"
-        }
-    }
-    ```
-5.  let's execute:
-    ```sh
-    punchlinectl start -p udf.pml -v
-    ```
-    Expected output:
-    ```python
-    Show node result: sql_cast_columns_to_proper_types
+}
+```
 
-    | output_features | output_prediction | init_host_ip   | init_host_ip_tokenized | session_out_byte | init_host_ip_hashed | source_features | source_prediction |
+Output result:
 
-    | WrappedArr...   | 0                 | 128.186.66.249 | WrappedArr...          | 7199             | (1000,[233...       | [0.0,0.0,0...   | 0                 |
-    | WrappedArr...   | 0                 | 189.216.177.97 | WrappedArr...          | 15068            | (1000,[240...       | [0.0,0.0,0...   | 0                 |
-    | WrappedArr...   | 0                 | 189.7.247.162  | WrappedArr...          | 3065             | (1000,[331...       | [0.0,0.0,0...   | 0                 |
+```sh
+# note: $(pwd) is root directory of this readme
+punchlinectl start -p $(pwd)/before_udf_helloworld.punchline
 
-    root
-    |-- output_features: array (nullable = true)
-    |    |-- element: string (containsNull = true)
-    |-- output_prediction: integer (nullable = true)
-    |-- init_host_ip: string (nullable = true)
-    |-- init_host_ip_tokenized: array (nullable = true)
-    |    |-- element: string (containsNull = true)
-    |-- session_out_byte: integer (nullable = true)
-    |-- init_host_ip_hashed: vector (nullable = true)
-    |-- source_features: vector (nullable = true)
-    |-- source_prediction: integer (nullable = false)
+--[[
+__________                    .__    .____    .__               
+\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
+ |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
+ |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
+ |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
+                     \/     \/     \/        \/       \/     \/ 
+--]]_______ _________  _ 
+[__ |__]|__||__/|_/  
+___]|   |  ||  \| \_ 
+                   
+Show node result: processor_processed
 
-    [
-    {
-        "name": "sql_cast_columns_to_proper_types",
-        "title": "SHOW"
-    }
+| field1       |
+
+| [1, 2, 3, 4] |
+
+root
+ |-- field1: string (nullable = true)
+
+[
+  {
+    "name": "processor_processed",
+    "title": "SHOW"
+  }
+]
+```
+
+Now let's build this package
+
+```sh
+mvn clean install
+```
+
+Afterwards we're going to install our jar to the correct directory with the help of `punchpkg`
+
+```sh
+# note $(pwd) is root directory of this readme
+punchpkg spark install-dependencies $(pwd)/target/punchplatform-udf-starter-kit-1.0-jar-with-dependencies.jar
+
+# let's check if our jar is properly installed
+punchpkg spark list-dependencies 
+{
+    "custom_jars": [
+        "punchplatform-udf-starter-kit-1.0-jar-with-dependencies.jar"
+    ],
+    "main_jars": [
+        "punchplatform-analytics-uber-6.0.0-SNAPSHOT-jar-with-dependencies.jar",
+        "punchplatform-analytics-plugins-udf-6.0.0-SNAPSHOT-jar-with-dependencies.jar"
     ]
-    ```
+}
+```
+
+```json
+# extract of what has changed in after_udf_helloworld.punchline compared to before_udf_helloworld.punchline
+
+{
+    type: sql
+    component: processor
+    settings: {
+        register_udf: [
+            {
+                class_name: org.thales.punch.udf.starter.kit.StrToArrayString
+                function_name: punch_convertor
+                schema_ddl: ARRAY<STRING>
+            }
+        ]
+        statement_list: [
+            {
+                output_table_name: processed
+                statement: SELECT punch_convertor(field1) from dummy_data
+            }
+        ]
+    }
+...
+}
+```
+
+let's run the new configuration
+
+```sh
+punchlinectl start -p after_udf_helloworld.punchline 
+--[[
+__________                    .__    .____    .__               
+\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
+ |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
+ |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
+ |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
+                     \/     \/     \/        \/       \/     \/ 
+--]]_______ _________  _ 
+[__ |__]|__||__/|_/  
+___]|   |  ||  \| \_ 
+                   
+Show node result: processor_processed
+
+| UDF:punch_convertor(field1) |
+
+| WrappedArray(1, 2, 3, 4)    |
+
+root
+ |-- UDF:punch_convertor(field1): array (nullable = true)
+ |    |-- element: string (containsNull = true)
+
+[
+  {
+    "name": "processor_processed",
+    "title": "SHOW"
+  }
+]
+```
+
+# Conclusion
+
+As you can see, we developped an UDF function with the ability to translate a string representing an array to an array of string !
+
+Much more can be done, for instance, integrating parsing logic as UDFs!
+
