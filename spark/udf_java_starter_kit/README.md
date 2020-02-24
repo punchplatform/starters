@@ -213,7 +213,7 @@ cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependen
     ```
 5.  let's execute:
     ```sh
-    punchlinectl -p udf.pml -v
+    punchlinectl start -p udf.pml -v
     ```
     Expected output:
     ```python
