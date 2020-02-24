@@ -57,7 +57,7 @@ cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependen
 
 Let's run the configuration below:
 
-```json
+```hjson
 {
     tenant: default
     channel: default
@@ -186,7 +186,7 @@ punchpkg spark list-dependencies
 }
 ```
 
-```json
+```hjson
 # extract of what has changed in after_udf_helloworld.punchline compared to before_udf_helloworld.punchline
 
 {
