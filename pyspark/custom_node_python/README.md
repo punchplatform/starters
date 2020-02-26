@@ -2,9 +2,7 @@
 
 -   A quick look of our API documentation: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/index.html`
 -   Brainstorm your use-case with our existing nodes: `https://doc.punchplatform.com/Reference_Guide/Data_Analytics/Nodes/Elastic_Input.html`
--   Python3.6+ installed: `https://doc.punchplatform.com/Tutorials/Pyenv.html`
 -   A dave-standalone installed: `https://punchplatform.com/download-nightly-dave-standalone/`
--   Python3-venv (or equivalent)
 
 # Quick Start
 
