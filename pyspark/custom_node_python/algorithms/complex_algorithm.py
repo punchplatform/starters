@@ -5,8 +5,6 @@ from punchline_python.core.holders.input_holder import InputHolder
 from punchline_python.core.holders.output_holder import OutputHolder
 from punchline_python.core.node import AbstractNode
 from typing import List
-import redis
-
 
 class ComplexAlgorithm(AbstractNode):
 
@@ -23,7 +21,8 @@ class ComplexAlgorithm(AbstractNode):
         super().__init__()
         # Decorators on this constructor are used to by our job editor
 
-    def complex_logic(self, param1: str) -> str:
+    @staticmethod
+    def complex_logic(param1: str) -> str:
         return "Hello {}".format(param1)
 
     def execute(self, input_data: InputHolder, output_data: OutputHolder) -> None:
@@ -32,5 +31,6 @@ class ComplexAlgorithm(AbstractNode):
          * to subscribed node data: input_data
          * to publish data of any type: output_data
         """
-        results: List[str] = self.complex_logic(self.settings.get("param1"))  # do something with your list...
+        import redis
+        results: List[str] = ComplexAlgorithm.complex_logic(self.settings.get("param1"))  # do something with your list...
         output_data.set(results)  # here we submit it to the next node !
