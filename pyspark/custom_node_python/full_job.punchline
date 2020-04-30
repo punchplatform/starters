@@ -1,6 +1,6 @@
 {
 	name: helloworld
-	channe: default
+	channel: default
 	version: "6.0"
 	tenant: default
 	runtime: pyspark
