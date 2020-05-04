@@ -6,6 +6,16 @@
 
 # Quick Start
 
+A `Makefile` is put at your disposal, use it to clean, lint and format your custom node code !
+
+```sh
+# check lint and code formatting for module algorithms
+make inspect path=algorithms/
+
+# clean unwanted .pyc if any
+make clean
+```
+
 ![](../../resources/pyspark/helloworld.gif)
 
 

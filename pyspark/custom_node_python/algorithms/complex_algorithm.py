@@ -6,6 +6,7 @@ from punchline_python.core.holders.output_holder import OutputHolder
 from punchline_python.core.node import AbstractNode
 from typing import List
 
+
 class ComplexAlgorithm(AbstractNode):
 
     # uncomment below if we want this node to take as input a single dataframe
@@ -32,5 +33,9 @@ class ComplexAlgorithm(AbstractNode):
          * to publish data of any type: output_data
         """
         import redis
-        results: List[str] = ComplexAlgorithm.complex_logic(self.settings.get("param1"))  # do something with your list...
+
+        print(redis.__version__)
+        results: List[str] = ComplexAlgorithm.complex_logic(
+            self.settings.get("param1")
+        )  # do something with your list...
         output_data.set(results)  # here we submit it to the next node !
