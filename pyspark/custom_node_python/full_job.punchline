@@ -30,4 +30,7 @@
 			}
 		}
 	]
+	settings: {
+		spark.additional.pex: complex_algorithm_dependencies.pex
+	}
 }
