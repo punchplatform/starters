@@ -5,11 +5,13 @@ integrate custom pyspark udf in your punchline.
 
 ## Directory structure
 
+```sh
 ├── README.md
 ├── setup.py (define here your needed requirements)
 └── udf_example (your package name)
     ├── __init__.py
     └── udf0_example.py (script containing your udf function)
+```
 
 ## How to use in punchline ?
 
@@ -47,7 +49,7 @@ integrate custom pyspark udf in your punchline.
 }
 ```
 
-## custom requirements
+## Custom requirements
 
 Custom requirements can be added in install_requires list as below:
 
@@ -63,6 +65,10 @@ setup (
   ]
 )
 ```
+
+## Note
+
+For your project, don't forget to rename `udf_example` to something more meaningful for your use case, ideally with a version number. Both `setup.py` and folder `udf_example` should be renamed !
 
 # Quick Start
 
