@@ -57,7 +57,7 @@ Custom requirements can be added in install_requires list as below:
 from setuptools import setup
 
 setup (
-  name = "udf_examples",
+  name = "udf_example",
   packages=["udf_example"],
   install_requires=[
     "elasticsearch==7.0.5",
@@ -68,7 +68,7 @@ setup (
 
 ## Note
 
-For your project, don't forget to rename `udf_example` to something more meaningful for your use case, ideally with a version number. Both `setup.py` and folder `udf_example` should be renamed !
+For your project, don't forget to rename `udf_example` to something more meaningful for your use case, ideally with a version number. Both name parameter from `setup.py` and folder name `udf_example` should be renamed !
 
 # Quick Start
 
