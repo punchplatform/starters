@@ -1,7 +1,8 @@
 {
-  tenant_name:"my_tenant"
-  runtime_id:"292001762275371029"
-  job: [
+  runtime: pyspark
+  type: punchline
+  version: "6.0"
+  dag: [
         {
             type: dataset_generator
             component: input
