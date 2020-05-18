@@ -33,11 +33,6 @@
             settings: {
                 register_udf: [
                     {
-                        function_name: myOwnFunc
-                        class_name: org.thales.punch.pl.plugins.udf.functions.KmeansSqdist
-                        schema_ddl: Double
-                    }
-                    {
                         function_name: myOwnFunc2
                         function_definition: udf_example.udf0_example.test_random
                         schema_ddl: Integer
@@ -47,10 +42,6 @@
                     {
                         output_table_name: data
                         statement: SELECT myOwnFunc2(), punch_str_to_array_double(Message) FROM input_data
-                    }
-                    {
-                        output_table_name: other
-                        statement: SELECT 1
                     }
                 ]
             }
@@ -73,10 +64,6 @@
                 {
                     component: sql
                     stream: data
-                }
-                {
-                    component: sql
-                    stream: other
                 }
             ]
         }

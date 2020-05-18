@@ -18,5 +18,5 @@ import random
 
 
 def test_random() -> int:
-    return random
+    return random \
         .randint(0, 100)
