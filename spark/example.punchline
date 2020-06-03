@@ -1,0 +1,50 @@
+{
+    type: punchline
+    version: "6.0"
+    runtime: spark
+    tenant: default
+    dag: [
+        {
+            type: dataset_generator
+            component: input
+            settings: {
+                input_data: [
+                    {
+                        age: 21
+                        name: phil
+                        musician: false
+                    }
+                    {
+                        age: 23
+                        name: alice
+                        musician: true
+                    }
+                    {
+                        age: 53
+                        name: dimi
+                        musician: true
+                    }
+                ]
+            }
+            publish: [
+                {
+                    stream: data
+                }
+            ]
+        }
+        {
+            package: org.thales.punch.spark.node.starter.kit
+            type: my_node
+            component: my_node
+            settings: {
+
+            }
+            subscribe: [
+                {
+                    stream: data
+                    component: input
+                }
+            ]
+        }
+    ]
+}

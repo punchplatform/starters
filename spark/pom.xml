@@ -57,11 +57,6 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>org.punch.channel.cli.Main</mainClass>
-						</manifest>
-					</archive>
 				</configuration>
 				<executions>
 					<execution>
