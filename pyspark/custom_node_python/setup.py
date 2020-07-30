@@ -14,6 +14,8 @@ setup(
     description="boilerplate for custom nodes",
     python_requires='>=3.6',
     install_requires=[
+        "pex==2.1.15",  # this is important do not remove
+        "requests==2.24.0",
         "redis"
     ]
 )

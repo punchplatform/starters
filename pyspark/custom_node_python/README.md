@@ -2,119 +2,80 @@
 
 -   A quick look of our API documentation: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/index.html`
 -   Brainstorm your use-case with our existing nodes: `https://doc.punchplatform.com/Reference_Guide/Data_Analytics/Nodes/Elastic_Input.html`
--   A dave-standalone installed: `https://punchplatform.com/download-nightly-dave-standalone/`
+-   A 6.1+ punchplatform release
+-   $PUNCHPLATFORM_ANALYTICS_INSTALL_DIR must be defined
 
-# Quick Start
+# Notes
 
 A `Makefile` is put at your disposal, use it to clean, lint and format your custom node code !
 
 ```sh
 # check lint and code formatting for module algorithms
-make inspect path=algorithms/
+# in general; you should launch this command before any commit
+make inspect path=nodes/
 
-# clean unwanted .pyc if any
+# clean unwanted .pyc if any or other python related binaries during runtime execution
 make clean
 ```
 
-![](../../resources/pyspark/helloworld.gif)
+**Note 1**
 
+If you are using an IDE like Pycharm (or similar); configure your IDE to use the generated `.venv` from this directory.
 
-Note that we will be using `punchpkg`...
+**Note 2**
+
+- We expect that on your platform python is a symlink to python3.
+- We highly advice you to use some python manager like `pyenv` for development phase !
+
+**Note 3**
+
+We provided a template hierarchy for setuptools to work out of the box; you are free to change it as to meet your requirements; just keep in mind that it should follows PEP convention for PEX packaging to work !
+
+# Quick Start
+
+Template hierarchy:
 
 ```sh
-# Use punchpkg pyspark info to get install dir of pyspark
-
-    >   punchpkg pyspark info
-
-# Let's try running our template_node
-
-# To begin, we will make our node available to our shells and editor
-
-    >  eval "$(_PUNCHPKG_COMPLETE=source punchpkg)"     # for auto completion
-    > punchpkg pyspark link-external-nodes $(pwd)     #  note: pwd here is rootdir of this README.txt
-    > punchpkg pyspark list-external-nodes    # check if node was linked properly
-    > punchpkg pyspark install-dependencies $(pwd)/complex_algorithm_dependencies   # install custom dependencies needed by your module (note: if the given module is not available on PyPI, please convert your module to PEX and use the same command on your PEX file !)
-    > punchlinectl start -p $(pwd)/full_job.punchline
-
---[[
-__________                    .__    .____    .__               
-\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
- |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
- |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
- |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
-                     \/     \/     \/        \/       \/     \/ 
---]]
-____   ________ _________  _ 
-|__]\_/ [__ |__]|__||__/|_/  
-|    |  ___]|   |  ||  \| \_ 
-               
-
-using nodes from ./nodes sources
-Hello punch
-
-Execution took 0.18007254600524902 seconds
+├── full_job.punchline
+├── Makefile
+├── nodes
+│   ├── __init__.py
+│   └── my_use_case
+│       ├── __init__.py
+│       └── my_node
+│           ├── complex_algorithm.py
+│           └── __init__.py
+├── README.md
+└── setup.py
 ```
 
-Let's try for now to add some autocompletion to our favorite IDE
+## Step one
 
 ```sh
-# Grab our punchline_python.whl file and install it using pip install in a virtualenv
-# Note when using pip install some_modules. Be sure to track added modules in a seperate file.
-# i.e don't mix our installed dependencies with your since this would generate big PEX files...
+# get all available commands
+make
 ```
 
-# Coding/deploying your custom node
+## Step two (Packaging)
 
-Follow the getting started on writing your custom node: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/getting_started.html`
-
-# Making your node available to our shells/PL Editor
+An example node is given in `nodes` package which contains `my_use_case` module with a sub-module `my_node`
 
 ```sh
-# In case your node uses some custom modules like: pandas
-# You should provide a text file named as your module. 
-# The text file should include only the custom modules your node is using
-punchpkg pyspark install-dependencies full/path/to/text_file/custom_modules
+# after coding your node
+make inspect path=nodes/
 
->   punchpkg pyspark install-dependencies complex_algorithm_dependencies
+# build a pex distribution
+make package name=complex_algorithm_dependencies.pex
+```
 
-# Check if your custom module is properly installed
-# A json document will be outputted on stdout, search for the key custom_pex_dependencies
-# Within this key, you will see custom_modules
-punchpkg pyspark list-dependencies
+## Step three (Installation)
 
-# Check the current module
-punchpkg pyspark info
+```sh
+punchpkg analytics install-pex dist/complex_algorithm_dependencies.pex
+```
 
-# Installing your custom node from full path (use tab for autocompletion)
-punchpkg pyspark install-node </tab></tab>
+## Step four (Execute to test)
 
->   punchpkg pyspark install-node $(pwd)/algorithms
-
-# List installed nodes
-punchpkg pyspark list-nodes
-
-# Executing a node
-# either use our PL editor or use our shell punchlinectl
-punchlinectl start -p full/path/to/job.punchline
-
->   punchlinectl start -p full_job.punchline -v
-
-
---[[
-__________                    .__    .____    .__               
-\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
- |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
- |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
- |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
-                     \/     \/     \/        \/       \/     \/ 
---]]
-____   ________ _________  _ 
-|__]\_/ [__ |__]|__||__/|_/  
-|    |  ___]|   |  ||  \| \_ 
-              
-
-using nodes from ./nodes sources
-Hello punch
-
-Execution took 0.18007254600524902 seconds
+```sh
+punchlinectl start -p full_job.punchline -r pyspark
 ```
