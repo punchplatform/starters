@@ -1,5 +1,2 @@
+.pexrc
 __pycache__/*
-*.pyc
-.idea/*
-.venv/*
-.mypy_cache/*

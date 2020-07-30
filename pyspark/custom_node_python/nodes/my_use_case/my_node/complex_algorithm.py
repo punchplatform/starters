@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# coding: utf-8
+# -*- coding: utf-8 -*-
+
 
 from punchline_python.core.holders.input_holder import InputHolder
 from punchline_python.core.holders.output_holder import OutputHolder
@@ -10,7 +11,7 @@ from typing import List
 class ComplexAlgorithm(AbstractNode):
 
     # uncomment below if we want this node to take as input a single dataframe
-    #  @AbstractNode.declare_dataframe_input()
+    #  @AbstractNode.declare_dataframe_input()
     # We are expecting this node to publish one dataframe as output
     @AbstractNode.declare_dataframe_output()
     # We make use of the decorator design pattern to declare our node parameters...
