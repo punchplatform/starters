@@ -6,6 +6,7 @@
 	runtime: pyspark
 	dag: [
 		{
+			package: nodes.my_use_case.my_node
 			type: complex_algorithm
 			component: step1
 			publish: [
