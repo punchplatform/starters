@@ -13,12 +13,13 @@
 		<junit.version>4.12</junit.version>
 		<punch.version>6.1.0-SNAPSHOT</punch.version>
 		<jackson.version>2.10.1</jackson.version>
+    	<log4j.version>2.12.1</log4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.12.1</version>
+			<version>${log4j.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
