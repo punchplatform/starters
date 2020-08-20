@@ -74,10 +74,10 @@ For your project, don't forget to rename `udf_example` to something more meaning
 
 ```sh
 # generate a udf.pex that contains all your python code and requirements
-pex . -o udf.pex
+punchpkg pyspark package-pex udf
 
 # install the udf.pex dependency like other dependencies
-punchpkg pyspark install-dependencies udf.pex
+punchpkg pyspark install udf.pex
 
 # launch the example
 punchlinectl start -p example_pyspark_udf.pml
