@@ -1,24 +1,68 @@
-# Punchplatform Punchline Node
+# Prerequisites
 
-A skeleton package where you can get started writing your node in Java.
-
-## Prerequisites
+For development phase, you should have:
 
 - standalone installed
-- install needed dependencies with `punchplatform-development.sh --install`
-- update `pom.xml` with the correct version of standalone release:
+- clone this repository
 
-```xml
-	<properties>
-		...
-        <punch.version>6.0.0</punch.version>
-        ...
-	</properties>
+Useful links:
+
+- https://doc.punchplatform.com/Development_Guide/Punchline_Custom_Node/Spark_User_Nodes.html
+
+# Notes
+
+**Note 1**
+
+Dependencies that are specified in the provided `pom.xml` of this project is a constraints and should not be removed or have their version changed.
+
+**Note 2**
+
+In your punchline don't forget to specify `spark.additional.jar` to add your custom node as a dependency at runtime.
+
+**Note 3**
+
+Java8 is expected to be installed by the user running the punchline.
+
+**Note 4**
+
+Use maven to build the jar
+
+# Quick Start
+
+Template hierarchy:
+
+```sh
+├── input_node_example.punchline
+├── pom.xml
+├── README.md
+├── src
+│   └── main
+│       └── java
+│           └── org
+│               └── thales
+│                   └── punch
+│                       └── spark
+│                           └── node
+│                               └── starter
+│                                   └── kit
+│                                       └── InputNode.java
 ```
 
-## Development phase
+## Step one
 
-Override the:
+```sh
+mvn clean install
+```
 
-- execute;
-- declare method
+## Step two
+
+```sh
+ROOT=$(pwd)  # directory of this README.md
+punchpkg spark install $ROOT/target/punchplatform-spark-node-starter-kit-1.0-jar-with-dependencies.jar
+```
+
+## Step three
+
+```sh
+punchlinectl start -p $ROOT/input_node_example.punchline
+```
