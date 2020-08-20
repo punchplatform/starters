@@ -32,6 +32,11 @@ If you are using an IDE like Pycharm (or similar); configure your IDE to use the
 
 A template hierarchy for setuptools to work out of the box is provided; you are free to change it so as to meet your requirements; just keep in mind that it should follows PEP convention for PEX packaging to work !
 
+**Note 3**
+
+For now, you should put your custom python modules in package name *nodes*, like in this example.
+This will enable our kibana plugin to display your custom node in **Punchline Editor**.
+
 # Quick Start
 
 Template hierarchy:
