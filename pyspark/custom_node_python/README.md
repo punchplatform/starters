@@ -3,7 +3,7 @@
 -   A quick look of our API documentation: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/index.html`
 -   Brainstorm your use-case with our existing nodes: `https://doc.punchplatform.com/Reference_Guide/Data_Analytics/Nodes/Elastic_Input.html`
 -   A 6.1+ punchplatform release
--   $PUNCHPLATFORM_ANALYTICS_INSTALL_DIR must be defined
+-   $PUNCHPLATFORM_INSTALL_DIR must be defined
 
 # Notes
 
@@ -24,12 +24,13 @@ If you are using an IDE like Pycharm (or similar); configure your IDE to use the
 
 **Note 2**
 
-- We expect that on your platform python is a symlink to python3.
+- We expect that on your platform python is a symlink to python3.6.x
 - We highly advice you to use some python manager like `pyenv` for development phase !
+- In case you want to use shiva for launching pyspark punchlines; make sure that python3.6 is installed (not pyenv).
 
 **Note 3**
 
-We provided a template hierarchy for setuptools to work out of the box; you are free to change it as to meet your requirements; just keep in mind that it should follows PEP convention for PEX packaging to work !
+A template hierarchy for setuptools to work out of the box is provided; you are free to change it so as to meet your requirements; just keep in mind that it should follows PEP convention for PEX packaging to work !
 
 # Quick Start
 
@@ -56,17 +57,13 @@ Template hierarchy:
 make
 
 # info
-punchpkg analytics info
+punchpkg pyspark info
 
 # result
 {
-    "analytics_install_dir": {
-        "dir": "/home/jonathan/Desktop/standalone/punchplatform-standalone-6.1.0-SNAPSHOT-linux/external/punchplatform-binaries-6.1.0-SNAPSHOT/punchplatform-spark-6.1.0-SNAPSHOT",
-        "info": "root directory of pexlib, extpex and extlib"
-    },
-    "pexlib": "internal jars used by our platform",
-    "extpex": "your custom pex files (i.e node, udf, udaf or custom dependency)",
-    "extlib": "your custom jar that you can include in your analytics classpath"
+    "pyspark_internal_lib_dir": "/home/jonathan/Desktop/standalone/punch-standalone-6.1.0-SNAPSHOT-linux/external/punch-binaries-6.1.0-SNAPSHOT/lib/pyspark",
+    "$PUNCHPLATFORM_INSTALL_DIR/lib/pyspark": "internal jars/pexs used by pyspark module",
+    "$PUNCHPLATFORM_INSTALL_DIR/extlib/pyspark": "external jars/pexs to be added to punchline runtime as dependencies"
 }
 ```
 
