@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.thales.punch.spark.node.starter.kit</groupId>
-	<artifactId>punchplatform-spark-node-starter-kit</artifactId>
+	<artifactId>punch-spark-node-starter-kit</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
-	<name>punchplatform-spark-node-starter-kit</name>
+	<name>punch-spark-node-starter-kit</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<spark.version>2.4.3</spark.version>

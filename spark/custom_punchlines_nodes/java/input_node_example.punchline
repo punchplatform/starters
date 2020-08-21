@@ -36,6 +36,6 @@
     }
   ]
   settings: {
-      spark.additional.jar: punchplatform-spark-node-starter-kit-1.0-jar-with-dependencies.jar
+      spark.additional.jar: punch-spark-node-starter-kit-1.0-jar-with-dependencies.jar
   }
 }
