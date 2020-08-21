@@ -58,7 +58,7 @@ mvn clean install
 
 ```sh
 ROOT=$(pwd)  # directory of this README.md
-punchpkg spark install $ROOT/target/punchplatform-spark-node-starter-kit-1.0-jar-with-dependencies.jar
+punchpkg spark install $ROOT/target/punch-spark-node-starter-kit-1.0-jar-with-dependencies.jar
 ```
 
 ## Step three
