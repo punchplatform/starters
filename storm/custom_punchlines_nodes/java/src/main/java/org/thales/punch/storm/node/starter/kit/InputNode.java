@@ -19,8 +19,8 @@ public class InputNode extends PunchInputNode {
   /**
   Specific name to display.
   */
-  @JsonProperty(required = true)
-  String username;
+  @JsonProperty(value = "user_name", required = true)
+  public String username;
 
   String message;
 
@@ -41,6 +41,7 @@ public class InputNode extends PunchInputNode {
   @Override
   public void onClose() {
       super.onClose();
+      // do something before the node exit
   }
 
 }
