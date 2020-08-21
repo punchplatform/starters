@@ -11,7 +11,7 @@
       class: org.thales.punch.storm.node.starter.kit.InputNode
       settings:
       {
-        username: alice
+        user_name: alice
         load_control: rate
         load_control.rate: 1
       }
