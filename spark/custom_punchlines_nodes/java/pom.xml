@@ -13,7 +13,10 @@
 		<junit.version>4.12</junit.version>
 		<punch.version>6.1.0-SNAPSHOT</punch.version>
 		<jackson.version>2.10.1</jackson.version>
-    	<log4j.version>2.12.1</log4j.version>
+		<log4j.version>2.12.1</log4j.version>
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,13 +85,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<!--compilerArgument>-Xlint:unchecked</compilerArgument -->
 					<encoding>UTF-8</encoding>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 
