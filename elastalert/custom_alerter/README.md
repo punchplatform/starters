@@ -1,7 +1,6 @@
 # Prerequisite
 
--   A quick look of our API documentation: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/index.html`
--   Brainstorm your use-case with our existing nodes: `https://doc.punchplatform.com/Reference_Guide/Data_Analytics/Nodes/Elastic_Input.html`
+-   A quick look of our API documentation: `https://doc.punchplatform.com/Operations/Platform_Alerting/HOWTOs/HOWTO_use_elastalert_in_dev_mode.html`
 -   A 6.1+ punchplatform release
 -   $PUNCHPLATFORM_INSTALL_DIR must be defined
 
@@ -26,16 +25,10 @@ If you are using an IDE like Pycharm (or similar); configure your IDE to use the
 
 - We expect that on your platform python is a symlink to python3.6.x
 - We highly advice you to use some python manager like `pyenv` for development phase !
-- In case you want to use shiva for launching pyspark punchlines; make sure that python3.6 is installed (not pyenv).
 
 **Note 3**
 
 A template hierarchy for setuptools to work out of the box is provided; you are free to change it so as to meet your requirements; just keep in mind that it should follows PEP convention for PEX packaging to work !
-
-**Note 4**
-
-For now, you should put your custom python modules in package name *nodes*, like in this example.
-This will enable our kibana plugin to display your custom node in **Punchline Editor**.
 
 # Quick Start
 
