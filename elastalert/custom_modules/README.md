@@ -84,7 +84,45 @@ cp $ROOT/dist/complex_algorithm_dependencies.pex $PUNCHPLATFORM_INSTALL_DIR/extl
 
 ## Step four (Execute to test)
 
+### Custom Rule
+
 ```sh
-punchplatform-elastalert.sh --start-foreground --config $ROOT/example_configs/rule/config.yaml --rule example_configs/rule.yaml --additional-pex custom_rule-1.0.0.pex
+ROOT=$(pwd) punchplatform-elastalert.sh \
+                --start-foreground \
+                --config $ROOT/example_configs/rule/config.yaml \
+                --rule example_configs/rule/rule.yaml \
+                --additional-pex custom_rule-1.0.0.pex
 ```
+
+### Custom Alerter
+
+```sh
+ROOT=$(pwd) punchplatform-elastalert.sh \
+                --start-foreground \
+                --config $ROOT/example_configs/alert/config.yaml \
+                --rule example_configs/alert/rule.yaml \
+                --additional-pex custom_rule-1.0.0.pex
+```
+
+### Custom Enhancement
+
+```sh
+ROOT=$(pwd) punchplatform-elastalert.sh \
+                --start-foreground \
+                --config $ROOT/example_configs/enhancement/config.yaml \
+                --rule example_configs/enhancement/rule.yaml \
+                --additional-pex custom_rule-1.0.0.pex
+```
+
+### Custom Rule Loader
+
+```sh
+ROOT=$(pwd) punchplatform-elastalert.sh \
+                --start-foreground \
+                --config $ROOT/example_configs/rule_loader/config.yaml \
+                --rule example_configs/rule_loader/rule.yaml \
+                --additional-pex custom_rule-1.0.0.pex
+```
+
+
 
