@@ -12,8 +12,12 @@ At top level you will find application that you can extends. For example, interf
 
 ## Spark
 
-In spark directory, you will find starters for implementing your own punchline node and udf. A starter is provided for `pyspark` and `spark` users.
+In `spark` directory, you will find starters for implementing your own punchline node and udf. A starter is provided for `pyspark` and `spark` users.
 
 ## Storm
 
-In storm directory, you will find a starter on how to write custom storm nodes in java.
+In `storm` directory, you will find a starter on how to write custom storm nodes in java.
+
+## Elastalert
+
+In `elastalert` directory, you will find a starter for writting your `custom rules, alerters, enhancements and rule_loader` with their respectives configurations files in `example_configs` directory.
