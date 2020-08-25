@@ -87,6 +87,7 @@ cp $ROOT/dist/complex_algorithm_dependencies.pex $PUNCHPLATFORM_INSTALL_DIR/extl
 ### Custom Rule
 
 ```sh
+# Terminal should be at the same location as this README.md
 ROOT=$(pwd) punchplatform-elastalert.sh \
                 --start-foreground \
                 --config $ROOT/example_configs/rule/config.yaml \
@@ -97,6 +98,7 @@ ROOT=$(pwd) punchplatform-elastalert.sh \
 ### Custom Alerter
 
 ```sh
+# Terminal should be at the same location as this README.md
 ROOT=$(pwd) punchplatform-elastalert.sh \
                 --start-foreground \
                 --config $ROOT/example_configs/alert/config.yaml \
@@ -107,6 +109,7 @@ ROOT=$(pwd) punchplatform-elastalert.sh \
 ### Custom Enhancement
 
 ```sh
+# Terminal should be at the same location as this README.md
 ROOT=$(pwd) punchplatform-elastalert.sh \
                 --start-foreground \
                 --config $ROOT/example_configs/enhancement/config.yaml \
@@ -117,6 +120,7 @@ ROOT=$(pwd) punchplatform-elastalert.sh \
 ### Custom Rule Loader
 
 ```sh
+# Terminal should be at the same location as this README.md
 ROOT=$(pwd) punchplatform-elastalert.sh \
                 --start-foreground \
                 --config $ROOT/example_configs/rule_loader/config.yaml \
