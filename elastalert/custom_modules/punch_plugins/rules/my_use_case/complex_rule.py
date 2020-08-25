@@ -11,7 +11,7 @@ from elastalert.ruletypes import RuleType
 from elastalert.util import ts_to_dt  # NOQA
 
 
-class ComplexAlerter(RuleType):
+class ComplexRule(RuleType):
 
     # By setting required_options to a set of strings
     # You can ensure that the rule config file specifies all
