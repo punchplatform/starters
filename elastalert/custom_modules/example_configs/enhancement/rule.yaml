@@ -1,0 +1,24 @@
+# From example_rules/example_frequency.yaml
+es_host: localhost
+es_port: 9200
+name: "Punch Example Rule and Alerter"
+type: "punch_plugins.rules.my_use_case.complex_rule.ComplexRule"
+index: logstash-*
+num_events: 50
+timeframe:
+    hours: 4
+filter:
+- term:
+    some_field: "some_value"
+alert: "punch_plugins.alerters.my_use_case.complex_alert.ComplexAlert"
+match_enhancements:
+- "punch_plugins.enhancements.my_use_case.complex_enhancement.ComplexEnhancement"
+output_file_path: "/tmp/alerts.log"
+email:
+- "contact@punchplatform.com"
+time_start: "20:00"
+usernames:
+- "admin"
+- "userXYZ"
+- "foobaz"
+time_end: "24:00"
