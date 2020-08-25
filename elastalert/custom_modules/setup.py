@@ -16,5 +16,6 @@ setup(
     install_requires=[
         "pex==2.1.6",  # this is important do not remove
         "requests==2.24.0",  # this is important do not remove
+        "pymongo",
     ]
 )
