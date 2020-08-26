@@ -33,5 +33,6 @@
 	]
 	settings: {
 		spark.additional.pex: complex_algorithm_dependencies.pex
+		spark.python_initializer: nodes.my_use_case.my_node.complex_algorithm_initializer.ComplexAlgorithmnInitializer
 	}
 }
