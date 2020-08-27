@@ -33,6 +33,7 @@
 	]
 	settings: {
 		spark.additional.pex: complex_algorithm_dependencies.pex
-		spark.python_initializer: nodes.my_use_case.my_node.complex_algorithm_initializer.ComplexAlgorithmnInitializer
+		spark.pre_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_pre_execution.ComplexAlgorithmnPreExecution
+		spark.post_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_post_execution.ComplexAlgorithmnPostExecution
 	}
 }
