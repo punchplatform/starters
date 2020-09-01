@@ -7,9 +7,10 @@ index: platform-metrics-*
 
 alert: "punch_plugins.alerters.my_use_case.complex_alert.ComplexAlert"
 
-match_enhancements: "punch_plugins.enhancements.my_use_case.complex_enhancement.ComplexEnhancement"
+match_enhancements: 
+- "punch_plugins.enhancements.my_use_case.complex_enhancement.ComplexEnhancement"
 
 output_file_path: "/tmp/alerts.log"
-time_start: "20:00"
-kafka_tpic_name: "reporter-topic"
+time_start: "00:00"
+kafka_topic_name: "reporter-topic"
 time_end: "23:59"
