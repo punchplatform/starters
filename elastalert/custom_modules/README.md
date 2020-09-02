@@ -61,7 +61,6 @@ make
 
 An example on how to code your custom elastalert module is given in `punch_plugins` package which contains `rules` module with a sub-module `my_use_case`
 
-```sh
 # IMPORTANT
 # Terminal should be at the same location as this README.md
 ROOT=$(pwd)
