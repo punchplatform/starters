@@ -128,4 +128,29 @@ ROOT=$(pwd) punchplatform-elastalert.sh \
 ```
 
 
+## Suspect Name Detection
 
+### Insert data in elasticsearch
+
+```sh
+PUT /customers-2020.09.23/_doc/1
+{
+  "name": "Johnny Halll",
+  "@timestamp": "2020-09-23T14:47:02.448Z"
+}
+
+PUT /customers-2020.09.23/_doc/2
+{
+  "name": "Jack Mao",
+  "@timestamp": "2020-09-23T15:47:02.448Z"
+}
+```
+
+### Test
+
+```sh
+pyenv virtualenv 3.6.8 elastalert_test
+pyenv activate elastalert_test
+
+elastalert --config example_configs/suspect_name_detection/config.yaml --rule example_configs/suspect_name_detection/rule.yaml --start 2020-09-23T14:47:02.448Z
+```
