@@ -11,6 +11,15 @@
                 input_data: [
                     { 
                         field1: "[1, 2, 3, 4]"
+                        age: 2
+                    }
+                    { 
+                        field1: "[15, 112, 3, 0]"
+                        age: 22
+                    }
+                    {
+                        field1: "[15, 112, 3, 0]"
+                        age: 99
                     }
                 ]
             }
@@ -30,11 +39,19 @@
                         function_name: punch_convertor
                         schema_ddl: ARRAY<STRING>
                     }
+                    {
+                        class_name: org.thales.punch.udf.starter.kit.SumAggregate
+                        function_name: avg_age
+                    }
                 ]
                 statement_list: [
                     {
-                        output_table_name: processed
+                        output_table_name: processed_udf
                         statement: SELECT punch_convertor(field1) from dummy_data
+                    }
+                    {
+                        output_table_name: processed_udaf
+                        statement: SELECT avg_age(age) AS average_name from dummy_data
                     }
                 ]
             }
@@ -46,7 +63,10 @@
             ]
             publish: [
                 {
-                    stream: processed
+                    stream: processed_udf
+                }
+                {
+                    stream: processed_udaf
                 }
             ]
         }
@@ -59,9 +79,16 @@
             subscribe: [
                 {
                     component: processor
-                    stream: processed
+                    stream: processed_udf
+                }
+                {
+                    component: processor
+                    stream: processed_udaf
                 }
             ]
         }
     ]
+    settings: {
+        spark.additional.jar: punchplatform-udf-starter-kit-1.0-jar-with-dependencies.jar
+    }
 }
