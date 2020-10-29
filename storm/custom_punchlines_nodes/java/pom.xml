@@ -11,7 +11,7 @@
 	<properties>
 		<storm.version>2.1.0</storm.version>
 		<junit.version>4.12</junit.version>
-		<punch.version>6.1.0-SNAPSHOT</punch.version>
+		<punch.version>6.2.0-SNAPSHOT</punch.version>
 		<jackson.version>2.10.1</jackson.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
