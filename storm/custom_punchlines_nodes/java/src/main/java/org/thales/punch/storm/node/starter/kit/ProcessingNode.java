@@ -1,10 +1,8 @@
 package org.thales.punch.storm.node.starter.kit;
 
-import java.util.Collections;
 import org.apache.storm.tuple.Tuple;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.punch.api.node.PunchNode;
-import com.github.punch.api.node.StreamDeclaration;
 import com.github.punch.api.storm.PunchProcessingNode;
 
 /**
@@ -25,15 +23,33 @@ public class ProcessingNode extends PunchProcessingNode {
    */
   @JsonProperty(value = "can_process")
   public Boolean canProcess = false;
+
+  @Override
+  public void prepare() {
+    super.prepare();
+    getLogger().info("message=\"Processing Node ready. Can process data tuples ? {}\"", canProcess);
+  }
   
   @Override
   public void process(Tuple input) {
-    for (StreamDeclaration stream: getPublishStreams()) {
-      if (canProcess.booleanValue()) {
-        getCollector().emit(stream.getStreamId(), Collections.singleton(input), input.getValues());
-      } 
+    // Metric Tuple
+    if(isMetricTuple(input)){
+      enrichAndForwardMetricTuple(input); // enrich and forward on _ppf_metrics.
+      return;
     }
-    getCollector().ack(input);
+
+    // Error Tuple
+    if(isErrorTuple(input)){
+      forwardErrorTuple(input); // processing. Here there is no processing. Incoming tuple is forwarded on _ppf_errors.
+      return;
+    }
+
+    // Data Tuple
+    if(isDataTuple(input)){
+      if(canProcess.booleanValue()){
+        forwardDataTuple(input); // processing. Here there is no processing. Incoming tuple is forwarded on user defined streams.
+      }
+    }
   }
 
 }
