@@ -1,9 +1,8 @@
 package org.thales.punch.storm.node.starter.kit;
 
-import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.punch.api.node.PunchNode;
-import com.github.punch.api.storm.PunchInputNode;
+import com.github.punch.api.storm.impl.PunchInputNode;
 
 /**
  * An example of a custom storm Input Node
@@ -34,8 +33,7 @@ public class InputNode extends PunchInputNode {
   @Override
   public void nextTuple() {
       super.nextTuple();
-      getPublishStreams().forEach(stream -> 
-          getCollector().emit(stream.getStreamId(), Arrays.asList(message)));
+      emitDataTuple(message); // emit only on user defined streams
   }
 
   @Override
