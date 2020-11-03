@@ -30,7 +30,7 @@ public class InputNode extends PunchInputNode {
 
   private static final long serialVersionUID = 1L;
 
-  @JsonProperty()
+  @JsonProperty(value = "title")
   public String title = "a_title";
 
   @JsonProperty(value = "input_data")
