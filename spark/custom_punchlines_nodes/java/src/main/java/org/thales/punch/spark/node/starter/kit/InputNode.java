@@ -16,6 +16,7 @@ import com.github.punch.api.spark.OutputDataset;
 import com.github.punch.api.spark.SparkNodePubSub;
 import com.github.punch.api.spark.nodes.PunchInputNode;
 import com.github.punch.api.node.PunchNode;
+import com.github.punch.api.node.PunchProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -30,10 +31,12 @@ public class InputNode extends PunchInputNode {
 
   private static final long serialVersionUID = 1L;
 
-  @JsonProperty(value = "title")
+  @JsonProperty(value = "title", required = false)
+  @PunchProperty()
   public String title = "a_title";
 
   @JsonProperty(value = "input_data")
+  @PunchProperty()
   public List<String> inputData = new LinkedList<>();
 
   @Override
