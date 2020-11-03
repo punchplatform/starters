@@ -1,8 +1,24 @@
+/*
+ *  This code is licensed under the outer restricted Tiss license:
+ *
+ *  Copyright [2014]-[2020] Thales Services under the Thales Inner Source Software License
+ *  (Version 1.0, InnerPublic - OuterRestricted the "License");
+ *
+ *  You may not use this file except in compliance with the License.
+ *
+ *  The complete license agreement can be requested at contact@punchplatform.com.
+ *
+ *  Refer to the License for the specific language governing permissions and limitations
+ *  under the License.
+ */
+
 package org.thales.punch.storm.node.starter.kit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.punch.api.node.PunchNode;
 import com.github.punch.api.storm.impl.PunchInputNode;
+import com.github.punch.api.storm.impl.StormNodePubSub;
 
 /**
  * An example of a custom storm Input Node
@@ -40,6 +56,11 @@ public class InputNode extends PunchInputNode {
   public void onClose() {
       super.onClose();
       // do something before the node exit
+  }
+
+  @Override
+  public void declare(StormNodePubSub declarer) {
+    declarer.publishMap(new TypeReference<String>() {});
   }
 
 }

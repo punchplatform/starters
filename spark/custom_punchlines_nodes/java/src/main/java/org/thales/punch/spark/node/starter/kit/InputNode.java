@@ -12,8 +12,8 @@ import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.punch.api.spark.IDeclarer;
 import com.github.punch.api.spark.OutputDataset;
+import com.github.punch.api.spark.SparkNodePubSub;
 import com.github.punch.api.spark.nodes.PunchInputNode;
 import com.github.punch.api.node.PunchNode;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -48,7 +48,7 @@ public class InputNode extends PunchInputNode {
   }
 
   @Override
-  public void declare(IDeclarer declarer) {
+  public void declare(SparkNodePubSub declarer) {
     declarer.publishMap(new TypeReference<Dataset<Row>>() {
     });
   }
