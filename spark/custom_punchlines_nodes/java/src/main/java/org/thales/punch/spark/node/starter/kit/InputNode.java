@@ -49,8 +49,7 @@ public class InputNode extends PunchInputNode {
 
   @Override
   public void declare(SparkNodePubSub declarer) {
-    declarer.publishMap(new TypeReference<Dataset<Row>>() {
-    });
+    declarer.publishMap(new TypeReference<Dataset<Row>>() {});
   }
 
 }
