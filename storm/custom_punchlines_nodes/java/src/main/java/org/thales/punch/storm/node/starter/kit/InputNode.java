@@ -17,8 +17,8 @@ package org.thales.punch.storm.node.starter.kit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.punch.api.node.PunchNode;
-import com.github.punch.api.storm.impl.PunchInputNode;
-import com.github.punch.api.storm.impl.StormNodePubSub;
+import com.github.punch.api.storm.PunchInputNode;
+import com.github.punch.api.storm.StormNodePubSub;
 
 /**
  * An example of a custom storm Input Node
