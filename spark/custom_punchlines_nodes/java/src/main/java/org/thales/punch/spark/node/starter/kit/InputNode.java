@@ -12,10 +12,11 @@ import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.punch.api.spark.IDeclarer;
 import com.github.punch.api.spark.OutputDataset;
+import com.github.punch.api.spark.SparkNodePubSub;
 import com.github.punch.api.spark.nodes.PunchInputNode;
 import com.github.punch.api.node.PunchNode;
+import com.github.punch.api.node.PunchProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -30,10 +31,12 @@ public class InputNode extends PunchInputNode {
 
   private static final long serialVersionUID = 1L;
 
-  @JsonProperty()
+  @JsonProperty(value = "title", required = false)
+  @PunchProperty()
   public String title = "a_title";
 
   @JsonProperty(value = "input_data")
+  @PunchProperty()
   public List<String> inputData = new LinkedList<>();
 
   @Override
@@ -48,9 +51,8 @@ public class InputNode extends PunchInputNode {
   }
 
   @Override
-  public void declare(IDeclarer declarer) {
-    declarer.publishMap(new TypeReference<Dataset<Row>>() {
-    });
+  public void declare(SparkNodePubSub declarer) {
+    declarer.publishMap(new TypeReference<Dataset<Row>>() {});
   }
 
 }
