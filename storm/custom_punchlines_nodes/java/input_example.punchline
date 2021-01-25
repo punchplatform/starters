@@ -42,9 +42,6 @@
       publish: []
     }
   ]
-  metrics: {
-    
-  }
   settings:
   {
     additional_jars:
