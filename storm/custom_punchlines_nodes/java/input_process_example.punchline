@@ -6,9 +6,9 @@
   dag:
   [
     {
-      type: third_party_input
+      package: org.thales.punch.storm.node.starter.kit
+      type: input_node
       component: input_node
-      class: org.thales.punch.storm.node.starter.kit.InputNode
       settings:
       {
         user_name: alice
@@ -27,9 +27,9 @@
       ]
     }
     {
-      type: third_party_node
+      package: org.thales.punch.storm.node.starter.kit
+      type: processing_node
       component: processing_node
-      class: org.thales.punch.storm.node.starter.kit.ProcessingNode
       settings:
       {
         can_process: true

@@ -18,8 +18,8 @@ import org.apache.storm.tuple.Tuple;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.punch.api.node.PunchNode;
-import com.github.punch.api.storm.PunchProcessingNode;
-import com.github.punch.api.storm.StormNodePubSub;
+import com.github.punch.api.storm.nodes.PunchProcessingNode;
+import com.github.punch.api.storm.streams.StormNodePubSub;
 
 /**
  * 

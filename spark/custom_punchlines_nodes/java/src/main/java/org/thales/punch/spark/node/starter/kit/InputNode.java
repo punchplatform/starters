@@ -12,9 +12,10 @@ import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.github.punch.api.spark.OutputDataset;
-import com.github.punch.api.spark.SparkNodePubSub;
+import com.github.punch.api.spark.datasets.OutputDataset;
 import com.github.punch.api.spark.nodes.PunchInputNode;
+import com.github.punch.api.spark.streams.SparkNodePubSub;
+import com.github.punch.api.exceptions.PunchlineException;
 import com.github.punch.api.node.PunchNode;
 import com.github.punch.api.node.PunchProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -40,7 +41,7 @@ public class InputNode extends PunchInputNode {
   public List<String> inputData = new LinkedList<>();
 
   @Override
-  public void execute(OutputDataset output) {
+  public void execute(OutputDataset output) throws PunchlineException {
     SparkSession sparkSession = SparkSession.builder().getOrCreate();
     List<Row> rows = inputData.stream().map(data -> RowFactory.create(data)).collect(Collectors.toList());
     StructType schema = new StructType(new StructField[] {
