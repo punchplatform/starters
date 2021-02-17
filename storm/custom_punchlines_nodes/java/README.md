@@ -7,7 +7,7 @@ For development phase, you should have:
 
 Useful links:
 
-- https://doc.punchplatform.com/Development_Guide/Punchline_Custom_Node/Storm_User_Nodes.html
+- https://doc.punchplatform.com/6.3.2/Development_Guide/Custom_Node/Storm_Custom_Nodes.html
 
 # Notes
 
