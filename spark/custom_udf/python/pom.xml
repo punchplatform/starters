@@ -1,21 +1,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
- 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.thales.punch</groupId>
-	<artifactId>punch-spark-python-node-starter-kit</artifactId>
-	<packaging>jar</packaging>
-	<version>1.0.0</version>
-	<name>Punch User Node</name>
-	<url>http://maven.apache.org</url>
-	<properties>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.thales.punch.udf.starter.kit</groupId>
+  <artifactId>punchplatform-udf-python-starter-kit</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>punchplatform-udf-starter-kit</name>
+  <url>http://maven.apache.org</url>
+  <properties>
       <metadataFilePath>${basedir}/target/classes/metadata.yml</metadataFilePath>
       <artifactFilePath>${basedir}/target/${project.artifactId}-${project.version}.pex</artifactFilePath>
 		  <timestamp>${maven.build.timestamp}</timestamp>
     	<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
       <buildPath>${basedir}/target</buildPath>
 	</properties>
-
-  <build>
+<build>
       <resources>
         <resource>
           <directory>metadata/</directory>

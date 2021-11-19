@@ -12,10 +12,10 @@ spec:
   garbageCollect: false
   implementation: java
   dependencies:
-  - additional-spark-jar:org.thales.punch:punch-spark-java-node-starter-kit:1.0.0
+  - additional-spark-jar:org.thales.punch:punchplatform-udf-java-starter-kit:1.0.0
   settings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
-    spark.additional.jar: punch-spark-java-node-starter-kit-1.0.0-jar-with-dependencies.jar
+    spark.additional.jar: punchplatform-udf-java-starter-kit-1.0.0-jar-with-dependencies.jar
   punchline:
     dag:
     - type: dataset_generator
@@ -31,28 +31,27 @@ spec:
       publish:
         - stream: data
     - type: sql
-        component: processor
-        settings:
-          register_udf:
-            - class_name: org.thales.punch.udf.starter.kit.StrToArrayString
-              function_name: punch_convertor
-              schema_ddl: ARRAY<STRING>
-            - class_name: org.thales.punch.udf.starter.kit.SumAggregate
-              function_name: avg_age
-          statement_list:
-            - output_table_name: processed_udf
-              statement: SELECT punch_convertor(field1) from dummy_data
-            - output_table_name: processed_udaf
-              statement: SELECT avg_age(age) AS average_name from dummy_data
-        subscribe:
-        - component: dataset_generator
-          stream: data      
-        publish:
-        - stream: data  
-    - type: punchlet_node
+      component: processor
       settings:
-        punchlet_code: "{print(root);}"
-      component: punch_bolt
+        register_udf:
+          - class_name: org.thales.punch.udf.starter.kit.StrToArrayString
+            function_name: punch_convertor
+            schema_ddl: ARRAY<STRING>
+          - class_name: org.thales.punch.udf.starter.kit.SumAggregate
+            function_name: avg_age
+        statement_list:
+          - output_table_name: processed_udf
+            statement: SELECT punch_convertor(field1) from dummy_data
+          - output_table_name: processed_udaf
+            statement: SELECT avg_age(age) AS average_name from dummy_data
+      subscribe:
+      - component: dataset_generator
+        stream: data      
+      publish:
+      - stream: data  
+    - type: show
+      component: show
+      settings: {}
       subscribe:
       - component: processor
         stream: data

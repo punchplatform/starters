@@ -4,13 +4,15 @@
   <groupId>org.thales.punch.udf.starter.kit</groupId>
   <artifactId>punchplatform-udf-java-starter-kit</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.0.0</version>
   <name>punchplatform-udf-starter-kit</name>
   <url>http://maven.apache.org</url>
   <properties>
 	<spark.version>3.1.1</spark.version>
 	<junit.version>4.12</junit.version>
 	<java.version>11</java.version>
+	<timestamp>${maven.build.timestamp}</timestamp>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
   </properties>
   <dependencies>
 	<dependency>

@@ -1,0 +1,52 @@
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v1
+kind: Sparkline
+metadata:
+  name: udf-before-python
+spec:  
+  image: ghcr.io/punchplatform/sparkline:7.0.1-SNAPSHOT
+  initContainerImage: ghcr.io/punchplatform/resourcectl:7.0.1-SNAPSHOT
+  initContainerUrl: http://artifacts-service.punch-gateway-ns:4245
+  imagePullPolicy: IfNotPresent
+  serviceAccount: admin-user
+  garbageCollect: false
+  implementation: python
+  dependencies:
+  - additional-pyspark-pex:org.thales.punch:punchplatform-udf-python-starter-kit:1.0.0
+  settings:
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+    spark.additional.pex: punchplatform-udf-python-starter-kit-1.0.0.pex
+  punchline:
+    dag:
+    - type: dataset_generator
+      component: input
+      settings:
+        input_data: 
+          - Message: "[1, 2, 3]"
+          - Message: "[1, 2, 3, 5]"
+          - Message: "[1, 2, 3, 99, 5.0]"
+          - Message: "[0.3, 2, 3]"
+      publish:
+        - stream: data
+    - type: sql
+      component: processor
+      settings:
+        register_udf:
+          - function_name: myOwnFunc2
+            function_definition: udf_example.udf0_example.test_random
+            schema_ddl: Integer
+        statement_list:
+          - output_table_name: data
+            statement: SELECT myOwnFunc2(), punch_str_to_array_double(Message) FROM input_data
+      subscribe:
+      - component: input
+        stream: data      
+      publish:
+      - stream: data  
+    - type: show
+      component: show
+      settings: {}
+      subscribe:
+      - component: processor
+        stream: data
+      publish: []

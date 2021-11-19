@@ -17,36 +17,21 @@ integrate custom pyspark udf in your punchline.
 
 ```sh
 # in your punchline configuration of your sql_node
-{
-    type: sql
-    component: sql
-    settings: {
-        register_udf: [
-            {
-                function_name: myOwnFunc2
-                function_definition: udf_example.udf0_example.test_random
-                schema_ddl: Integer
-            }
-        ]
-        statement_list: [
-            {
-                statement: SELECT myOwnFunc2() FROM input_data
-                output_table_name: data
-            }
-        ]
-    }
-    publish: [
-        {
-            stream: data
-        }
-    ]
-    subscribe: [
-        {
-            stream: data
-            component: input
-        }
-    ]
-}
+- type: sql
+      component: processor
+      settings:
+        register_udf:
+          - function_name: myOwnFunc2
+            function_definition: udf_example.udf0_example.test_random
+            schema_ddl: Integer
+        statement_list:
+          - output_table_name: data
+            statement: SELECT myOwnFunc2(), punch_str_to_array_double(Message) FROM input_data
+      subscribe:
+      - component: dataset_generator
+        stream: data      
+      publish:
+      - stream: data  
 ```
 
 ## Custom requirements
@@ -73,14 +58,14 @@ For your project, don't forget to rename `udf_example` to something more meaning
 # Quick Start
 
 ```sh
-# generate a udf.pex that contains all your python code and requirements
-punchpkg pyspark package-pex udf
+# generate a artefact that contains all your python code, requirements and metadata
+mvn clean instal 
 
-# install the udf.pex dependency like other dependencies
-punchpkg pyspark install udf.pex
+# upload artefact to resource manager
+resourcectl --url $ARTEFACT_URL upload --files target/punchplatform-udf-python-starter-kit-1.0.0-artefact.zip
 
 # launch the example
-punchlinectl start -p example_pyspark_udf.pml
+kubectl apply -f example_pyspark_udf.yaml
 
 # output
 

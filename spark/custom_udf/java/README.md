@@ -22,226 +22,85 @@ this UDF produces as output:
 
 > WrappedArray(1.0, 2, 5.5, 8.6)
 
+## Generation 
+
+```sh
+mvn clean install
+```
+
 ## Installation
 
-#### Making your jar available to PunchPlatform environment (with punchpkg)
+To deploy your custom node as a new artefact, refer to this [documentation](../../Manual_Pages/resourcectl.md)
 
-```sh
-YOUR_STANDALONE_VERSION=6.0.0
-SPARK_VERSION=2.4.3
-STARTER_KIT_VERSION=1.0
-
-# at the same level of this README.md
-mvn clean install
-
-punchpkg spark install-dependencies $(pwd)/target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependencies.jar
-```
-
-#### Making your jar available to PunchPlatform environment (without punchpkg)
-
-```sh
-YOUR_STANDALONE_VERSION=6.0.0
-SPARK_VERSION=2.4.3
-STARTER_KIT_VERSION=1.0
-
-# at the same level of this README.md
-mvn clean install
-
-mkdir -p $PUNCHPLATFORM_CONF_DIR/../external/spark-${SPARK_VERSION}-bin-hadoop2.7/punchplatform/analytics/job/custom/
-cp target/punchplatform-udf-starter-kit-${STARTER_KIT_VERSION}-jar-with-dependencies.jar $PUNCHPLATFORM_CONF_DIR/../external/spark-${SPARK_VERSION}-bin-hadoop2.7/punchplatform/analytics/job/custom/
-```
-
-#### Using the UDF function hello world
-
-#### before using our custom udf function 
+## Configuration
 
 Let's run the configuration below:
 
-```hjson
-{
-    tenant: default
-    channel: default
-    version: "6.0"
-    runtime: spark
-    dag: [
-        {
-            type: dataset_generator
-            component: dummy
-            settings: {
-                input_data: [
-                    { 
-                        field1: "[1, 2, 3, 4]"
-                    }
-                ]
-            }
-            publish: [
-                {
-                    stream: data
-                }
-            ]
-        }
-        {
-            type: sql
-            component: processor
-            settings: {
-                register_udf: [
-                    {
-                        class_name: org.thales.punch.udf.starter.kit.StrToArrayString
-                        function_name: punch_convertor
-                        schema_ddl: ARRAY<STRING>
-                    }
-                ]
-                statement_list: [
-                    {
-                        output_table_name: processed
-                        statement: SELECT punch_convertor(field1) from dummy_data
-                    }
-                ]
-            }
-            subscribe: [
-                {
-                    stream: data
-                    component: dummy
-                }
-            ]
-            publish: [
-                {
-                    stream: processed
-                }
-            ]
-        }
-        {
-            type: show
-            component: stdout
-            settings: {
-                truncate: false
-            }
-            subscribe: [
-                {
-                    component: processor
-                    stream: processed
-                }
-            ]
-        }
-    ]
-}
+```yaml
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v1
+kind: Sparkline
+metadata:
+  name: udf-before-java
+spec:  
+  image: ghcr.io/punchplatform/sparkline:7.0.1-SNAPSHOT
+  initContainerImage: ghcr.io/punchplatform/resourcectl:7.0.1-SNAPSHOT
+  initContainerUrl: http://artifacts-service.punch-gateway-ns:4245
+  imagePullPolicy: IfNotPresent
+  serviceAccount: admin-user
+  garbageCollect: false
+  implementation: java
+  dependencies:
+  - additional-spark-jar:org.thales.punch:punchplatform-udf-java-starter-kit:1.0.0
+  settings:
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+    spark.additional.jar: punchplatform-udf-java-starter-kit-1.0-jar-with-dependencies.jar
+  punchline:
+    dag:
+    - type: dataset_generator
+      component: dataset_generator
+      settings:
+        input_data: 
+          - field1: "[1, 2, 3, 4]"
+            age: 2
+          - field1: "[15, 112, 3, 0]"
+            age: 22
+          - field1: "[15, 112, 3, 0]"
+            age: 99 
+      publish:
+        - stream: data
+    - type: sql
+      component: processor
+      settings:
+        register_udf:
+          - class_name: org.thales.punch.udf.starter.kit.StrToArrayString
+            function_name: punch_convertor
+            schema_ddl: ARRAY<STRING>
+          - class_name: org.thales.punch.udf.starter.kit.SumAggregate
+            function_name: avg_age
+        statement_list:
+          - output_table_name: processed_udf
+            statement: SELECT punch_convertor(field1) from dummy_data
+          - output_table_name: processed_udaf
+            statement: SELECT avg_age(age) AS average_name from dummy_data
+      subscribe:
+      - component: dataset_generator
+        stream: data      
+      publish:
+      - stream: data  
+    - type: show
+      component: show
+      settings: {}
+      subscribe:
+      - component: processor
+        stream: data
+      publish: []
 ```
 
-Output result:
+## Deployment
 
 ```sh
-# note: $(pwd) is root directory of this readme
-punchlinectl start -p $(pwd)/before_udf_helloworld.punchline
-
---[[
-__________                    .__    .____    .__               
-\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
- |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
- |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
- |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
-                     \/     \/     \/        \/       \/     \/ 
---]]_______ _________  _ 
-[__ |__]|__||__/|_/  
-___]|   |  ||  \| \_ 
-                   
-Show node result: processor_processed
-
-| field1       |
-
-| [1, 2, 3, 4] |
-
-root
- |-- field1: string (nullable = true)
-
-[
-  {
-    "name": "processor_processed",
-    "title": "SHOW"
-  }
-]
-```
-
-Now let's build this package
-
-```sh
-mvn clean install
-```
-
-Afterwards we're going to install our jar to the correct directory with the help of `punchpkg`
-
-```sh
-# note $(pwd) is root directory of this readme
-punchpkg spark install-dependencies $(pwd)/target/punchplatform-udf-starter-kit-1.0-jar-with-dependencies.jar
-
-# let's check if our jar is properly installed
-punchpkg spark list-dependencies 
-{
-    "custom_jars": [
-        "punchplatform-udf-starter-kit-1.0-jar-with-dependencies.jar"
-    ],
-    "main_jars": [
-        "punchplatform-analytics-uber-6.0.0-SNAPSHOT-jar-with-dependencies.jar",
-        "punchplatform-analytics-plugins-udf-6.0.0-SNAPSHOT-jar-with-dependencies.jar"
-    ]
-}
-```
-
-```hjson
-# extract of what has changed in after_udf_helloworld.punchline compared to before_udf_helloworld.punchline
-
-{
-    type: sql
-    component: processor
-    settings: {
-        register_udf: [
-            {
-                class_name: org.thales.punch.udf.starter.kit.StrToArrayString
-                function_name: punch_convertor
-                schema_ddl: ARRAY<STRING>
-            }
-        ]
-        statement_list: [
-            {
-                output_table_name: processed
-                statement: SELECT punch_convertor(field1) from dummy_data
-            }
-        ]
-    }
-...
-}
-```
-
-let's run the new configuration
-
-```sh
-punchlinectl start -p after_udf_helloworld.punchline 
---[[
-__________                    .__    .____    .__               
-\______   \__ __  ____   ____ |  |__ |    |   |__| ____   ____  
- |     ___/  |  \/    \_/ ___\|  |  \|    |   |  |/    \_/ __ \ 
- |    |   |  |  /   |  \  \___|   Y  \    |___|  |   |  \  ___/ 
- |____|   |____/|___|  /\___  >___|  /_______ \__|___|  /\___  >
-                     \/     \/     \/        \/       \/     \/ 
---]]_______ _________  _ 
-[__ |__]|__||__/|_/  
-___]|   |  ||  \| \_ 
-                   
-Show node result: processor_processed
-
-| UDF:punch_convertor(field1) |
-
-| WrappedArray(1, 2, 3, 4)    |
-
-root
- |-- UDF:punch_convertor(field1): array (nullable = true)
- |    |-- element: string (containsNull = true)
-
-[
-  {
-    "name": "processor_processed",
-    "title": "SHOW"
-  }
-]
+kubectl apply -f after_udf_helloworld.yaml
 ```
 
 # Conclusion
