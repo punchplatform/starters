@@ -2,8 +2,9 @@
 
 For development phase, you should have:
 
-- standalone installed
-- clone this repository
+- A Kubernetes cluster reachable
+- Punch Services (Operator & Artefact Server) deployed
+- Clone this repository
 
 Useful links:
 
@@ -17,13 +18,9 @@ Dependencies that are specified in the provided `pom.xml` of this project is a c
 
 **Note 2**
 
-In your punchline don't forget to specify `additional_jars` to add your custom node as a dependency at runtime.
+Java 11 is expected to build this repository
 
 **Note 3**
-
-Java8 is expected to be installed by the user running the punchline.
-
-**Note 4**
 
 Use maven to build the jar
 
@@ -32,8 +29,8 @@ Use maven to build the jar
 Template hierarchy:
 
 ```sh
-├── input_example.punchline
-├── input_process_example.punchline
+├── input_example.yaml
+├── input_process_example.yaml
 ├── pom.xml
 ├── README.md
 ├── src
@@ -59,12 +56,11 @@ mvn clean install
 ## Step two
 
 ```sh
-ROOT=$(pwd)  # directory of this README.md
-cp $ROOT/target/punch-storm-node-starter-kit-1.0-jar-with-dependencies.jar $PUNCHPLATFORM_INSTALL_DIR/extlib/storm/
+resourcectl --url $ARTEFACT_URL upload --files target/punch-storm-node-starter-kit-1.0-artefact.zip
 ```
 
 ## Step three
 
 ```sh
-punchlinectl start -p $ROOT/input_example.punchline
+kubectl apply -f $ROOT/input_example.punchline
 ```

@@ -2,8 +2,9 @@
 
 For development phase, you should have:
 
-- standalone installed
-- clone this repository
+- A Kubernetes cluster reachable
+- Punch Services (Operator & Artefact Server) deployed
+- Clone this repository
 
 Useful links:
 
@@ -17,13 +18,9 @@ Dependencies that are specified in the provided `pom.xml` of this project is a c
 
 **Note 2**
 
-In your punchline don't forget to specify `spark.additional.jar` to add your custom node as a dependency at runtime.
+Java 11 is expected to build this repository
 
 **Note 3**
-
-Java8 is expected to be installed by the user running the punchline.
-
-**Note 4**
 
 Use maven to build the jar
 
@@ -32,7 +29,7 @@ Use maven to build the jar
 Template hierarchy:
 
 ```sh
-├── input_node_example.punchline
+├── input_node_example.yaml
 ├── pom.xml
 ├── README.md
 ├── src
@@ -57,12 +54,11 @@ mvn clean install
 ## Step two
 
 ```sh
-ROOT=$(pwd)  # directory of this README.md
-punchpkg spark install $ROOT/target/punch-spark-node-starter-kit-1.0-jar-with-dependencies.jar
+resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-java-node-starter-kit-1.0-SNAPSHOT-artefact.zip
 ```
 
 ## Step three
 
 ```sh
-punchlinectl start -p $ROOT/input_node_example.punchline
+kubectl apply -f $ROOT/input_node_example.punchline
 ```

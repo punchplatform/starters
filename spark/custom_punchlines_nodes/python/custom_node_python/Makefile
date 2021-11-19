@@ -47,6 +47,6 @@ update-dependencies: .venv
 	@. ${DIR}/.venv/bin/activate && pip install ${PUNCHPLATFORM_INSTALL_DIR}/lib/pyspark/wheel/*
 
 package: .venv
-	@. ${DIR}/.venv/bin/activate && pex . -o dist/$(name)
+	@. ${DIR}/.venv/bin/activate && pex . -o $(BUILD_PATH)/$(name)
 
 

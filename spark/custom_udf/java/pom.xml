@@ -2,19 +2,20 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.thales.punch.udf.starter.kit</groupId>
-  <artifactId>punchplatform-udf-starter-kit</artifactId>
+  <artifactId>punchplatform-udf-java-starter-kit</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
   <name>punchplatform-udf-starter-kit</name>
   <url>http://maven.apache.org</url>
   <properties>
-	<spark.version>2.4.3</spark.version>
+	<spark.version>3.1.1</spark.version>
 	<junit.version>4.12</junit.version>
+	<java.version>11</java.version>
   </properties>
   <dependencies>
 	<dependency>
 	    <groupId>org.apache.spark</groupId>
-	    <artifactId>spark-sql_2.11</artifactId>
+	    <artifactId>spark-sql_2.12</artifactId>
 	    <version>${spark.version}</version>
 	    <scope>provided</scope>
 	</dependency>
@@ -25,44 +26,63 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>org.punch.channel.cli.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<!--compilerArgument>-Xlint:unchecked</compilerArgument -->
-					<encoding>UTF-8</encoding>
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
+<build>
+  <resources>
+      <resource>
+        <directory>metadata/</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+		  <archive>
+			<manifest>
+				<mainClass>org.punch.channel.cli.Main</mainClass>
+			</manifest>
+		</archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+           <execution>
+            <id>artefact-zip</id>
+            <phase>package</phase>
+            <goals>
+                <goal>single</goal>
+            </goals>
+            <configuration>
+                <appendAssemblyId>true</appendAssemblyId>
+                <descriptors>
+                    <descriptor>assembly/assembly-artefact.xml</descriptor>
+                </descriptors>
+            </configuration>
+        </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <!--compilerArgument>-Xlint:unchecked</compilerArgument -->
+          <encoding>UTF-8</encoding>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
 
-		</plugins>
-	</build>
+    </plugins>
+  </build>
 </project>
