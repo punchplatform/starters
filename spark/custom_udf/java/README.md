@@ -22,16 +22,6 @@ this UDF produces as output:
 
 > WrappedArray(1.0, 2, 5.5, 8.6)
 
-## Generation 
-
-```sh
-mvn clean install
-```
-
-## Installation
-
-To deploy your custom node as a new artefact, refer to this [documentation](../../Manual_Pages/resourcectl.md)
-
 ## Configuration
 
 Let's run the configuration below:
@@ -97,11 +87,42 @@ spec:
       publish: []
 ```
 
-## Deployment
+# Quick Start
+
+## Build 
 
 ```sh
-kubectl apply -f after_udf_helloworld.yaml
+mvn clean install
 ```
+
+## Start your punchline in development mode
+
+Import your node : 
+
+```sh
+ROOT=$(pwd)  # directory of this README.md
+cp $ROOT/target/punchplatform-udf-java-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/spark/
+```
+
+Start your punchline in foreground mode :  
+
+```sh
+punchlinectl start -p $ROOT/after_udf_helloworld.yaml
+```
+
+## Start your punchline in production mode
+
+Import your artefact : 
+
+```sh
+resourcectl --url $ARTEFACT_URL upload --files target/punchplatform-udf-java-starter-kit-1.0.0-artefact.zip
+```
+Start your punchline on kubernetes 
+
+```sh
+kubectl apply -f $ROOT/after_udf_helloworld.yaml
+```
+
 
 # Conclusion
 

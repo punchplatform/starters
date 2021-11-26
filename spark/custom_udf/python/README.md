@@ -57,25 +57,36 @@ For your project, don't forget to rename `udf_example` to something more meaning
 
 # Quick Start
 
+## Build 
+
 ```sh
-# generate a artefact that contains all your python code, requirements and metadata
-mvn clean instal 
+mvn clean install
+```
 
-# upload artefact to resource manager
+## Start your punchline in development mode
+
+Import your node : 
+
+```sh
+ROOT=$(pwd)  # directory of this README.md
+cp $ROOT/target/punchplatform-udf-python-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/pyspark/
+```
+
+Start your punchline in foreground mode :  
+
+```sh
+punchlinectl start -p $ROOT/example_pyspark_udf.yaml
+```
+
+## Start your punchline in production mode
+
+Import your artefact : 
+
+```sh
 resourcectl --url $ARTEFACT_URL upload --files target/punchplatform-udf-python-starter-kit-1.0.0-artefact.zip
+```
+Start your punchline on kubernetes 
 
-# launch the example
-kubectl apply -f example_pyspark_udf.yaml
-
-# output
-
-Show node result:
-+--------------+----------------------------------------+
-| myOwnFunc2() | UDF:punch_str_to_array_double(Message) |
-+--------------+----------------------------------------+
-|      6       |            [1.0, 2.0, 3.0]             |
-|      6       |          [1.0, 2.0, 3.0, 5.0]          |
-|      6       |       [1.0, 2.0, 3.0, 99.0, 5.0]       |
-|      6       |            [0.3, 2.0, 3.0]             |
-+--------------+----------------------------------------+
+```sh
+kubectl apply -f $ROOT/example_pyspark_udf.yaml
 ```

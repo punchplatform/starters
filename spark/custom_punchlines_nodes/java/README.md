@@ -45,20 +45,36 @@ Template hierarchy:
 │                                       └── InputNode.java
 ```
 
-## Step one
+## Build 
 
 ```sh
 mvn clean install
 ```
 
-## Step two
+## Start your punchline in development mode
+
+Import your node : 
 
 ```sh
-resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-java-node-starter-kit-1.0-SNAPSHOT-artefact.zip
+ROOT=$(pwd)  # directory of this README.md
+cp $ROOT/target/punch-spark-java-node-starter-kit-1.0.0-jar-with-dependencies.jar $PUNCHPLATFORM_INSTALL_DIR/extlib/spark/
 ```
 
-## Step three
+Start your punchline in foreground mode :  
 
 ```sh
-kubectl apply -f $ROOT/input_node_example.punchline
+punchlinectl start -p $ROOT/input_node_example.yaml
+```
+
+## Start your punchline in production mode
+
+Import your artefact : 
+
+```sh
+resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-java-node-starter-kit-1.0.0-artefact.zip
+```
+Start your punchline on kubernetes 
+
+```sh
+kubectl apply -f $ROOT/input_node_example.yaml
 ```

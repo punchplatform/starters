@@ -17,7 +17,3 @@ In `spark` directory, you will find starters for implementing your own punchline
 ## Storm
 
 In `storm` directory, you will find a starter on how to write custom storm nodes in java.
-
-## Elastalert
-
-In `elastalert` directory, you will find a starter for writting your `custom rules, alerters, enhancements and rule_loader` with their respectives configurations files in `example_configs` directory.

@@ -51,20 +51,35 @@ Template hierarchy:
 └── setup.py
 ```
 
-## Step one
+## Build 
 
 ```sh
 mvn clean install
 ```
 
+## Start your punchline in development mode
 
-## Step two
+Import your node : 
 
 ```sh
-resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-python-node-starter-kit-1.0-artefact.zip
+ROOT=$(pwd)  # directory of this README.md
+cp $ROOT/target/punch-spark-python-node-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/pyspark/
 ```
 
-## Step three
+Start your punchline in foreground mode :  
+
+```sh
+punchlinectl start -p $ROOT/full_job.yaml
+```
+
+## Start your punchline in production mode
+
+Import your artefact : 
+
+```sh
+resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-python-node-starter-kit-1.0.0-artefact.zip
+```
+Start your punchline on kubernetes 
 
 ```sh
 kubectl apply -f $ROOT/full_job.yaml
