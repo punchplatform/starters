@@ -16,5 +16,6 @@ FROM ghcr.io/punchplatform/stormline:7.0.1-SNAPSHOT
 WORKDIR /resources
 COPY punchlets .
 COPY punchline .
+COPY log4j2/ /opt/binaries/punch/log4j2/
 
 WORKDIR /
