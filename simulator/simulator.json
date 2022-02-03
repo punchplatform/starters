@@ -1,0 +1,58 @@
+{
+  "destination": {
+    "proto": "tcp",
+    "host": "127.0.0.1",
+    "port": 8880
+  },
+  "load": {
+    "total_messages": 1000000,
+    "stats_publish_interval": "2s",
+    "message_throughput": 59
+  },
+  "message": {
+    "payloads": [
+      "%{syslog_timestamp} host%{syslog_host_counter} sourcefiredc: SFIMS: [119:4:1] http_inspect: BARE BYTE UNICODE ENCODING [Impact: %{impact}] From \"IPS_inline_DE/MARC-3B4-SF3D45-1\" at %{timestamp} UTC [Classification: Not Suspicious Traffic] [Priority: 3] {tcp} %{src_ip}:%{src_port}->%{dst_ip}:80"
+    ],
+    "fields": {
+      "syslog_timestamp": {
+        "type": "timestamp",
+        "format": "MMM dd HH:mm:ss"
+      },
+      "syslog_host_counter": {
+        "type": "counter",
+        "min": 0,
+        "max": 256
+      },
+      "src_ip": {
+        "type": "ipv4",
+        "format": "192.168.99.[0-255]"
+      },
+      "dst_ip": {
+        "type": "ipv4",
+        "format": "189.[0-255].[0-255].[0-255]"
+      },
+      "src_port": {
+        "type": "random",
+        "min": 1024,
+        "max": 32769
+      },
+      "bytes": {
+        "type": "random",
+        "min": 1000,
+        "max": 30000
+      },
+      "timestamp": {
+        "type": "timestamp",
+        "format": "EEE MMM HH:mm:ss yyyy"
+      },
+      "impact": {
+        "type": "list",
+        "content": [
+          "Potentially Vulnerable",
+          "Critical"
+        ]
+      }
+    }
+  }
+}
+

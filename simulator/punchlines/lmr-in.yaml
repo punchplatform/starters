@@ -1,0 +1,60 @@
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: StreamPunchline
+metadata:
+  name: lmr-in
+  namespace: mytenant
+  annotations:
+     prometheus.io/scrape: 'true'
+     prometheus.io/port: '7772'     
+spec:  
+  image: ghcr.io/punchplatform/punchline-java:8.0-dev
+  env:
+  - name: JDK_JAVA_OPTIONS
+    value: "-Xms100m -Xmx450m"
+  dag:
+  - id: input
+    kind: source
+    type: lumberjack_source
+    load_control:
+      throughput: 100000
+      max_pending_row_number: 1000
+      row_timeout_secs: 0
+    settings:
+      host: 0.0.0.0
+      port: 9990
+      compression: true
+    out: 
+    - id: output
+      table: logs
+      columns: 
+      - name: log
+        type: string
+      - name: _ppf_remote_host
+        type: string
+      - name: _ppf_remote_port
+        type: int
+      - name: _ppf_local_host
+        type: string
+      - name: _ppf_local_port
+        type: int
+      - name: _ppf_timestamp
+        type: string
+      - name: _ppf_id      
+        type: string
+  - id: processing
+    type: punchlet_function
+    kind: function 
+    settings:
+      punchlet_code: "{ print(root); }"
+  - id: output
+    kind: sink
+    type: kafka_sink
+    settings:
+      format: lumberjack
+      producer.acks: all
+      producer.batch.size: 16384
+      producer.linger.ms: 5
+      bootstrap.servers: kafka-kafka-bootstrap.processing:9092
+      topic: ref-test-01-lmr
+
+ 
