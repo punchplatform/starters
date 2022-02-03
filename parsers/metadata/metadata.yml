@@ -1,0 +1,29 @@
+# Punch Artifact Hub package metadata file
+type: punch-parsers
+group: org.thales.punch
+logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
+version: ${project.version}
+artifact: ${project.name}
+displayName: ${project.name}
+createdAt: ${timestamp}
+description: This package is an example of a parsers
+keywords: # (optional)
+  - Punch
+  - Example
+  - Parsers
+links: # (optional)
+  - name: Punch documentation
+    url: https://doc.punchplatform.com
+readme: | # (optional)
+  Package documentation in markdown format
+  Content added here will be rendered on Artifact Hub
+changelog: # (optional)
+  - New parser (no previous state)
+maintainers: # (optional)
+  - name: pierre dosne
+    email: pierre.dosne@punchplatform.com
+provider: # (optional)
+  name: Thales Punch
+  email: contact@punchplatform.com  
+punchVersionCompatible: # (optional)
+  - 6.x

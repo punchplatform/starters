@@ -1,0 +1,29 @@
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: StreamPunchline
+metadata:
+  name: my-punchline
+spec:  
+  image: ghcr.io/punchplatform/punchline-starter:latest
+  dag:
+  - id: input
+    kind: source
+    type: generator_source
+    settings:
+      expectation: none
+      acked:
+      messages:
+        - "my first log"
+        - "My second message log"
+        - "And finally a third one"
+    out: 
+    - id: parser
+      table: logs
+      columns:
+      - name: log
+        type: string
+  - id: parser
+    type: punchlet_function
+    kind: function
+    settings:
+      punchlet: 
+      - /resources/example.punch

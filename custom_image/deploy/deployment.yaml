@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: punchline
+  labels:
+    app: punch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: punch
+  template:
+    metadata:
+      labels:
+        app: punch
+    spec: 
+      containers:
+        - name: punchline
+          image: ghcr.io/punchplatform/punchline-starter:latest
+          imagePullPolicy: Always
+          args: ["-t", "default", "start", "-p", "resources/generator_print.yaml"]

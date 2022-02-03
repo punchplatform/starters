@@ -1,0 +1,36 @@
+---
+apiVersion: 1.0
+kind: PunchletGroup
+metadata:
+  name: "sample group of related punchlets"
+spec:
+  punchlets:
+  - punchlet: parser.punch
+    labels:
+       description: "a sample punchlet for you to easily start coding your own"
+       performance: 3000
+       category: sample
+       author: "punch team"
+       vendor: thales
+    groks:
+    - groks/pattern.grok
+    inputStream:
+    - name: logs
+      fields:
+      - name: data
+        type: string
+  - punchlet: enrich.punch
+    labels:
+       description: "a sample punchlet to illustrate chaining and enrichment concepts"
+       performance: 2000
+       category: sample
+       author: "punch team"
+       vendor: thales
+    resources:
+    - resources/color_codes.json
+    inputStream:
+    - name: logs
+      fields:
+      - name: data
+        type: string
+        

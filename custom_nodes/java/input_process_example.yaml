@@ -1,0 +1,47 @@
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: StreamPunchline
+metadata:
+  name: input-example
+spec:  
+  image: ghcr.io/punchplatform/punchline-java:8.0-dev
+  initContainerImage: ghcr.io/punchplatform/resourcectl:8.0-dev
+  initContainerUrl: http://artifacts-service.kooker:4245
+  dependencies:
+    - additional-punch-jar:com.github.punchplatform:punchline-java-starter-kit:1.0.0
+  dag:
+  - id: input
+    kind: source
+    type: com.github.starter.punchline.java.CustomSource
+    settings:
+      print: true
+    out: 
+    - id: processing
+      table: logs
+      columns:
+      - name: row1
+        type: string
+      - name: row2
+        type: string
+      - name: row3
+        type: string
+  - id: processing
+    kind: function
+    type: com.github.starter.punchline.java.CustomFunction
+    settings:
+      print: true
+    out: 
+    - id: parser
+      table: logs
+      columns:
+      - name: row1
+        type: string
+      - name: row2
+        type: string
+      - name: row3
+        type: string
+  - id: parser
+    type: punchlet_function
+    kind: function
+    settings:
+      punchlet_code: "{print(root);}"
