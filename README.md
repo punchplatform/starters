@@ -11,3 +11,10 @@ java, python and punchlang parsers.
 * parsers : provides a complete punch parser example.  It also provides useful commands to help you in development and production mode.
 * examples : provides a collection of punchlet and punchline examples to quickly find your way in solving your use cases with the right pattern.
 * simulator : provides a simulator example
+
+## Tools
+
+Some lightweight tools are provided (shell helpers, because all the complex things are in docker...).
+To include these tools in your PATH:
+
+	. activate.sh
