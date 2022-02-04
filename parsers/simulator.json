@@ -1,0 +1,38 @@
+{
+    "destination": {
+      "proto": "tcp",
+      "host": "127.0.0.1",
+      "port": 9902
+    },
+    "load": {
+      "total_messages": 1000000,
+      "stats_publish_interval": "2s",
+      "message_throughput": 59
+    },
+    "message": {
+      "payloads": [
+        "color=%{color} city=%{city} uri=https://punchplatform.com"
+      ],
+      "fields": {
+        "color": {
+            "type": "list",
+            "content": [
+              "Paris",
+              "Rome",
+              "New York",
+              "London"
+            ]
+        },
+        "city": {
+            "type": "list",
+            "content": [
+              "red",
+              "green",
+              "yellow"
+            ]
+        }
+      }
+    }
+}
+  
+  

@@ -3,7 +3,6 @@
 	 // the expected input string is a key value format
 	 // For example "color=red city=Rome uri=https://punchplatform.com"
 	 // First convert it to a tuple
-
 	 kv().on([logs][data]).into([logs][log]);
 	 
 	 // Then apply the custom grok pattern to the uri part and put the resulting

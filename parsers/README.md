@@ -153,7 +153,15 @@ To test the punchline above in foreground mode simply run :
 ```sh
 docker run -it -v $PWD/src/:/opt/punch/resources/ \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
+    --network=host \
     ghcr.io/punchplatform/punchline-java:8.0-dev /data/punchline.yaml
+```
+
+And in another terminal inject some data : 
+
+```sh
+docker run --rm --network=host -v $PWD/simulator.json:/punch/simulator.json \
+  ghcr.io/punchplatform/simulator:8.0-dev -c simulator.json
 ```
 
 ## Start your punchline in production mode on Kubernetes

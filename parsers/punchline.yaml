@@ -17,7 +17,7 @@ spec:
     - id: parser
       table: logs
       columns:
-      - name: log
+      - name: data
         type: string
   - id: parser
     type: punchlet_function
@@ -29,3 +29,14 @@ spec:
       - com/mycompany/sample/groks/
       punchlets:
       - com/mycompany/sample/parser.punch
+    out: 
+    - id: print
+      table: logs
+      columns:
+      - name: log
+        type: string
+  - id: print
+    type: punchlet_function
+    kind: function
+    settings:
+      punchlet_code: "{print(root);}"
