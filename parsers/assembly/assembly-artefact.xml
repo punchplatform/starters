@@ -12,7 +12,7 @@
             </file>
             <!-- metadata.yml -->
             <file>
-                    <source>${project.basedir}/metadata/metadata.yml</source>
+                    <source>${project.build.outputDirectory}/metadata.yml</source>
                     <outputDirectory>.</outputDirectory>
             </file>
     </files>

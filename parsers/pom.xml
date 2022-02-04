@@ -1,14 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.mycompany</groupId>
     <artifactId>parsers</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>parsers</name>
+    <name>parsers-example</name>
     <properties>
-        <metadataFilePath>${basedir}/target/classes/metadata.yml</metadataFilePath>
-        <artifactFilePath>${basedir}/target/${project.artifactId}-${project.version}.zip</artifactFilePath>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     </properties>
@@ -77,25 +74,6 @@
                             <descriptors>
                                 <descriptor>assembly/assembly-artefact.xml</descriptor>
                             </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.thales.punch</groupId>
-                <artifactId>punch-maven-deploy-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <id>deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>rm-archiver</goal>
-                        </goals>
-                        <configuration>
-                            <uri>url_of_your_resource_manager</uri>
-                            <username>username_if_resource_manager_protected</username>
-                            <password>password_if_resource_manager_protected</password>
                         </configuration>
                     </execution>
                 </executions>

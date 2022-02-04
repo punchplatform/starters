@@ -179,13 +179,14 @@ And in another terminal inject some data :
 
 A zip archive containing your parsers and a metadata file can be build using maven : parsers-1.0-SNAPSHOT-artefact.zip
 
-You simply have to upload it to the Punch Artefact Server using this command :
+You simply have to upload it to the Punch Artefact Server using this command (do not forget to update the artifact service name):
 
 ```sh
 curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/parsers-1.0-SNAPSHOT-artefact.zip -F override=true
 ```
-Start your punchline on kubernetes 
+
+Start your punchline on kubernetes, de not forget to check the artifact service name in `punchline.yaml` file before executing this command : 
 
 ```sh
-kubectl apply -f $ROOT/punchline.yaml
+kubectl apply -f punchline.yaml
 ```

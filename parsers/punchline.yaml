@@ -4,8 +4,10 @@ metadata:
   name: my-parser
 spec:  
   initContainerImage: ghcr.io/punchplatform/resourcectl:8.0-dev
-  initContainerUrl: http://artifacts-service.kooker:4245
+  initContainerUrl: http://artifacts-service.punch-gateway-ns:4245
   image: ghcr.io/punchplatform/punchline-java:8.0-dev
+  dependencies:
+    - punch-parsers:com.mycompany:parsers:1.0.0
   dag:
   - id: input
     kind: source
