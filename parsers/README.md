@@ -160,8 +160,7 @@ docker run -it -v $PWD/src/:/opt/punch/resources/ \
 And in another terminal inject some data : 
 
 ```sh
-docker run --rm --network=host -v $PWD/simulator.json:/punch/simulator.json \
-  ghcr.io/punchplatform/simulator:8.0-dev -c simulator.json
+./simulate.sh
 ```
 
 ## Start your punchline in production mode on Kubernetes
