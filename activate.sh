@@ -1,11 +1,14 @@
-#
+#!/bin/bash -ue
+
 
 # The purpose of this is to include some useful tools in your path
 # juste source it:
-
 # source ./activate.sh
 
-export PATH=$(pwd)/tools:${PATH}
+[ "$BASH_SOURCE" != "" ] || { echo "This file is supposed to be sourced using: 'source $0' ." 1>&2 ; exit 1 ; }
+
+
+export PATH=$(dirname "${BASH_SOURCE}")/tools:${PATH}
 
 cat << EOF
 
