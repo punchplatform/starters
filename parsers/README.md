@@ -109,6 +109,18 @@ spec:
   - groks/pattern.grok
 ```
 
+## Test Your Parsers
+
+To test your parsers with your unit tests file simply run : 
+
+```sh
+mvn clean install
+```
+
+It will launch a punch tool called `puncher` in a docker container which is is charge of running your tests. 
+Be sure to have docker installed before running this command
+
+
 ## Using Your Parsers
 
 Once your parser is ready, you can simply refer to them in your punchline. 
