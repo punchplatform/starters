@@ -54,7 +54,7 @@ function red () { errecho $(FG RED "$*" ) ;}
 function yellow () { echo $(FG YELLOW "$*" ) ;}
 function check_prerequisites() {
 	
-  mandatoryAvailableCommands="java punchplatform-puncher.sh"
+  mandatoryAvailableCommands="docker"
   for command in ${mandatoryAvailableCommands}; do
     if which "$command" &>/dev/null; then
     	green "$command installed."
@@ -66,8 +66,7 @@ function check_prerequisites() {
 }
 
 function main() {
- 	check_prerequisites
-  	punchplatform-puncher.sh -T .
+  	docker run -v $PWD:/workdir/ ghcr.io/punchplatform/puncher:8.0-dev -T /workdir
   	exit $?
 }
 main $@
