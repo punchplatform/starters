@@ -14,7 +14,7 @@
         "color=%{color} city=%{city} uri=https://punchplatform.com"
       ],
       "fields": {
-        "color": {
+        "city": {
             "type": "list",
             "content": [
               "Paris",
@@ -23,7 +23,7 @@
               "London"
             ]
         },
-        "city": {
+        "color": {
             "type": "list",
             "content": [
               "red",
