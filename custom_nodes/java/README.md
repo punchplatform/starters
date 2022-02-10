@@ -42,7 +42,7 @@ Template hierarchy:
 │                               └── Config.java
 ```
 
-## Build 
+## Build
 
 ```sh
 mvn clean install
@@ -53,8 +53,8 @@ mvn clean install
 To test the punchline above in foreground mode simply run : 
 
 ```sh
-docker run -it \
-    -v $PWD/target/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar:/opt/punch/extlib/storm/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar \
+docker run --rm -it \
+    -v $PWD/target/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar \
     -v $PWD/input_example.yaml:/data/input_example.yaml \
     ghcr.io/punchplatform/punchline-java:8.0-dev \
     /data/input_example.yaml

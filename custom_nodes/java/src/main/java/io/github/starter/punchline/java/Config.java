@@ -1,4 +1,4 @@
-package com.github.starter.punchline.java;
+package io.github.starter.punchline.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

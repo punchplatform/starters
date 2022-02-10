@@ -163,7 +163,7 @@ spec:
 To test the punchline above in foreground mode simply run : 
 
 ```sh
-docker run -it -v $PWD/src/:/opt/punch/resources/ \
+docker run -it -v $PWD/src/:/usr/share/punch/resources/ \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
     --network=host \
     ghcr.io/punchplatform/punchline-java:8.0-dev /data/punchline.yaml
@@ -182,7 +182,7 @@ A zip archive containing your parsers and a metadata file can be build using mav
 You simply have to upload it to the Punch Artefact Server using this command (do not forget to update the artifact service name):
 
 ```sh
-curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/parsers-1.0-SNAPSHOT-artefact.zip -F override=true
+curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/parsers-1.0.0-artefact.zip -F override=true
 ```
 
 Start your punchline on kubernetes, de not forget to check the artifact service name in `punchline.yaml` file before executing this command : 
@@ -190,3 +190,26 @@ Start your punchline on kubernetes, de not forget to check the artifact service 
 ```sh
 kubectl apply -f punchline.yaml
 ```
+
+
+In one window, view your punchline log :
+
+```sh
+kubectl logs -f --tail -1 -l punchline-name=my-parser
+```
+
+In an other one, inject logs to your punchline:
+
+```sh
+# This will just create a target service name, to be able to send logs to our punchline
+kubectl apply -f my_service.yaml  
+
+# Then we start a simulator inside the kubernetes cluster :
+cat simulator.json | kubectl run -i simulator --image ghcr.io/punchplatform/simulator:8.0-dev -- -c - --host my-parser-input.default
+```
+
+Note: When you want to stop your simulator session, a '<ctrl>-c' will not be enough (it will just detach your console from the remote pod running in Kubernetes. You will have to remove your simulator using:
+```sh
+kubectl delete pod simulator
+```
+

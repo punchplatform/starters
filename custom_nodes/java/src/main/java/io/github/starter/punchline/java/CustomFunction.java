@@ -12,14 +12,14 @@
  *  under the License.
  */
 
-package com.github.starter.punchline.java;
+package io.github.starter.punchline.java;
 
 import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.punchplatform.api.exceptions.ConfigurationException;
-import com.github.punchplatform.api.punchline.java.Function;
-import com.github.punchplatform.api.punchline.java.Row;
+import io.github.punchplatform.api.exceptions.ConfigurationException;
+import io.github.punchplatform.api.punchline.java.Function;
+import io.github.punchplatform.api.punchline.java.Row;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

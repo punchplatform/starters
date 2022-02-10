@@ -1,0 +1,14 @@
+---
+# Service to receive logs at input point of ltr
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-parser-input
+spec:
+  ports:
+    - port: 9902
+      targetPort: 9902
+      name: input-port
+  selector:
+    punchline-name: my-parser

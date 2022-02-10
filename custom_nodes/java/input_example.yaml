@@ -8,11 +8,11 @@ spec:
   initContainerImage: ghcr.io/punchplatform/resourcectl:8.0-dev
   initContainerUrl: http://artifacts-service.kooker:4245
   dependencies:
-    - additional-punch-jar:com.github.punchplatform:punchline-java-starter-kit:1.0.0
+    - additional-punch-jar:io.github.punchplatform:punchline-java-starter-kit:1.0.0
   dag:
   - id: input
     kind: source
-    type: com.github.starter.punchline.java.CustomSource
+    type: io.github.starter.punchline.java.CustomSource
     settings:
       print: true
     out: 
