@@ -134,7 +134,9 @@ kind: StreamPunchline
 metadata:
   name: my-parser
 spec:  
-  image: ghcr.io/punchplatform/punchline-java:8.0-dev
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.0-dev
   dag:
   - id: input
     kind: source

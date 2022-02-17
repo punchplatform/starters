@@ -1,4 +1,4 @@
-#!/usr/bin/bash -ue
+#!/bin/bash -ue
 
 : ${IMG:="ghcr.io/punchplatform/simulator:8.0-dev"}
 : ${FILE:="simulator.json"}
