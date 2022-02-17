@@ -2,8 +2,10 @@ apiVersion: punchline.gitlab.thalesdigital.io/v2
 kind: StreamPunchline
 metadata:
   name: my-punchline
-spec:  
-  image: ghcr.io/punchplatform/punchline-starter:latest
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-starter:latest
   dag:
   - id: input
     kind: source

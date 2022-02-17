@@ -3,10 +3,13 @@ apiVersion: punchline.gitlab.thalesdigital.io/v2
 kind: StreamPunchline
 metadata:
   name: input-example
-spec:  
-  image: ghcr.io/punchplatform/punchline-java:8.0-dev
-  initContainerImage: ghcr.io/punchplatform/resourcectl:8.0-dev
-  initContainerUrl: http://artifacts-service.kooker:4245
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.0-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-service.kooker:4245
   dependencies:
     - additional-punch-jar:io.github.punchplatform:punchline-java-starter-kit:1.0.0
   dag:
