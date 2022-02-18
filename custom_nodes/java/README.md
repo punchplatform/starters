@@ -2,22 +2,42 @@
 
 For development phase, you should have:
 
-- Docker install locally or a Kubernetes cluster reachable
+- Java 11
+- Maven > 3.6
+- Docker install locally, or a Kubernetes cluster reachable
 - Clone this repository
 
 # Notes
 
 **Note 1**
 
-Dependencies that are specified in the provided `pom.xml` of this project is a constraints and should not be removed or have their version changed.
+Dependencies that are specified in the provided `pom.xml` of this project are mandatory.
+They cannot be removed or have their version changed.
 
 **Note 2**
 
-Java 11 is expected to build this repository
+Currently, the Punch API is in 8.0-SNAPSHOT version.
 
-**Note 3**
-
-Use maven to build the jar
+To use SNAPSHOT versions, you have to add Maven Central Snapshot Repository to your `~/.m2/settings.xml` :
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<profiles>
+	  <profile>
+	     <id>allow-snapshots</id>
+		<activation><activeByDefault>true</activeByDefault></activation>
+	     <repositories>
+	       <repository>
+		 <id>snapshots-repo</id>
+		 <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		 <releases><enabled>false</enabled></releases>
+		 <snapshots><enabled>true</enabled></snapshots>
+	       </repository>
+	     </repositories>
+	   </profile>
+	</profiles>
+</settings>
+```
 
 # Quick Start
 
@@ -48,7 +68,7 @@ Template hierarchy:
 mvn clean install
 ```
 
-## Start your punchline in development mode with docker
+## Start your punchline in development mode with Docker
 
 To test the punchline above in foreground mode simply run : 
 
@@ -60,17 +80,16 @@ docker run --rm -it \
     /data/input_example.yaml
 ```
 
-## Start your punchline in production mode on Kubernetes
+## Start your punchline in production mode with Kubernetes
 
-A zip archive containing your jars and his metadata file can be build using maven : punchline-java-starter-kit-1.0.0-artifact.zip
+Maven generates `./target/punchline-java-starter-kit-1.0.0-artifact.zip`.
 
-You simply have to upload it to the Punch Artefact Server using this command :
-
+You simply have to upload it to the Punch Artifacts Server using this command :
 ```sh
-curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-java-starter-kit-1.0.0-artefact.zip -F override=true
+curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-java-starter-kit-1.0.0-artifact.zip -F override=true
 ```
-Start your punchline on kubernetes 
 
+Start your punchline on Kubernetes :
 ```sh
 kubectl apply -f $ROOT/input_example.yaml
 ```

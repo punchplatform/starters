@@ -11,7 +11,7 @@
 	<properties>
 		<storm.version>2.3.0</storm.version>
 		<junit.version>4.12</junit.version>
-		<punch.version>8.0-dev</punch.version>
+		<punch.version>8.0-SNAPSHOT</punch.version>
 		<jackson.version>2.10.1</jackson.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -74,7 +74,7 @@
 					</goals>
 				</execution>
 				<execution>
-					<id>artefact-zip</id>
+					<id>artifact-zip</id>
 					<phase>package</phase>
 					<goals>
 						<goal>single</goal>
@@ -82,7 +82,7 @@
 					<configuration>
 						<appendAssemblyId>true</appendAssemblyId>
 						<descriptors>
-							<descriptor>assembly/assembly-artefact.xml</descriptor>
+							<descriptor>assembly/assembly-artifact.xml</descriptor>
 						</descriptors>
 					</configuration>
 				</execution>
