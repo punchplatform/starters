@@ -1,8 +1,9 @@
 # Punch Starters
 
-This repository is a software development kit for Punch developers.
-It provides easy to start with examples for various use cases, implemented using
-java, python and punchlang parsers.
+This repository is a software development kit for Punch developers. 
+
+It provides easy-to-start-with samples for various use cases, implemented using
+java, python and punchlang functions.
 
 ## Repository Organisation
 
