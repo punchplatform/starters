@@ -10,6 +10,13 @@ spec:
   - id: input
     kind: source
     type: generator_source
+    exit_conditions:
+     success:
+        acks_greater_or_equal_to: 3
+        require_no_remaining_row_to_inject: true
+        require_no_pending_row: true
+     failure:
+        fails_greater_or_equal_to: 1
     settings:
       expectation: none
       acked:
@@ -27,5 +34,5 @@ spec:
     type: punchlet_function
     kind: function
     settings:
-      punchlet: 
+      punchlets: 
       - /resources/example.punch
