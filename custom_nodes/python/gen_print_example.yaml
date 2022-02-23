@@ -1,0 +1,37 @@
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: BatchPunchline
+metadata:
+  name: python-example
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-python:8.0-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+  dependencies:
+    - additional-pyspark-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0
+  dag:
+    - type: custom_node.gendata
+      component: input
+      settings:
+        messages:
+          - [ 0.8 , 1.8 ]
+          - [ 0.0 , 1.0 ]
+          - [ 3.5 ,  4.5 ]
+          - [ 7.2 ,  8.2 ]
+          - [ 0.6 , 1.6 ]
+          - [ 2.5 ,  3.5 ]
+          - [ 7.9 ,  8.9 ]
+          - [ 0.0 , 1.0 ]
+          - [ 2.9 ,  3.9 ]
+          - [ 8.0 ,  2.9 ]
+      publish:
+      - stream: data
+
+    - type: show_sink
+      component: show
+      subscribe:
+      - stream: data
+        component: input

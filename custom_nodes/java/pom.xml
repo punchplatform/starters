@@ -6,10 +6,9 @@
 	<artifactId>punchline-java-starter-kit</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
-	<name>Punch User Node</name>
+	<name>Punch Java User Node</name>
 	<url>http://maven.apache.org</url>
 	<properties>
-		<storm.version>2.3.0</storm.version>
 		<junit.version>4.12</junit.version>
 		<punch.version>8.0-SNAPSHOT</punch.version>
 		<jackson.version>2.10.1</jackson.version>
