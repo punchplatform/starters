@@ -8,7 +8,7 @@ spec:
       image: ghcr.io/punchplatform/punchline-java:8.0-dev
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.kooker:4245
+      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
   dependencies:
     - punch-parsers:com.mycompany:parsers:1.0.0
   dag:
