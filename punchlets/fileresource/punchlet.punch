@@ -1,0 +1,4 @@
+{   
+    [logs][color] = getResourceTuple("color_codes")
+        .get([logs][log]);
+}

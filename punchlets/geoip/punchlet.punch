@@ -1,0 +1,5 @@
+{   
+    if (!geoip().on([logs][log]).into([logs][doc])) {
+        [logs][doc] = "not found!";
+    }
+}

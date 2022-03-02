@@ -28,10 +28,16 @@ spec:
     type: punchlet_function
     kind: function
     settings:
-      json_resources:
-      - com/mycompany/sample/resources/color_codes.json
-      punchlet_grok_pattern_dirs:
-      - com/mycompany/sample/groks/
+      resources:
+      - name: color_codes
+        type: json
+        url: com/mycompany/sample/resources/color_codes.json
+      - name: standard_groks
+        type: grok
+        url: /usr/share/punch/resources/patterns
+      - name: custom_groks
+        type: grok
+        url: com/mycompany/sample/groks
       punchlets:
       - com/mycompany/sample/parser.punch
     out: 

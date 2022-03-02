@@ -4,6 +4,16 @@ kind: PunchletGroup
 metadata:
   name: "sample group of related punchlets"
 spec:
+  resources:
+    - name: custom_groks
+      type: grok
+      url: groks/pattern.grok
+    - name: standard_groks
+      type: grok
+      url: /usr/share/punch/resources/patterns
+    - name: color_codes
+      type: json
+      url: resources/color_codes.json
   punchlets:
   - punchlet: parser.punch
     labels:
@@ -12,8 +22,6 @@ spec:
        category: sample
        author: "punch team"
        vendor: thales
-    groks:
-    - groks/pattern.grok
     inputStream:
     - name: logs
       fields:
@@ -26,11 +34,3 @@ spec:
        category: sample
        author: "punch team"
        vendor: thales
-    resources:
-    - resources/color_codes.json
-    inputStream:
-    - name: logs
-      fields:
-      - name: data
-        type: string
-        
