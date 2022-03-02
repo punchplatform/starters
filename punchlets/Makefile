@@ -1,4 +1,3 @@
-all: arkoon geoip grok
 FORCE: ;
 
 fileresource: FORCE
@@ -6,13 +5,6 @@ fileresource: FORCE
 		-v ${PWD}/fileresource/punchlet.punch:/punchlet.punch \
 		-v ${PWD}/fileresource/punchline.yaml:/punchline.yaml \
 		-v ${PWD}/fileresource/color_codes.json:/color_codes.json \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
-		/punchline.yaml
-
-s3resource: FORCE
-	docker run \
-		-v ${PWD}/s3resource/punchlet.punch:/punchlet.punch \
-		-v ${PWD}/s3resource/punchline.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
 
@@ -29,6 +21,7 @@ geoip: FORCE
  		-v /Users/dimi/.m2/repository/com/github/punchplatform/punch-punchlang-resources/8.0-dev/punch-punchlang-resources-8.0-dev.zip:/opt/punch/repository/com/github/punchplatform/punch-punchlang-resources/8.0-dev/punch-punchlang-resources-8.0-dev.zip \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
+
 stdgroks: FORCE
 	docker run \
 		-v ${PWD}/stdgroks/punchlet.punch:/punchlet.punch \
@@ -50,17 +43,3 @@ artifact: FORCE
 		-v ${HOME}/\.m2/repository/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip:/usr/share/punch/artifacts/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
-
-merde: FORCE
-	docker run \
-		-v ${PWD}/punchline.yaml:/punchline.yaml \
-		-v ${HOME}/\.m2/repository/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip:/usr/share/punch/artifacts/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
-		/punchline.yaml
-
-it: FORCE
-	docker run -it --entrypoint /bin/bash \
-		-v ${PWD}/artifact/punchline.yaml:/punchline.yaml \
-		-v ${HOME}/\.m2/repository/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip:/usr/share/punch/artifacts/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip \
-		ghcr.io/punchplatform/punchline-java:8.0-dev
-
