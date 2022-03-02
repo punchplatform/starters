@@ -38,5 +38,4 @@ To include these in yoru path type in:
 
 ```sh
 . activate.sh
-To include these tools in your PATH:
 ```
