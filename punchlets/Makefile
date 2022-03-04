@@ -1,3 +1,4 @@
+all: fileresource arkoon geoip stdgroks customgroks generator
 FORCE: ;
 
 fileresource: FORCE
@@ -41,5 +42,11 @@ artifact: FORCE
 	docker run \
 		-v ${PWD}/artifact/punchline.yaml:/punchline.yaml \
 		-v ${HOME}/\.m2/repository/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip:/usr/share/punch/artifacts/io/github/punchplatform/punch-sample-parser/8.0.0/punch-sample-parser-8.0.0-artifact.zip \
+		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		/punchline.yaml
+
+generator: FORCE
+	docker run \
+		-v ${PWD}/generator/punchline.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
