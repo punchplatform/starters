@@ -1,5 +1,0 @@
-{
-	findByKey("taxonomy", "code")
-		.on([logs][log])
-		.into([logs][taxonomy]);
-}

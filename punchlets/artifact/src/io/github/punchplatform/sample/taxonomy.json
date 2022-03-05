@@ -1,4 +1,0 @@
-[
-	{ "code": "GET_100", "xdas_ae": "XDAS_AE_QUERY_DATA_ITEM_CONTENTS", "xdas_out": "XDAS_OUT_UNKNOWN", "nf_alarm": "110018", "nf_sev": "2" },
-	{ "code": "PUT_100", "xdas_ae": "XDAS_AE_MODIFY_DATA_ITEM_CONTENTS", "xdas_out": "XDAS_OUT_UNKNOWN", "nf_alarm": "110018", "nf_sev": "2" },
-]

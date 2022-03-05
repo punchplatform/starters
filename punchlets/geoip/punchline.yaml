@@ -3,11 +3,6 @@ kind: StreamPunchline
 metadata:
   name: mypunchline
 spec:
-  containers:
-    dependencies:
-      - parser:org.thales.punch:cisco:latest
-    applicationContainer:
-      image: ghcr.io/punchplatform/punchline-starter:latest
   dag:
   - id: input
     kind: source
@@ -34,6 +29,13 @@ spec:
     type: punchlet_function
     kind: function
     settings:
+      resources:
+        - type: file
+          format: geoipv4
+          url: /belgium4.csv.gz
+        - type: file
+          format: geoipv6
+          url: /belgium6.csv.gz
       punchlets:
       - /punchlet.punch
     out:

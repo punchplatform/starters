@@ -3,11 +3,6 @@ kind: StreamPunchline
 metadata:
   name: mypunchline
 spec:
-  containers:
-    dependencies:
-      - parser:org.thales.punch:cisco:latest
-    applicationContainer:
-      image: ghcr.io/punchplatform/punchline-starter:latest
   dag:
   - id: input
     kind: source
@@ -35,8 +30,7 @@ spec:
     kind: function
     settings:
       resources:
-        - name: standard_groks 
-          url: /usr/share/punch/resources/patterns
+        - url: /usr/share/punch/resources/patterns
           type: file
           format: grok
       punchlets:

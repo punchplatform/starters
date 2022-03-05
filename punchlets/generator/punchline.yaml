@@ -18,14 +18,13 @@ spec:
       message_count: 10
       interval: 0
       messages:
-        - logs:
-            log: "log %{message_num}"
-            _ppf_id: "uuid%{message_num}"
-            _ppf_timestamp: 18722782
-            _ppf_local_host: 127.0.0.1
-            _ppf_local_port: 9888
-            _ppf_remote_host: 5.145.111.23
-            _ppf_remote_port: 37632
+        - log: "log %{message_num}"
+          _ppf_id: "uuid%{message_num}"
+          _ppf_timestamp: 18722782
+          _ppf_local_host: 127.0.0.1
+          _ppf_local_port: 9888
+          _ppf_remote_host: 5.145.111.23
+          _ppf_remote_port: 37632
     out:
     - id: print
       table: logs
@@ -46,7 +45,7 @@ spec:
          type: int
   - id: print
     type: punchlet_function
-    kind: function
+    kind: sink
     settings:
       punchlet_code: "{print(root);}"
 
