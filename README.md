@@ -9,7 +9,7 @@ punchplatform.
 
 ## Punchlets
 
-Checkout the [./punchlets] guide. Writing a punchlet is easy, testing it as easy.
+Checkout the [punchlets] guide. Writing a punchlet is easy, testing it as easy.
 
 ## Log Parsers
 
@@ -20,7 +20,7 @@ can be easily deployed on a production punch.
 The parser SDK provides you with a maven toolkit to take care of all these packaging issues.
 It also provides you with a unit test framework. 
 
-Checkout out the [./parsers] guide.
+Checkout out the [parsers] guide.
 
 ## Docker Images
 
