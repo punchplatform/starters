@@ -13,23 +13,40 @@ spec:
   dependencies:
     - additional-punch-jar:io.github.punchplatform:punchline-java-starter-kit:1.0.0
   dag:
-  - id: input
-    kind: source
-    type: io.github.starter.punchline.java.CustomSource
-    settings:
-      print: true
-    out: 
-    - id: parser
-      table: logs
-      columns:
-      - name: row1
-        type: string
-      - name: row2
-        type: string
-      - name: row3
-        type: string
-  - id: parser
-    type: punchlet_function
-    kind: function
-    settings:
-      punchlet_code: "{print(root);}"
+    - id: input
+      kind: source
+      type: io.github.starter.punchline.java.CustomSource
+      settings:
+        print: true
+      out:
+        - id: middle
+          table: logs
+          columns:
+            - name: row1
+              type: string
+            - name: row2
+              type: string
+            - name: row3
+              type: string
+
+    - id: middle
+      kind: function
+      type: io.github.starter.punchline.java.CustomFunction
+      settings:
+        print: true
+      out:
+        - id: output
+          table: logs
+          columns:
+            - name: row1
+              type: string
+            - name: row2
+              type: string
+            - name: row3
+              type: string
+
+    - id: output
+      type: io.github.starter.punchline.java.CustomSink
+      kind: sink
+      settings:
+        punchlet_code: "{print(root);}"

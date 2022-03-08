@@ -1,4 +1,4 @@
-package org.thales.punch.udf.starter.kit;
+package io.github.starter.punchline.spark.udf;
 
 import org.apache.spark.sql.api.java.UDF1;
 
@@ -19,23 +19,21 @@ import org.apache.spark.sql.api.java.UDF1;
  * <br>
  * 	<b>Example in a query Statement:</b>
  * <br>
- * 		{@literal SELECT your_registered_function_name('[1, 2, 3, 4.0]')}
+ *        {@literal SELECT your_registered_function_name('[1, 2, 3, 4.0]')}
  * </pre>
- * @author jonathan yue chun
  *
+ * @author jonathan yue chun
  */
-public class StrToArrayString implements UDF1<String,String[]> {
+public class StrToArrayString implements UDF1<String, String[]> {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	public String[] call(String tuple) throws Exception {
-		String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
-		String[] result = new String[tupleValuesAsList.length];
-		for (int i = 0; i < tupleValuesAsList.length; i++) {
-			result[i] = tupleValuesAsList[i].replace(" ", "");
-		}
-		return result;
-	}
-	
+    @Override
+    public String[] call(String tuple) {
+        String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
+        String[] result = new String[tupleValuesAsList.length];
+        for (int i = 0; i < tupleValuesAsList.length; i++) {
+            result[i] = tupleValuesAsList[i].replace(" ", "");
+        }
+        return result;
+    }
 }

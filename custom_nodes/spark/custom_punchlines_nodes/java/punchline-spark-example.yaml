@@ -1,0 +1,47 @@
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v1
+kind: Sparkline
+metadata:
+  name: input-example-spark
+spec:
+  image: ghcr.io/punchplatform/sparkline:7.0.1-SNAPSHOT
+  initContainerImage: ghcr.io/punchplatform/operator-init:1.0.2-SNAPSHOT
+  initContainerUrl: http://artifacts-service.default:4245
+  imagePullPolicy: IfNotPresent
+  serviceAccount: admin-user
+  garbageCollect: false
+  implementation: java
+  initContainerDebug: true
+  dependencies:
+    - additional-spark-jar:io.github.starters:punchline-spark-starter-kit:1.0.0
+  settings:
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+    spark.additional.jar: punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar
+  punchline:
+    dag:
+      - id: input
+        type: io.github.starter.punchline.spark.CustomSource
+        kind: source
+        settings:
+          title: name
+          input_data:
+            - alice
+            - bob
+            - john
+        out:
+          - id: select
+
+      - id: select
+        type: io.github.starter.punchline.spark.CustomFunction
+        kind: function
+        settings:
+          select:
+            - name
+        out:
+          - id: show
+
+      - id: show
+        type: io.github.starter.punchline.spark.CustomSink
+        kind: function
+        settings:
+          truncate: 3

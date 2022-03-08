@@ -11,8 +11,8 @@ For development phase, you should have:
 
 **Note 1**
 
-Dependencies that are specified in the provided `pom.xml` of this project are mandatory.
-They cannot be removed or have their version changed.
+Dependencies that are specified in the provided `pom.xml` of this project are mandatory. They cannot be removed or have
+their version changed.
 
 **Note 2**
 
@@ -21,21 +21,28 @@ Currently, the Punch API is in 8.0-SNAPSHOT version.
 To use SNAPSHOT versions, you have to add Maven Central Snapshot Repository to your `~/.m2/settings.xml` :
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<profiles>
-	  <profile>
-	     <id>allow-snapshots</id>
-		<activation><activeByDefault>true</activeByDefault></activation>
-	     <repositories>
-	       <repository>
-		 <id>snapshots-repo</id>
-		 <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		 <releases><enabled>false</enabled></releases>
-		 <snapshots><enabled>true</enabled></snapshots>
-	       </repository>
-	     </repositories>
-	   </profile>
-	</profiles>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd"
+          xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <profiles>
+        <profile>
+            <id>allow-snapshots</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>snapshots-repo</id>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
 </settings>
 ```
 
@@ -70,7 +77,7 @@ mvn clean install
 
 ## Start your punchline in development mode with Docker
 
-To test the punchline above in foreground mode simply run : 
+To test the punchline above in foreground mode simply run :
 
 ```sh
 docker run --rm -it \
