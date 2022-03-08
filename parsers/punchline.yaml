@@ -30,13 +30,16 @@ spec:
     settings:
       resources:
       - name: color_codes
-        type: json
+        format: json
+        type: file
         url: com/mycompany/sample/resources/color_codes.json
       - name: standard_groks
-        type: grok
+        format: grok
+        type: file
         url: /usr/share/punch/resources/patterns
       - name: custom_groks
-        type: grok
+        type: file
+        format: grok
         url: com/mycompany/sample/groks
       punchlets:
       - com/mycompany/sample/parser.punch

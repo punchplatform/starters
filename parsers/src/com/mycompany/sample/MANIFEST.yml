@@ -6,13 +6,16 @@ metadata:
 spec:
   resources:
     - name: custom_groks
-      type: grok
+      type: file
+      format: grok
       url: groks/pattern.grok
     - name: standard_groks
-      type: grok
+      type: file
+      format: grok
       url: /usr/share/punch/resources/patterns
     - name: color_codes
-      type: json
+      type: file
+      format: json
       url: resources/color_codes.json
   punchlets:
   - punchlet: parser.punch
