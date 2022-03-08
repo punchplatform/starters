@@ -4,8 +4,8 @@
 from pyspark.sql.session import SparkSession
 
 
-class ComplexAlgorithmnPreExecution(object):
-    """You can initialize sparksession object with additional values
+class ComplexAlgorithmPreExecution(object):
+    """You can initialize spark session object with additional values
     """
 
     __spark_session: SparkSession

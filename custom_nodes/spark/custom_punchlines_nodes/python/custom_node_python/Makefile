@@ -33,7 +33,7 @@ clean-test:
 clean: clean-pyc clean-test
 	@$(info ************  CLEAN  ************)
 
-flush: clean clean-pyc clean-test clean-package
+flush: clean clean-pyc clean-test
 	$(info ************  CLEANING PACKAGED DEPENDENCIES  ************)
 	@rm -rf .venv
 

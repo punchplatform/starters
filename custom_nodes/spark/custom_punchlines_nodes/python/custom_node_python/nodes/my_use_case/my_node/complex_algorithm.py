@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 
+from typing import List
+
 from punchline_python.core.holders.input_holder import InputHolder
 from punchline_python.core.holders.output_holder import OutputHolder
 from punchline_python.core.node import AbstractNode
-from typing import List
 
 
 class ComplexAlgorithm(AbstractNode):
@@ -16,7 +17,7 @@ class ComplexAlgorithm(AbstractNode):
     @AbstractNode.declare_dataframe_output()
     # We make use of the decorator design pattern to declare our node parameters...
     @AbstractNode.declare_param(name="param1", required=False, default="TEST")
-    # We expect that this node subscribe to a stream and is going to output a stream of data
+    # We expect that this node subscribes to a stream and is going to output a stream of data
     @AbstractNode.declare_map_dataframe_input()
     @AbstractNode.declare_map_dataframe_output()
     def __init__(self) -> None:

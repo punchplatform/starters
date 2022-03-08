@@ -4,7 +4,7 @@
 from pyspark.sql.session import SparkSession
 
 
-class ComplexAlgorithmnPostExecution(object):
+class ComplexAlgorithmPostExecution(object):
     """You can run some code after your punchline execution has finished
     """
 
