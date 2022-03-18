@@ -24,7 +24,7 @@ spec:
        performance: 3000
        category: sample
        author: "punch team"
-       vendor: thales
+       vendor: punchplatform
     inputStream:
     - name: logs
       fields:
@@ -36,4 +36,4 @@ spec:
        performance: 2000
        category: sample
        author: "punch team"
-       vendor: thales
+       vendor: punchplatform

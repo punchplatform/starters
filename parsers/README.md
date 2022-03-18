@@ -100,7 +100,7 @@ metadata:
     category: sample
     author: "punch team"
     performance: 3000
-    vendor: thales
+    vendor: punchplatform
 spec:
   punchlets:
     - parser.punch

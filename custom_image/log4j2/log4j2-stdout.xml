@@ -25,34 +25,12 @@
           The debug level lets you understand the important actions.
           The trace level shows it all.
          -->
-        <logger name="org.thales.punch" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.kafka.AbstractKafkaNode" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.kafka.KafkaInput" level="info"/>
-        <logger name="org.thales.punch.libraries.storm.spout.BatchKafkaInput" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.kafka" level="info"/>
-        <logger name="org.thales.punch.libraries.kafka" level="info"/>
-        <logger name="org.thales.punch.libraries.kafka" level="info"/>
-        <!-- archiving -->
-        <logger name="org.thales.punch.libraries.storm.bolt" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.file.BatchStrategy" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.file.AtLeastOnceStrategy" level="info"/>
-        <logger name="org.thales.punch.nodes.sab.file.OneByOneStrategy" level="info"/>
-        <!-- others -->
-        <logger name="org.thales.punch.platform.impl" level="warn"/>
-        <logger name="org.thales.punch.platform.api" level="warn"/>
-        <logger name="org.thales.punch.plan" level="warn"/>
-        <logger name="org.thales.punch.libraries.metrics.impl" level="warn"/>
-        <logger name="org.thales.punch.libraries.resources.manager" level="warn"/>
-        <logger name="org.thales.punch.netty" level="warn"/>
-        <logger name="org.thales.punch.cli.punchplanctl" level="warn"/>
-        <logger name="org.hibernate.validator" level="warn"/>
+        <logger name="com.github.punchplatform" level="info"/>
 
         <!--
           these make it easy to track the log traversal. Use the trace level to see each
           message going through
 
-          <logger name="org.thales.punch.libraries.storm.spout" level="trace"/>
-          <logger name="org.thales.punch.libraries.storm.bolt" level="trace"/>
        -->
 
         <!-- just in case you need it, not likely -->
@@ -62,8 +40,6 @@
         <logger name="org.apache.curator" level="error"/>
         <logger name="org.jtwig" level="error"/>
         <logger name="org.apache.spark" level="error"/>
-        <logger name="org.thales.punch.libraries.plan.metrics.PlanReporter" level="error"/>
-        <logger name="org.thales.punch.libraries.forkexec.impl.SubProcess" level="error"/>
         <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>

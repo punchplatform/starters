@@ -35,9 +35,9 @@ Template hierarchy:
 ├── src
 │   └── main
 │       └── java
-│           └── org
-│               └── thales
-│                   └── punch
+│           └── com
+│               └── github
+│                   └── punchplatform
 │                       └── spark
 │                           └── node
 │                               └── starter

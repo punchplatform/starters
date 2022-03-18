@@ -1,5 +1,5 @@
 type: additional-pyspark-pex
-group: org.thales.punch
+group: com.github.punchplatform
 logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
 version: ${project.version}
 artifact: ${project.artifactId}
@@ -7,5 +7,5 @@ displayName: ${project.artifactId}
 createdAt: ${timestamp}
 description: This package contains an example of a java spark custom node
 provider: # (optional)
-  name: Thales Punch
+  name: Punch Team
   email: contact@punchplatform.com  

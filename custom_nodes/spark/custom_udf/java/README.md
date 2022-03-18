@@ -27,63 +27,58 @@ Let's run the configuration below:
 
 ```yaml
 ---
-apiVersion: punchline.gitlab.thalesdigital.io/v1
-kind: Sparkline
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: SparkPunchline
 metadata:
   name: udf-before-java
 spec:
-  image: ghcr.io/punchplatform/sparkline:7.0.1-SNAPSHOT
-  initContainerImage: ghcr.io/punchplatform/resourcectl:7.0.1-SNAPSHOT
-  initContainerUrl: http://artifacts-service.punch-gateway-ns:4245
-  imagePullPolicy: IfNotPresent
-  serviceAccount: admin-user
-  garbageCollect: false
-  implementation: java
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
   dependencies:
-    - additional-spark-jar:org.thales.punch:punchplatform-udf-java-starter-kit:1.0.0
-  settings:
+    - additional-spark-jar:com.github.punchplatform:punchplatform-udf-java-starter-kit:1.0.0
+  engineSettings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
     spark.additional.jar: punchplatform-udf-java-starter-kit-1.0-jar-with-dependencies.jar
-  punchline:
-    dag:
-      - type: dataset_generator
-        component: dataset_generator
-        settings:
-          input_data:
-            - field1: "[1, 2, 3, 4]"
-              age: 2
-            - field1: "[15, 112, 3, 0]"
-              age: 22
-            - field1: "[15, 112, 3, 0]"
-              age: 99
-        publish:
-          - stream: data
-      - type: sql
-        component: processor
-        settings:
-          register_udf:
-            - class_name: org.thales.punch.udf.starter.kit.StrToArrayString
-              function_name: punch_convertor
-              schema_ddl: ARRAY<STRING>
-            - class_name: org.thales.punch.udf.starter.kit.SumAggregate
-              function_name: avg_age
-          statement_list:
-            - output_table_name: processed_udf
-              statement: SELECT punch_convertor(field1) from dummy_data
-            - output_table_name: processed_udaf
-              statement: SELECT avg_age(age) AS average_name from dummy_data
-        subscribe:
-          - component: dataset_generator
-            stream: data
-        publish:
-          - stream: data
-      - type: show
-        component: show
-        settings: { }
-        subscribe:
-          - component: processor
-            stream: data
-        publish: [ ]
+  dag:
+    - id: dataset_generator
+    - type: generator
+      kind: source
+      settings:
+        messages:
+          - field1: "[1, 2, 3, 4]"
+            age: 2
+          - field1: "[15, 112, 3, 0]"
+            age: 22
+          - field1: "[15, 112, 3, 0]"
+            age: 99
+      out:
+        - id: processor
+    - type: sql
+      kind: function
+      component: processor
+      settings:
+        udfs:
+          - class_name: com.github.punchplatform.udf.starter.kit.StrToArrayString
+            function_name: punch_convertor
+            schema_ddl: ARRAY<STRING>
+          - class_name: com.github.punchplatform.udf.starter.kit.SumAggregate
+            function_name: avg_age
+        statements:
+          - output_table_name: processed_udf
+            statement: SELECT punch_convertor(field1) from dataset_generator_default
+          - output_table_name: processed_udaf
+            statement: SELECT avg_age(age) AS average_name from dataset_generator_default
+      out:
+        - id: show
+    - type: show
+      kind: sink
+      id: show
 ```
 
 # Quick Start
