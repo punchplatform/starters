@@ -133,31 +133,54 @@ apiVersion: punchline.gitlab.thalesdigital.io/v2
 kind: StreamPunchline
 metadata:
   name: my-parser
-spec:
+spec:  
   containers:
     applicationContainer:
       image: ghcr.io/punchplatform/punchline-java:8.0-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - punch-parsers:com.mycompany:parsers:1.0.0
   dag:
-    - id: input
-      kind: source
-      type: syslog_source
-      settings:
-        host: 0.0.0.0
-        port: 9902
-      out:
-        - id: parser
-          table: logs
-          columns:
-            - name: log
-              type: string
+  - id: input
+    kind: source
+    type: syslog_source
+    settings:
+      host: 0.0.0.0
+      port: 9902
+    out: 
     - id: parser
-      type: punchlet_function
-      kind: function
-      settings:
-        json_resources:
-          - com/mycompany/sample/resources/color_codes.json
-        punchlets:
-          - com/mycompany/sample/parser.punch
+      table: logs
+      columns:
+      - name: data
+        type: string
+  - id: parser
+    type: punchlet_function
+    kind: function
+    settings:
+      resources:
+      - name: color_codes
+        format: json
+        type: file
+        url: com/mycompany/sample/resources/color_codes.json
+      - name: custom_groks
+        type: file
+        format: grok
+        url: com/mycompany/sample/groks
+      punchlets:
+      - com/mycompany/sample/parser.punch
+    out: 
+    - id: print
+      table: logs
+      columns:
+      - name: log
+        type: string
+  - id: print
+    type: punchlet_function
+    kind: function
+    settings:
+      punchlet_code: "{print(root);}"
 ```
 
 ## Run in foreground with docker
@@ -165,10 +188,7 @@ spec:
 To test the punchline above in foreground mode simply run :
 
 ```sh
-docker run -it -v $PWD/src/:/usr/share/punch/resources/ \
-    -v $PWD/punchline.yaml:/data/punchline.yaml \
-    --network=host \
-    ghcr.io/punchplatform/punchline-java:8.0-dev /data/punchline.yaml
+docker run  -it -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/com/mycompany/parsers/1.0.0/parsers-1.0.0.    zip     -v $PWD/punchline.yaml:/data/punchline.yaml     --network=host     ghcr.io/punchplatform/punchline-java:8.0-dev /data/punchline.yaml
 ```
 
 And in another terminal inject some data :

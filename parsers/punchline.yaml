@@ -33,10 +33,6 @@ spec:
         format: json
         type: file
         url: com/mycompany/sample/resources/color_codes.json
-      - name: standard_groks
-        format: grok
-        type: file
-        url: /usr/share/punch/resources/patterns
       - name: custom_groks
         type: file
         format: grok
