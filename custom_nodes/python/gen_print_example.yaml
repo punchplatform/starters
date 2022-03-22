@@ -9,7 +9,7 @@ spec:
       image: ghcr.io/punchplatform/punchline-python:8.0-dev
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-pyspark-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0
   dag:

@@ -63,30 +63,28 @@ For your project, don't forget to rename `udf_example` to something more meaning
 mvn clean install
 ```
 
-## Start your punchline in development mode
+## Start your punchline in development mode with Docker
 
-Import your node : 
+
+To test the punchline above in foreground mode simply run :
 
 ```sh
-ROOT=$(pwd)  # directory of this README.md
-cp $ROOT/target/punchplatform-udf-python-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/pyspark/
+docker run --rm --entrypoint sparkctl-client \
+    -v $PWD/example_pyspark_udf.yaml:/usr/share/punch/example_pyspark_udf.yaml \
+    -v $PWD/target/punchplatform-udf-python-starter-kit-1.0.0.pex:/usr/share/punch/extlib/punchplatform-udf-python-starter-kit-1.0.0.pex \
+    ghcr.io/punchplatform/punchline-spark:8.0-dev --job /usr/share/punch/example_pyspark_udf.yaml
 ```
 
-Start your punchline in foreground mode :  
+## Start your punchline in production mode with Kubernetes
 
+Maven generates `./target/punchplatform-udf-python-starter-kit-1.0.0-artefact.zip`.
+
+You simply have to upload it to the Punch Artifacts Server using this command :
 ```sh
-punchlinectl start -p $ROOT/example_pyspark_udf.yaml
+curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchplatform-udf-python-starter-kit-1.0.0-artefact.zip -F override=true
 ```
 
-## Start your punchline in production mode
-
-Import your artefact : 
-
+Start your punchline on Kubernetes :
 ```sh
-resourcectl --url $ARTEFACT_URL upload --files target/punchplatform-udf-python-starter-kit-1.0.0-artefact.zip
-```
-Start your punchline on kubernetes 
-
-```sh
-kubectl apply -f $ROOT/example_pyspark_udf.yaml
+kubectl apply -f example_pyspark_udf.yaml
 ```

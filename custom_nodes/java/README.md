@@ -93,10 +93,10 @@ Maven generates `./target/punchline-java-starter-kit-1.0.0-artifact.zip`.
 
 You simply have to upload it to the Punch Artifacts Server using this command :
 ```sh
-curl -X POST "http://artifacts-service.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-java-starter-kit-1.0.0-artifact.zip -F override=true
+curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-java-starter-kit-1.0.0-artifact.zip -F override=true
 ```
 
 Start your punchline on Kubernetes :
 ```sh
-kubectl apply -f $ROOT/input_example.yaml
+kubectl apply -f input_example.yaml
 ```

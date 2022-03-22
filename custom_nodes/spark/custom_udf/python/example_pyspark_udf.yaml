@@ -11,12 +11,11 @@ spec:
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-pyspark-pex:com.github.punchplatform:punchplatform-udf-python-starter-kit:1.0.0
   engineSettings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
-    spark.additional.pex: punchplatform-udf-python-starter-kit-1.0.0.pex
   dag:
     - type: dataset_generator
       component: input

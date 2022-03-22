@@ -1,8 +1,5 @@
 # Prerequisite
 
-- A quick look of our API documentation: `https://doc.punchplatform.com/doc/punchplatform-pyspark/html/index.html`
-- Brainstorm your use-case with our existing
-  nodes: `https://doc.punchplatform.com/Reference_Guide/Data_Analytics/Nodes/Elastic_Input.html`
 - A Kubernetes cluster reachable
 - Punch Services (Operator & Artefact Server) deployed
 - Clone this repository
@@ -48,6 +45,8 @@ Template hierarchy:
 │       ├── __init__.py
 │       └── my_node
 │           ├── complex_algorithm.py
+│           ├── complex_algorithm_pre_execution.py
+│           ├── complex_algorithm_post_execution.py
 │           └── __init__.py
 ├── README.md
 └── setup.py
@@ -59,30 +58,27 @@ Template hierarchy:
 mvn clean install
 ```
 
-## Start your punchline in development mode
+## Start your punchline in development mode with Docker
 
-Import your node :
+To test the punchline above in foreground mode simply run :
 
 ```sh
-ROOT=$(pwd)  # directory of this README.md
-cp $ROOT/target/punch-spark-python-node-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/pyspark/
+docker run --rm --entrypoint sparkctl-client \
+    -v $PWD/full_job.yaml:/usr/share/punch/full_job.yml \
+    -v $PWD/target/punch-spark-python-node-starter-kit-1.0.0.pex:/usr/share/punch/extlib/punch-spark-python-node-starter-kit-1.0.0.pex \
+    ghcr.io/punchplatform/punchline-spark:8.0-dev --job /usr/share/punch/full_job.yml
 ```
 
-Start your punchline in foreground mode :
+## Start your punchline in production mode with Kubernetes
 
+Maven generates `./target/punchline-java-starter-kit-1.0.0-artifact.zip`.
+
+You simply have to upload it to the Punch Artifacts Server using this command :
 ```sh
-punchlinectl start -p $ROOT/full_job.yaml
+curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-java-starter-kit-1.0.0-artifact.zip -F override=true
 ```
 
-## Start your punchline in production mode
-
-Import your artefact :
-
+Start your punchline on Kubernetes :
 ```sh
-resourcectl --url $ARTEFACT_URL upload --files target/punch-spark-python-node-starter-kit-1.0.0-artefact.zip
-```
-Start your punchline on kubernetes
-
-```sh
-kubectl apply -f $ROOT/full_job.yaml
+kubectl apply -f full_job.yaml
 ```

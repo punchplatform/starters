@@ -11,7 +11,7 @@ spec:
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.default:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
       debug: true
   dependencies:
     - additional-spark-jar:io.github.starters:punchline-spark-starter-kit:1.0.0

@@ -39,7 +39,7 @@ spec:
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-spark-jar:com.github.punchplatform:punchplatform-udf-java-starter-kit:1.0.0
   engineSettings:
@@ -89,32 +89,30 @@ spec:
 mvn clean install
 ```
 
-## Start your punchline in development mode
+## Start your punchline in development mode with Docker
 
-Import your node :
+
+To test the punchline above in foreground mode simply run :
 
 ```sh
-ROOT=$(pwd)  # directory of this README.md
-cp $ROOT/target/punchplatform-udf-java-starter-kit-1.0.0.pex $PUNCHPLATFORM_INSTALL_DIR/extlib/spark/
+docker run --rm --entrypoint sparkctl-client \
+    -v $PWD/after_udf_helloworld.yaml:/usr/share/punch/after_udf_helloworld.yaml \
+    -v $PWD/target/punchline-udf-spark-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-udf-spark-starter-kit-1.0.0-jar-with-dependencies.jar \
+    ghcr.io/punchplatform/punchline-spark:8.0-dev --job /usr/share/punch/after_udf_helloworld.yaml
 ```
 
-Start your punchline in foreground mode :
+## Start your punchline in production mode with Kubernetes
 
+Maven generates `./target/punchline-udf-spark-starter-kit-1.0.0-artefact.zip`.
+
+You simply have to upload it to the Punch Artifacts Server using this command :
 ```sh
-punchlinectl start -p $ROOT/after_udf_helloworld.yaml
+curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-udf-spark-starter-kit-1.0.0-artefact.zip -F override=true
 ```
 
-## Start your punchline in production mode
-
-Import your artefact :
-
+Start your punchline on Kubernetes :
 ```sh
-resourcectl --url $ARTEFACT_URL upload --files target/punchplatform-udf-java-starter-kit-1.0.0-artefact.zip
-```
-Start your punchline on kubernetes
-
-```sh
-kubectl apply -f $ROOT/after_udf_helloworld.yaml
+kubectl apply -f after_udf_helloworld.yaml
 ```
 
 # Conclusion

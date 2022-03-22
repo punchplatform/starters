@@ -11,18 +11,17 @@ spec:
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - additional-spark-jar:io.gi:punchplatform-udf-java-starter-kit:1.0.0
+    - additional-spark-jar:io.github.starters:punchline-udf-spark-starter-kit:1.0.0
   engineSettings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
-    spark.additional.jar: punchplatform-udf-java-starter-kit-1.0.0-jar-with-dependencies.jar
   dag:
     - id: dataset_generator
       kind: source
-      type: dataset_generator
+      type: generator
       settings:
-        input_data:
+        messages:
           - field1: "[1, 2, 3, 4]"
             age: 2
           - field1: "[15, 112, 3, 0]"
@@ -36,22 +35,25 @@ spec:
       kind: function
       type: sql
       settings:
-        register_udf:
+        udfs:
           - class_name: io.github.starter.punchline.spark.udf.StrToArrayString
             function_name: punch_convertor
             schema_ddl: ARRAY<STRING>
           - class_name: io.github.starter.punchline.spark.udf.SumAggregate
             function_name: avg_age
-        statement_list:
+        statements:
           - output_table_name: processed_udf
-            statement: SELECT punch_convertor(field1) from dummy_data
+            statement: SELECT punch_convertor(field1) from dataset_generator_default
           - output_table_name: processed_udaf
-            statement: SELECT avg_age(age) AS average_name from dummy_data
+            statement: SELECT avg_age(age) AS average_name from dataset_generator_default
       out:
         - id: show
+          table: processed_udaf
+        - id: show
+          table: processed_udf
+         
 
     - id: show
       kind: sink
       type: show
-      component: show
       settings: { }

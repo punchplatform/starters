@@ -11,7 +11,7 @@ spec:
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.default:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-pyspark-pex:com.github.punchplatform:punch-spark-python-node-starter-kit:1.0.0
   engineSettings:
@@ -21,16 +21,15 @@ spec:
     spark.pre_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_pre_execution.ComplexAlgorithmnPreExecution
     spark.post_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_post_execution.ComplexAlgorithmnPostExecution
   dag:
-    - type: complex_algorithm
-      component: step1
-      package: nodes.my_use_case.my_node
+    - kind: source
+      id: step1
+      type: nodes.my_use_case.my_node
       settings:
         param1: punch !
-      publish:
-        - stream: data
-    - type: python_show
-      component: just_print_to_stdout
+      out: 
+        - id: just_print_to_stdout
+      
+    - kind: sink
+      id: just_print_to_stdout
+      type: show
       settings: { }
-      subscribe:
-        - component: step1
-          stream: data
