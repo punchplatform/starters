@@ -11,7 +11,7 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - additional-punch-jar:io.github.punchplatform:punchline-java-starter-kit:1.0.0
+    - additional-punch-jar:io.github.starter:punchline-java-starter-kit:1.0.0
   dag:
     - id: input
       kind: source
@@ -49,4 +49,4 @@ spec:
       type: io.github.starter.punchline.java.CustomSink
       kind: sink
       settings:
-        punchlet_code: "{print(root);}"
+        print: true

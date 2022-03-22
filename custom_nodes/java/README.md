@@ -52,7 +52,6 @@ Template hierarchy:
 
 ```sh
 ├── input_example.yaml
-├── input_process_example.yaml
 ├── pom.xml
 ├── README.md
 ├── src
