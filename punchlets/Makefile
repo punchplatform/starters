@@ -15,6 +15,12 @@ arkoon: FORCE
 		-v ${PWD}/arkoon/punchline.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
+parsing-error: FORCE
+	docker run \
+		-v ${PWD}/parsing-error/punchlet.punch:/punchlet.punch \
+		-v ${PWD}/parsing-error/punchline.yaml:/punchline.yaml \
+		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		/punchline.yaml
 geoip: FORCE
 	docker run \
 		-v ${PWD}/geoip/punchlet.punch:/punchlet.punch \

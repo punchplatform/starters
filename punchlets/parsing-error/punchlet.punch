@@ -1,0 +1,14 @@
+{
+    Tuple doc;
+    if (!grok("%{SYSLOGTIMESTAMP:doc:[event][timestamp} %{SYSLOGHOST:doc:[observer][ip]} %{SYSLOGPROG}: AKLOG - %{GREEDYDATA:doc:[aklog]}").on([logs][log])) {
+        raise("not a recognized arkoon log");
+    }
+    kv().on(doc:[aklog]).into(doc:[kv]);
+    doc:[obs][type] = doc:[kv][fw];
+    if (doc:[kv][aktype] == "IP") {
+        doc:[event][type] = doc:[kv][ip_log_type];
+    } else {
+        raise("invalid aktype field, expected='IP', got='%s'", doc:[kv][aktype]);
+    }
+    [logs][doc] = doc;
+}
