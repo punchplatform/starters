@@ -23,7 +23,7 @@ maintainers: # (optional)
   - name: Punch Team
     email: contact@punchplatform.com
 provider: # (optional)
-  name: Thales Punch
+  name: Punch Team
   email: contact@punchplatform.com  
 punchVersionCompatible: # (optional)
   - 8.x

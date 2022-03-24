@@ -1,27 +1,26 @@
 ---
-apiVersion: punchline.gitlab.thalesdigital.io/v1
-kind: Sparkline
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: SparkPunchline
 metadata:
   name: udf-before-python
-spec:  
-  image: ghcr.io/punchplatform/sparkline:7.0.1-SNAPSHOT
-  initContainerImage: ghcr.io/punchplatform/resourcectl:7.0.1-SNAPSHOT
-  initContainerUrl: http://artifacts-service.punch-gateway-ns:4245
-  imagePullPolicy: IfNotPresent
-  serviceAccount: admin-user
-  garbageCollect: false
-  implementation: python
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-  - additional-pyspark-pex:org.thales.punch:punchplatform-udf-python-starter-kit:1.0.0
-  settings:
+    - additional-pyspark-pex:com.github.punchplatform:punchplatform-udf-python-starter-kit:1.0.0
+  engineSettings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
-    spark.additional.pex: punchplatform-udf-python-starter-kit-1.0.0.pex
-  punchline:
-    dag:
+  dag:
     - type: dataset_generator
       component: input
       settings:
-        input_data: 
+        input_data:
           - Message: "[1, 2, 3]"
           - Message: "[1, 2, 3, 5]"
           - Message: "[1, 2, 3, 99, 5.0]"
@@ -39,14 +38,14 @@ spec:
           - output_table_name: data
             statement: SELECT myOwnFunc2(), punch_str_to_array_double(Message) FROM input_data
       subscribe:
-      - component: input
-        stream: data      
+        - component: input
+          stream: data
       publish:
-      - stream: data  
+        - stream: data
     - type: show
       component: show
-      settings: {}
+      settings: { }
       subscribe:
-      - component: processor
-        stream: data
-      publish: []
+        - component: processor
+          stream: data
+      publish: [ ]

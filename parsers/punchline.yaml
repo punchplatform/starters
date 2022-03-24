@@ -8,7 +8,7 @@ spec:
       image: ghcr.io/punchplatform/punchline-java:8.0-dev
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-service.punch-gateway-ns:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - punch-parsers:com.mycompany:parsers:1.0.0
   dag:
@@ -33,10 +33,6 @@ spec:
         format: json
         type: file
         url: com/mycompany/sample/resources/color_codes.json
-      - name: standard_groks
-        format: grok
-        type: file
-        url: /usr/share/punch/resources/patterns
       - name: custom_groks
         type: file
         format: grok

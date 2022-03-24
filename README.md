@@ -1,40 +1,38 @@
 # Punch Starters
 
-This repository is a software development kit for Punch developers. It provides easy-to-start-with 
-samples for various use cases, implemented using java, python and punchlang functions.
+This repository is a software development kit for Punch developers. It provides easy-to-start-with samples for various
+use cases, implemented using java, python and punchlang functions.
 
-The punch online documentation is available here: https://punch-1.gitbook.io/punch-doc/.
-The sample starters illustrates several ways to program or configure you 
-punchplatform.
+The punch online documentation is available here: https://punch-1.gitbook.io/punch-doc/. The sample starters illustrates
+several ways to program or configure you punchplatform.
 
 ## Punchlets
 
-Checkout the [./punchlets] guide. Writing a punchlet is easy, testing it as easy.
+Checkout the [punchlets] guide. Writing a punchlet is easy, testing it as easy.
 
 ## Log Parsers
 
-To write robust and industrial log parsers requires one or more punchlet(s), some additional
-resource files, some documentation and a way to package everything so that your parsers
-can be easily deployed on a production punch. 
+To write robust and industrial log parsers requires one or more punchlet(s), some additional resource files, some
+documentation and a way to package everything so that your parsers can be easily deployed on a production punch.
 
-The parser SDK provides you with a maven toolkit to take care of all these packaging issues.
-It also provides you with a unit test framework. 
+The parser SDK provides you with a maven toolkit to take care of all these packaging issues. It also provides you with a
+unit test framework.
 
-Checkout out the [./parsers] guide.
+Checkout out the [parsers](parsers) guide.
 
 ## Docker Images
 
-One easy way to package a punch application is to generate your own image together with the required
-punchlet(s) or custom functions. Check out the [./custom_image] folder.
+One easy way to package a punch application is to generate your own image together with the required punchlet(s) or
+custom functions. Check out the [custom_images](custom_image) folder.
 
 ## Custom Functions Development
 
-You can write your own Java or python functions using the punch SDK. Refer to the [./custom_nodes]
+You can write your own Java or python functions using the punch SDK. Refer to the [custom_nodes](custom_nodes)
 
 ## Tools
 
-A few helper tools are provided to ease the day to day working with the punch.  
-To include these in yoru path type in:
+A few helper tools are provided to ease the day-to-day working with the punch.  
+To include these in your path type in:
 
 ```sh
 . activate.sh

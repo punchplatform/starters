@@ -1,0 +1,35 @@
+---
+apiVersion: punchline.gitlab.thalesdigital.io/v2
+kind: SparkPunchline
+metadata:
+  name: python-sample-spark
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - additional-pyspark-pex:com.github.punchplatform:punch-spark-python-node-starter-kit:1.0.0
+  engineSettings:
+    spark.executor.instances: "1"
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+    spark.additional.pex: punch-spark-python-node-starter-kit-1.0.0.pex
+    spark.pre_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_pre_execution.ComplexAlgorithmnPreExecution
+    spark.post_punchline_execution: nodes.my_use_case.my_node.complex_algorithm_post_execution.ComplexAlgorithmnPostExecution
+  dag:
+    - kind: source
+      id: step1
+      type: nodes.my_use_case.my_node
+      settings:
+        param1: punch !
+      out: 
+        - id: just_print_to_stdout
+      
+    - kind: sink
+      id: just_print_to_stdout
+      type: show
+      settings: { }

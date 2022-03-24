@@ -2,11 +2,10 @@
 
 * [parser specification](./MANIFEST.yml)
 
-This package provides the following punchlets: 
+This package provides the following punchlets:
 
 * [parser.punch](./parser.punch) : a sample parser to illustrate this example.
-* [enrich.punch](./enrich.punch) : an punchlet example to illustrate the chaining and enrichment concepts.
-
+* [enrich.punch](./enrich.punch) : a punchlet example to illustrate the chaining and enrichment concepts.
 
 ```bash
 fakehostname SNORT[2500]: [1:1418:11]SNMP request tcp
