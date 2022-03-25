@@ -1,0 +1,39 @@
+---
+apiVersion: scheduler.punchplatform.io/v2
+kind: Plan
+metadata:
+  name: plan-application
+spec:
+  kind: BatchApplication
+  interval: 10s
+  checkpointRef:
+    name: plan-application-checkpoint
+    kind: ConfigMap
+  #cron: "* * * * *"
+  dates:
+    from:
+      offset: "-10h45m"
+      format: "2006-01-02T15:04:05-0700"
+  templateSpec:
+    containers:
+      serviceAccount: admin-user
+      applicationContainer:
+        image: busybox  
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: JDK_JAVA_OPTIONS
+            value: "-Xms100m -Xmx450m"
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "echo hello world: {{ .from }}"
+    jobSettings:
+      backoffLimit: 1
+      ttlSecondsAfterFinished: 180
+    configs:
+      myCustomConfMountedOnPod: |
+        # this content will be mounted on
+        # the pod container local filesystem at
+        # /data/myCustomConfMountedOnPod
+        test: hello world

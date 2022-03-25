@@ -1,4 +1,4 @@
-all: fileresource arkoon geoip stdgroks customgroks generator
+all: fileresource arkoon geoip stdgroks customgroks
 FORCE: ;
 
 fileresource: FORCE
@@ -42,11 +42,5 @@ customgroks: FORCE
 		-v ${PWD}/customgroks/punchlet.punch:/punchlet.punch \
 		-v ${PWD}/customgroks/punchline.yaml:/punchline.yaml \
 		-v ${PWD}/customgroks/mypatterns.grok:/mypatterns.grok \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
-		/punchline.yaml
-
-generator: FORCE
-	docker run \
-		-v ${PWD}/generator/punchline.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml

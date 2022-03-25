@@ -1,0 +1,28 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: punchline-spark
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      imagePullPolicy: IfNotPresent
+  dag:
+    - id: input
+      kind: source
+      type: generator
+      settings:
+        messages:
+          - name: phil
+            age: 21
+            host: host%{cnt}
+        messages_size: 10
+        counter_tag: "%{cnt}"
+      out:
+        - id: output
+
+    - id: output
+      kind: sink
+      type: show

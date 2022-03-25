@@ -1,0 +1,33 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: StreamPunchline
+metadata:
+  name: punchline-java
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.0-dev
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: JDK_JAVA_OPTIONS
+          value: "-Xms100m -Xmx450m"
+  dag:
+    - id: generator
+      kind: source
+      type: generator_source
+      settings:
+        messages:
+          - my first log
+          - My second message log
+          - And finally a third one
+      out:
+        - id: punchlet
+          table: logs
+          columns:
+            - name: log
+              type: string
+    - id: punchlet
+      kind: function
+      type: punchlet_function
+      settings:
+        punchlet_code: "{ print(root); }"
