@@ -129,7 +129,7 @@ pipeline where you chain your parser.
 An example explains it all:
 
 ```yaml
-apiVersion: punchline.gitlab.thalesdigital.io/v2
+apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
   name: my-parser

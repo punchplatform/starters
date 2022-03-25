@@ -1,17 +1,3 @@
-/*
- *  This code is licensed under the outer restricted Tiss license:
- *
- *  Copyright [2014]-[2020] Thales Services under the Thales Inner Source Software License
- *  (Version 1.0, InnerPublic - OuterRestricted the "License");
- *
- *  You may not use this file except in compliance with the License.
- *
- *  The complete license agreement can be requested at contact@punchplatform.com.
- *
- *  Refer to the License for the specific language governing permissions and limitations
- *  under the License.
- */
-
 package io.github.starter.punchline.java;
 
 import java.util.Arrays;

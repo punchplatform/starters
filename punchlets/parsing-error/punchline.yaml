@@ -1,4 +1,4 @@
-apiVersion: punchline.gitlab.thalesdigital.io/v2
+apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
   name: parserErrorPunchline
@@ -42,19 +42,7 @@ spec:
       columns:
       - name: log
         type: string
-    - id: printKo
-      table: _ppf_errors
-      columns: 
-      - name: _ppf_error_document
-        type: string
-      - name: _ppf_error_message
-        type: string
   - id: printOk
-    type: punchlet_function
-    kind: function
-    settings:
-      punchlet_code: "{print(root);}"
-  - id: printKo
     type: punchlet_function
     kind: function
     settings:
