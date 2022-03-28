@@ -35,11 +35,13 @@ Checkout out the [parsers](parsers) guide.
 
 You can write your own Java or Python functions using the punch SDK. Refer to the [custom_nodes](custom_nodes) guide.
 
-## Tools
+## Simulator Tool
 
-A few helper tools are provided to ease the day-to-day working with the punch.  
+A simulator tool is provided to ease the day-to-day working with the punch.  
 To include these in your path type in:
 
 ```sh
 . activate.sh
 ```
+
+You can now inject logs by simply calling `simulate.sh` from anywhere in the starters' repository.

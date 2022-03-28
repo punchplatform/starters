@@ -6,7 +6,7 @@
 
 [ "$BASH_SOURCE" != "" ] || { echo "This file is supposed to be sourced using: 'source $0' ." 1>&2 ; exit 1 ; }
 
-export PATH=$(dirname "${BASH_SOURCE}")/tools:${PATH}
+export PATH=$(dirname "${BASH_SOURCE}")/simulator:${PATH}
 cat << EOF
 
   Punchplatform starter kit provides these tools:
