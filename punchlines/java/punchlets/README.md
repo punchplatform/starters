@@ -1,6 +1,6 @@
 # Punchlets Starters
 
-This folder provides easy to start with punchlets examples. The Makefile lets you start the jaja punchline image to test
+This folder provides easy-to-start-with punchlets examples. The Makefile lets you start the java punchline
 and see the effect of various punchlang use cases.
 
 * *artifact* : demonstrates the loading of resources from a punch artifact.
@@ -19,16 +19,16 @@ make geoip
 ## Punchlets or Parsers ?
 
 Punchlets are simple yet powerful. Parsers let you package industrial tested and versioned sets of punchlets. Once at
-ease with punchlets, checkout the [../parsers] sample.
+ease with punchlets, checkout the [parsers](../../../parsers) sample.
 
 ## How it works
 
-Each example consists of a punchlet (punchlet.punch) and a punchline (punchline.yaml).
+Each example consists of a punchlet (`punchlet.punch`) and a punchline (`punchline.yaml`).
 
-In the punchline the data generator source is used to send in a log sample. The punchlet is then invoked, and a last
-punchlet function is terminating the punchline graph to print the result to the screen .
+In the punchline, the generator source is used to send in a log sample. The punchlet is then invoked, and a
+punchlet function is terminating the dag to print the result to the screen.
 
-For example here is the command launched for the arkoon sample:
+For example, here is the command launched for the arkoon sample:
 
 ```sh
 	docker run -it --rm \

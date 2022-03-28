@@ -1,8 +1,7 @@
 FROM ghcr.io/punchplatform/punchline-java:8.0-dev
 
-WORKDIR /resources
-COPY punchlets .
-COPY punchline .
-COPY log4j2 /opt/binaries/punch/log4j2/
+COPY punchlets/print.punch /usr/share/punch/resources/print.punch
+COPY punchline/punchline.yaml /data/punchline.yaml
+COPY log4j2 /opt/punch/log4j2/
 
-WORKDIR /
+ENTRYPOINT ["/bin/bash" , "start.sh", "/data/punchline.yaml"]

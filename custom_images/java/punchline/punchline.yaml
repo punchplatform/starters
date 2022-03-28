@@ -35,4 +35,4 @@ spec:
     kind: function
     settings:
       punchlets: 
-      - /resources/example.punch
+      - /usr/share/punch/resources/print.punch

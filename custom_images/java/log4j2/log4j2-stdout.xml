@@ -11,9 +11,6 @@
           logs directly to stdout.
         -->
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <!--
-              <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
-            -->
             <PatternLayout>
                 <pattern>${patternNoTime}</pattern>
             </PatternLayout>
