@@ -31,7 +31,7 @@ punchlet function is terminating the punchline graph to print the result to the 
 For example here is the command launched for the arkoon sample:
 
 ```sh
-	docker run \
+	docker run -it --rm \
 		-v ${PWD}/arkoon/punchlet.punch:/punchlet.punch \
 		-v ${PWD}/arkoon/punchline.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
