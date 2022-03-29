@@ -2,7 +2,7 @@
 apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
-  name: input-example
+  name: custom-nodes
 spec:
   containers:
     applicationContainer:
@@ -12,6 +12,7 @@ spec:
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-punch-jar:io.github.starter:punchline-java-starter-kit:1.0.0
+  engineSettings: { }
   dag:
     - id: input
       kind: source

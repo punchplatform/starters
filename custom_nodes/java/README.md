@@ -50,22 +50,22 @@ To use SNAPSHOT versions, you have to add Maven Central Snapshot Repository to y
 
 Template hierarchy:
 
-```sh
+```
 ├── input_example.yaml
 ├── pom.xml
 ├── README.md
 ├── src
-│   └── main
-│       └── java
-│           └── com
-│               └── github
-│                   └── starter
-│                       └── punchline
-│                           └── java
-│                               ├── CustomFunction.java
-│                               └── CustomSink.java
-│                               └── CustomSource.java
-│                               └── Config.java
+│   └── main
+│       └── java
+│           └── com
+│               └── github
+│                   └── starter
+│                       └── punchline
+│                           └── java
+│                               ├── CustomFunction.java
+│                               └── CustomSink.java
+│                               └── CustomSource.java
+│                               └── Config.java
 ```
 
 ## Build
@@ -97,5 +97,5 @@ curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifa
 
 Start your punchline on Kubernetes :
 ```sh
-kubectl apply -f input_example.yaml
+kubectl apply -f punchline.yaml
 ```

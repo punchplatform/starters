@@ -40,14 +40,14 @@ Template hierarchy:
 ├── full_job.yaml
 ├── Makefile
 ├── nodes
-│   ├── __init__.py
-│   └── my_use_case
-│       ├── __init__.py
-│       └── my_node
-│           ├── complex_algorithm.py
-│           ├── complex_algorithm_pre_execution.py
-│           ├── complex_algorithm_post_execution.py
-│           └── __init__.py
+│   ├── __init__.py
+│   └── my_use_case
+│       ├── __init__.py
+│       └── my_node
+│           ├── complex_algorithm.py
+│           ├── complex_algorithm_pre_execution.py
+│           ├── complex_algorithm_post_execution.py
+│           └── __init__.py
 ├── README.md
 └── setup.py
 ```
