@@ -46,3 +46,24 @@ clean: clean-package clean-pyc clean-test
 	rm -rf dist
 	rm -rf .cache
 	rm -rf .venv
+
+
+build:
+	mvn clean install
+
+run:
+	docker run --rm -it \
+        -v ${PWD}/target/punchline-python-starter-kit-1.0.0.pex:/usr/share/punch/extlib/punchline-python-starter-kit-1.0.0.pex \
+        -v ${PWD}/punchline.yaml:/data/punchline.yaml \
+        ghcr.io/punchplatform/punchline-python:8.0-dev \
+        /data/punchline.yaml
+
+apply:
+	curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-python-starter-kit-1.0.0-artifact.zip -F override=true
+	kubectl apply -f punchline.yaml
+
+logs:
+	kubectl logs -f --tail -1 -l punchline-name=custom-nodes-python
+
+delete:
+	kubectl delete -f punchline.yaml

@@ -2,17 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import json
-
 from typing import List
 from typing import Optional
 
 import pandas
-
 from api.holders.input_holder import InputHolder
 from api.holders.output_holder import OutputHolder
 from api.node import AbstractNode
 from api.node_api import NodeType
-
 
 __author__ = "RT"
 

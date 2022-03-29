@@ -71,12 +71,24 @@ Template hierarchy:
 ## Build
 
 ```sh
+make build
+```
+
+or
+
+```sh
 mvn clean install
 ```
 
 ## Start your punchline in development mode with Docker
 
 To test the punchline above in foreground mode simply run :
+
+```sh
+make run
+```
+
+or
 
 ```sh
 docker run --rm -it \
@@ -87,6 +99,28 @@ docker run --rm -it \
 ```
 
 ## Start your punchline in production mode with Kubernetes
+
+### Using Makefile
+
+To upload your nodes and apply your punchline :
+
+```sh
+make apply
+```
+
+To check your logs :
+
+```sh
+make logs
+```
+
+To delete your punchline :
+
+```sh
+make delete
+```
+
+### Using commands
 
 Maven generates `./target/punchline-java-starter-kit-1.0.0-artifact.zip`.
 

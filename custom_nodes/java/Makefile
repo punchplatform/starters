@@ -16,7 +16,7 @@ apply: FORCE
 	kubectl apply -f punchline.yaml
 
 logs: FORCE
-	kubectl logs -f --tail -1 -l punchline-name=custom-nodes
+	kubectl logs -f --tail -1 -l punchline-name=custom-nodes-java
 
 delete: FORCE
 	kubectl delete -f punchline.yaml

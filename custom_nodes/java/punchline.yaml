@@ -2,7 +2,7 @@
 apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
-  name: custom-nodes
+  name: custom-nodes-java
 spec:
   containers:
     applicationContainer:

@@ -2,7 +2,7 @@
 apiVersion: punchline.punchplatform.io/v2
 kind: BatchPunchline
 metadata:
-  name: python-example
+  name: custom-nodes-python
 spec:
   containers:
     applicationContainer:
@@ -28,10 +28,10 @@ spec:
           - [ 2.9 ,  3.9 ]
           - [ 8.0 ,  2.9 ]
       publish:
-      - stream: data
+        - stream: data
 
     - type: show_sink
       component: show
       subscribe:
-      - stream: data
-        component: input
+        - stream: data
+          component: input
