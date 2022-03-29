@@ -4,9 +4,9 @@
 # 
 # source ./activate.sh
 
-[ "$BASH_SOURCE" != "" ] || { echo "This file is supposed to be sourced using: 'source $0' ." 1>&2 ; exit 1 ; }
+[ "${BASH_SOURCE[0]}" != "" ] || { echo "This file is supposed to be sourced using: 'source $0' ." 1>&2 ; exit 1 ; }
 
-export PATH=$(dirname "${BASH_SOURCE}")/simulator:${PATH}
+export PATH="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"/simulator:${PATH}
 cat << EOF
 
   Punchplatform starter kit provides these tools:

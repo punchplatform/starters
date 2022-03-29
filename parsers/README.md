@@ -15,25 +15,25 @@ with many parsers. Should you write your own, this project is for you.
 
 To create punch parsers, clone or download this repository, you will get the following layout:
 
-```sh
+```
 ├── assembly
-│   └── assembly.xml
+│   └── assembly.xml
 ├── pom.xml
 ├── src
-│   └── com
-│       └── mycompany
-│           └── sample
-│               ├── MANIFEST.yml
-│               ├── groks
-│               │   └── pattern.grok
-│               ├── enrich.punch
-│               ├── parser.punch
-│               ├── resources
-│               │   └── color_codes.json
-│               └── test
-│                   ├── sample.txt
-│                   ├── unit_chain.json
-│                   └── unit_punchlet.json
+│   └── com
+│       └── mycompany
+│           └── sample
+│               ├── MANIFEST.yml
+│               ├── groks
+│               │   └── pattern.grok
+│               ├── enrich.punch
+│               ├── parser.punch
+│               ├── resources
+│               │   └── color_codes.json
+│               └── test
+│                   ├── sample.txt
+│                   ├── unit_chain.json
+│                   └── unit_punchlet.json
 └── tools
     └── test.sh
 ```
@@ -113,6 +113,11 @@ spec:
 ## Test Your Parsers
 
 To test your parsers with your unit tests file simply run :
+```sh
+make build
+```
+
+or
 
 ```sh
 mvn clean install
@@ -126,69 +131,25 @@ have docker installed before running this command
 Once your parser is ready, you can simply refer to them in your punchline. Remember a punchline is a log processing
 pipeline where you chain your parser.
 
-An example explains it all:
-
-```yaml
-apiVersion: punchline.punchplatform.io/v2
-kind: StreamPunchline
-metadata:
-  name: my-parser
-spec:  
-  containers:
-    applicationContainer:
-      image: ghcr.io/punchplatform/punchline-java:8.0-dev
-    resourcesInitContainer:
-      image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
-  dependencies:
-    - punch-parsers:com.mycompany:parsers:1.0.0
-  dag:
-  - id: input
-    kind: source
-    type: syslog_source
-    settings:
-      host: 0.0.0.0
-      port: 9902
-    out: 
-    - id: parser
-      table: logs
-      columns:
-      - name: data
-        type: string
-  - id: parser
-    type: punchlet_function
-    kind: function
-    settings:
-      resources:
-      - name: color_codes
-        format: json
-        type: file
-        url: com/mycompany/sample/resources/color_codes.json
-      - name: custom_groks
-        type: file
-        format: grok
-        url: com/mycompany/sample/groks
-      punchlets:
-      - com/mycompany/sample/parser.punch
-    out: 
-    - id: print
-      table: logs
-      columns:
-      - name: log
-        type: string
-  - id: print
-    type: punchlet_function
-    kind: function
-    settings:
-      punchlet_code: "{print(root);}"
-```
+Check out the [punchline example](punchline.yaml).
 
 ## Run in foreground with docker
 
-To test the punchline above in foreground mode simply run :
+To test the example punchline in foreground mode simply run :
 
 ```sh
-docker run  -it -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/com/mycompany/parsers/1.0.0/parsers-1.0.0.    zip     -v $PWD/punchline.yaml:/data/punchline.yaml     --network=host     ghcr.io/punchplatform/punchline-java:8.0-dev /data/punchline.yaml
+make run
+```
+
+or
+
+```sh
+docker run -it \
+    -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/com/mycompany/parsers/1.0.0/parsers-1.0.0.zip \
+    -v $PWD/punchline.yaml:/data/punchline.yaml \
+    --network=host \
+    ghcr.io/punchplatform/punchline-java:8.0-dev \
+    /data/punchline.yaml
 ```
 
 And in another terminal inject some data :
@@ -199,7 +160,28 @@ And in another terminal inject some data :
 
 ## Start your punchline in production mode on Kubernetes
 
-A zip archive containing your parsers and a metadata file can be build using maven : parsers-1.0-SNAPSHOT-artefact.zip
+A zip archive containing your parsers and a metadata file can be build using maven : `parsers-1.0-SNAPSHOT-artefact.zip`
+
+### Using Makefile
+
+You can apply your punchline, start a service and run the simulator by running :
+```sh
+make apply
+```
+
+When the simulator starts, you can exit this command using `Ctrl+c` and run :
+```sh
+make logs
+```
+
+This should show your punchline logs.
+
+To delete everything, simply run :
+```sh
+make delete
+```
+
+### Using shell commands
 
 You simply have to upload it to the Punch Artefact Server using this command (do not forget to update the artifact
 service name):

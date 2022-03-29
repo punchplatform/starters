@@ -1,20 +1,22 @@
 {
   "input": {
-    "logs": { "data" : "color=red city=Rome uri=https://punchplatform.com" }
+    "logs": {
+      "data": "color=red city=Rome uri=https://punchplatform.com"
+    }
   },
   "output": {
     "includes": {
-    	"logs": { 
-    		"data" : "color=red city=Rome uri=https://punchplatform.com",
-    		"log" : {
-    			"color": "red",
+      "logs": {
+        "data": "color=red city=Rome uri=https://punchplatform.com",
+        "log": {
+          "color": "red",
           "city": "rome",
           "proto": "https",
           "host": "punchplatform.com",
           "uri": "https://punchplatform.com",
           "color_code": 1
-    		}
-    	}
+        }
+      }
     }
   }
 }

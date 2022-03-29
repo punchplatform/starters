@@ -24,6 +24,6 @@ maintainers: # (optional)
     email: contact@punchplatform.com
 provider: # (optional)
   name: Punch Team
-  email: contact@punchplatform.com  
+  email: contact@punchplatform.com
 punchVersionCompatible: # (optional)
   - 8.x

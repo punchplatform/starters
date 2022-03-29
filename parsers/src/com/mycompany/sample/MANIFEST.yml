@@ -18,22 +18,22 @@ spec:
       format: json
       url: resources/color_codes.json
   punchlets:
-  - punchlet: parser.punch
-    labels:
-       description: "a sample punchlet for you to easily start coding your own"
-       performance: 3000
-       category: sample
-       author: "punch team"
-       vendor: punchplatform
-    inputStream:
-    - name: logs
-      fields:
-      - name: data
-        type: string
-  - punchlet: enrich.punch
-    labels:
-       description: "a sample punchlet to illustrate chaining and enrichment concepts"
-       performance: 2000
-       category: sample
-       author: "punch team"
-       vendor: punchplatform
+    - punchlet: parser.punch
+      labels:
+        description: "a sample punchlet for you to easily start coding your own"
+        performance: 3000
+        category: sample
+        author: "punch team"
+        vendor: punchplatform
+      inputStream:
+        - name: logs
+          fields:
+            - name: data
+              type: string
+    - punchlet: enrich.punch
+      labels:
+        description: "a sample punchlet to illustrate chaining and enrichment concepts"
+        performance: 2000
+        category: sample
+        author: "punch team"
+        vendor: punchplatform
