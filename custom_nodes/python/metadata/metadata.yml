@@ -1,4 +1,4 @@
-type: additional-pyspark-pex
+type: additional-pex
 group: ${project.groupId}
 logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
 version: ${project.version}

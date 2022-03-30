@@ -1,0 +1,60 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: custom-nodes-spark
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+      debug: true
+  dependencies:
+    - additional-spark-jar:io.github.starters:punchline-spark-starter-kit:1.0.0
+  engineSettings:
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+  dag:
+    - id: custom_source
+      type: io.github.starter.punchline.spark.CustomSource
+      kind: source
+      settings:
+        title: age
+        input_data:
+          - 22
+          - 18
+          - 34
+      out:
+        - id: custom_function
+
+    - id: custom_function
+      type: io.github.starter.punchline.spark.CustomFunction
+      kind: function
+      settings:
+        select:
+          - age
+      out:
+        - id: custom_udf
+
+    - id: custom_udf
+      kind: function
+      type: sql
+      settings:
+        udfs:
+          - class_name: io.github.starter.punchline.spark.udf.CustomUDAF
+            function_name: avg_age
+        statements:
+          - output_table_name: processed_udaf
+            statement: SELECT avg_age(age) AS avg_age from custom_function_default
+      out:
+        - id: custom_sink
+          table: processed_udaf
+
+    - id: custom_sink
+      type: io.github.starter.punchline.spark.CustomSink
+      kind: function
+      settings:
+        truncate: 3

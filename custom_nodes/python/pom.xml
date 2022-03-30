@@ -63,7 +63,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>artefact-zip</id>
+                        <id>artifact-zip</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>

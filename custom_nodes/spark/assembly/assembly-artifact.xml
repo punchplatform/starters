@@ -9,7 +9,7 @@
     <files>
         <!-- previous zip folder with src/ -->
         <file>
-            <source>${project.build.directory}/${project.build.finalName}.zip</source>
+            <source>${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar</source>
             <outputDirectory>.</outputDirectory>
         </file>
         <!-- metadata.yml -->

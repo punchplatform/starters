@@ -14,7 +14,7 @@ run: FORCE
 
 apply: FORCE
 	kubectl apply -f my_service.yaml
-	curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/parsers-1.0.0-artefact.zip -F override=true
+	curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/parsers-1.0.0-artifact.zip -F override=true
 	kubectl apply -f punchline.yaml
 	cat simulator.json | kubectl run -i simulator --image ghcr.io/punchplatform/simulator:8.0-dev -- -c - --host my-parser-input.default
 

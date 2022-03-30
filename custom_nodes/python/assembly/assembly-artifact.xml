@@ -9,7 +9,7 @@
     <files>
         <!-- previous zip folder with src/ -->
         <file>
-            <source>${project.build.directory}/${project.artifactId}-${project.version}.pex</source>
+            <source>${project.build.directory}/${project.build.finalName}.pex</source>
             <outputDirectory>.</outputDirectory>
         </file>
         <!-- metadata.yml -->
