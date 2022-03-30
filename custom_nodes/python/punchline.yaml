@@ -11,7 +11,7 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - additional-pyspark-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0
+    - additional-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0
   dag:
     - type: custom_node.gendata
       component: input

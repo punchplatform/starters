@@ -14,7 +14,7 @@ spec:
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
       debug: true
   dependencies:
-    - additional-spark-jar:io.github.starters:punchline-spark-starter-kit:1.0.0
+    - additional-jar:io.github.starters:punchline-spark-starter-kit:1.0.0
   engineSettings:
     spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
   dag:
