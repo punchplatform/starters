@@ -1,0 +1,21 @@
+ARG PYTHON_VERSION_TAG="3.6.8-slim"
+FROM python:${PYTHON_VERSION_TAG}
+ARG SOURCES=custom_node
+    # python:
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONDONTWRITEBYTECODE=1 \
+    # pip:
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_DEFAULT_TIMEOUT=100
+WORKDIR /
+RUN python3 -m venv venv &&\
+    venv/bin/pip install -U pip setuptools wheel &&\
+    venv/bin/pip install -U flake8 mypy black isort
+COPY ${SOURCES} ${SOURCES}
+COPY .flake8 .flake8
+RUN venv/bin/black ${SOURCES} &&\
+    venv/bin/isort ${SOURCES} &&\
+    venv/bin/flake8 ${SOURCES} &&\
+    venv/bin/mypy -p ${SOURCES} --ignore-missing-imports

@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from typing import List
-from typing import Optional
+from typing import List, Optional
 
 import pandas
 from api.holders.input_holder import InputHolder

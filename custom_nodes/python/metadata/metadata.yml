@@ -1,11 +1,11 @@
 type: additional-pex
-group: ${project.groupId}
+group: ${GROUP_ID}
 logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
-version: ${project.version}
-artifact: ${project.artifactId}
-displayName: ${project.artifactId}
-createdAt: ${timestamp}
+version: ${VERSION}
+artifact: ${ARTIFACT_ID}
+displayName: ${ARTIFACT_ID}
+createdAt: ${TIMESTAMP}
 description: This package contains an example of a python custom node
 provider: # (optional)
   name: Punch Team
-  email: contact@punchplatform.com  
+  email: contact@punchplatform.com

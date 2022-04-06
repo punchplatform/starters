@@ -1,0 +1,18 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+.PHONY: run
+
+run:
+	docker run --rm -it \
+        -v ${OUTPUT_PEX_ARCHIVE}:/usr/share/punch/extlib/${NAME}.pex \
+        -v ${PUNCHLINE}:/data/punchline.yaml \
+        ${ENGINE_IMG} \
+        /data/punchline.yaml
+
+.PHONY: apply
+
+apply:
+	curl -XPOST "http://artifacts-server.kooker:4245/v1/artifacts/upload" \
+        -F artifact=@${OUTPUT_ARCHIVE} \
+        -F override=true
+	kubectl apply -f ${PUNCHLINE}

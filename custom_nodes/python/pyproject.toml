@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "custom_node"
-version = "1.0.0"
+# managed by makefile
+version = "0.0.0"
 description = ""
-authors = ["RT"]
+authors = ["Punch"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = ">=3.6.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

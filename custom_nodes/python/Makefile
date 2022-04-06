@@ -1,69 +1,58 @@
-EXEC_NAME=custom_node.pex
-DIR=$(shell pwd)
+#!/usr/bin/env bash -ec -o pipefail
 
-.PHONY: all package clean-package clean-pyc clean-test clean
+include INFO
+include tools/INTERNAL
+include tools/TUTORIAL
 
-all: clean package
+export
 
-venv:
-	$(info ************  CREATE PYTHON 3 .venv  VIRTUALENV  ************)
-	@if [ ! -e "${DIR}/.venv/bin/activate" ] ; then python3 -m venv ${DIR}/.venv ; fi
-	@. ${DIR}/.venv/bin/activate && python3 -m pip install -U setuptools'<50' wheel pip
-	@. ${DIR}/.venv/bin/activate && python3 -m pip install -U poetry pex
-	@. ${DIR}/.venv/bin/activate && python3 -m poetry run pip install -U pip setuptools'<50' wheel
-	@. ${DIR}/.venv/bin/activate python3 -m poetry install
+.PHONY: artifact
 
+artifact: clean metadata package ## Generate final archive with metadata and pex
+	zip ${OUTPUT_ARCHIVE} ${OUTPUT_PEX_ARCHIVE} ${OUTPUT_METADATA_YML} 
 
-package: venv
-	@. ${DIR}/.venv/bin/activate && poetry build
-	@. ${DIR}/.venv/bin/activate && python3 -m pex . -o $(BUILD_PATH)/$(name)
+.PHONY: metadata
 
+metadata: prerequisites ## Generate metadata.yml resolved based on INFO
+	envsubst < ${METADATA_TEMPLATE_FILE} > ${OUTPUT_METADATA_YML}
 
-clean-package:
-	$(info ************  CLEANING DISTRIBUTION  ************)
-	rm -rf dist
-	rm -rf target
-	-rm -rf target/.distrib-built
+.PHONY: lint
 
-clean-pyc:
-	$(info ************  CLEANING TEMPORARY FILES  ************)
-	-find . -name '*.pyc' -exec rm -f {} +
-	-find . -name '*.pyo' -exec rm -f {} +
-	-find . -name '*~' -exec rm -f {} +
-	-find . -name '__pycache__' -exec rm -fr {} +
+lint: docker-clean ## Apply codestyle and lint code
+	@docker build . \
+		-t "${TOOL_IMG}" \
+		-f tools/Dockerfile.tools \
+		--build-arg "SOURCES=${SOURCES}" \
+		--build-arg "VERSION=${VERSION}" \
+		--build-arg "PYTHON_VERSION_TAG=${PYTHON_VERSION_TAG}" \
+		--quiet
+	@docker run --name "${CONTAINER_NAME}" "${TOOL_IMG}"
+	@docker cp "${CONTAINER_NAME}":/${SOURCES} .
+	@docker rm -f "${CONTAINER_NAME}"
 
-clean-test:
-	$(info ************  CLEANING TEST REPORTS  ************)
-	rm -fr .tox/
-	rm -fr .coverage
-	rm -fr htmlcov/
-	rm -rf target/.distrib-tested
+.PHONY: docker-build
 
-clean: clean-package clean-pyc clean-test
-	$(info ************  CLEAN  ************)
-	rm -rf target
-	rm -rf .venv
-	rm -rf dist
-	rm -rf .cache
-	rm -rf .venv
+docker-build: clean docker-clean ## Generate a zip archive of this application using docker
+	@rm -rf target
+	@mkdir -p target
+	@docker build . \
+		-t "${PEX_IMG}" \
+		--build-arg "SOURCES=${SOURCES}" \
+		--build-arg "VERSION=${VERSION}" \
+		--build-arg "PYTHON_VERSION_TAG=${PYTHON_VERSION_TAG}"
+	@docker run --name "${CONTAINER_NAME}" "${PEX_IMG}"
+	@docker cp "${CONTAINER_NAME}":/starter/target .
+	@docker rm -f "${CONTAINER_NAME}"
 
+.PHONY: docker-poetry
 
-build:
-	mvn clean install
+docker-poetry: ## Enter a poetry shell to update poetry.lock and pyproject.toml
+	docker build . -f tools/Dockerfile.poetry-shell -t "docker-poetry"
+	docker rm -f docker-poetry &> /dev/null || true
+	docker run --rm -it --privileged --name docker-poetry "docker-poetry" bash
 
-run:
-	docker run --rm -it \
-        -v ${PWD}/target/punchline-python-starter-kit-1.0.0.pex:/usr/share/punch/extlib/punchline-python-starter-kit-1.0.0.pex \
-        -v ${PWD}/punchline.yaml:/data/punchline.yaml \
-        ghcr.io/punchplatform/punchline-python:8.0-dev \
-        /data/punchline.yaml
+.PHONY: docker-poetry-commit
 
-apply:
-	curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-python-starter-kit-1.0.0-artifact.zip -F override=true
-	kubectl apply -f punchline.yaml
-
-logs:
-	kubectl logs -f --tail -1 -l punchline-name=custom-nodes-python
-
-delete:
-	kubectl delete -f punchline.yaml
+docker-poetry-commit: ## (requires docker-poetry to be active) Commit poetry.lock and pyproject.toml to your local filesystem
+	docker exec -it docker-poetry bash -c "cat /pyproject.toml" > pyproject.toml
+	docker exec -it docker-poetry bash -c "cat /poetry.lock" > poetry.lock

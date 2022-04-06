@@ -2,29 +2,100 @@
 
 For development phase, you should have:
 
-- Maven > 3.6
-- Docker install locally, or a Kubernetes cluster reachable
-- Clone this repository
+- Docker install locally and an access to a Kubernetes cluster
 
-# Notes
+Building and packaging this application requires only:
 
-**Note 1**
+- bash
+- make
+- docker
+- envsubst
+- zip
 
-Dependencies that are specified in the provided `pom.xml` of this project are mandatory. They cannot be removed or have
-their version changed.
+# Considerations
+
+## Note 1
+
+Renaming the root source python module from `custom_node` to `something_else`
+
+Requires updating in [INFO](./INFO) **SOURCES** variable to `something_else`
+
+## Note 2
+
+Likewise as in *Note 1*, changing *metadata.yml* information requires updating variables define in
+
+[INFO](./INFO) :
+
+- GROUP_ID
+- ARTIFACT_ID
+- VERSION
+
+In case you desire to include your project in a CI, these variables can be updated inline by passing them as argument:
+
+```sh
+make GROUP_ID="id" VERSION="unstable" artifact
+```
 
 # Quick Start
 
-## Build
+## Package
+
+### You are a developer
 
 ```sh
-make build
+make artifact # check target directory
 ```
 
-or
+**Generating** poetry.lock using venv
 
 ```sh
-mvn clean install
+make venv
+source .venv/bin/activate
+poetry add requests
+```
+
+**Generating** poetry.lock using docker
+
+**Usage**
+
+```sh
+# In terminal 1
+# activate docker-poetry
+make docker-poetry
+
+# add dependencies
+poetry add requests
+
+# In terminal 2
+make docker-poetry-commit
+
+# When finished
+# In terminal 1
+CTRL + D
+
+# Start a new build
+make docker-build
+
+# test
+make run
+```
+
+**During development phase**
+
+```sh
+make lint # abuse it ! this will tidy your code and reveals potential bugs...
+```
+
+### You are a user
+
+```sh
+mvn docker-build # check target directory
+```
+
+Building the zip archive using your desired python version
+
+```sh
+make docker-build PYTHON_VERSION_TAG=3.9.7-slim-buster
 ```
 
 ## Start your punchline in development mode with Docker
@@ -32,48 +103,22 @@ mvn clean install
 To test the punchline above in foreground mode simply run :
 
 ```sh
+# using latest-dev engine
 make run
-```
-
-or
-
-```sh
-docker run --rm -it \
-    -v $PWD/target/punchline-python-starter-kit-1.0.0.pex:/usr/share/punch/extlib/punchline-python-starter-kit-1.0.0.pex \
-    -v $PWD/punchline.yaml:/data/punchline.yaml \
-    ghcr.io/punchplatform/punchline-python:8.0-dev \
-    /data/punchline.yaml
-```
-
-## Start your punchline in production mode with Kubernetes
-
-### Using Makefile
-
-To upload your nodes and apply your punchline :
-
-```sh
-make apply
-```
-
-To check your logs :
-
-```sh
-make logs
-```
-
-To delete your punchline :
-
-```sh
-make delete
+# using latest-stable engine
+make run ENGINE_IMG=ghcr.io/punchplatform/punchline-python:8.0-latest
 ```
 
 ### Using commands
 
-Maven generates `./target/punchline-python-starter-kit-1.0.0-artifact.zip`.
+An archive is generated in `target/punchline-python-starter-kit-1.0.0-artifact.zip`.
 
-You simply have to upload it to the Punch Artifacts Server using this command :
+Upload the archive on the Artifact Server:
+
 ```sh
-curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-python-starter-kit-1.0.0-artifact.zip -F override=true
+curl -XPOST "http://artifacts-server.kooker:4245/v1/artifacts/upload" \
+    -F artifact=@target/punchline-python-starter-kit-1.0.0-artifact.zip \
+    -F override=true
 ```
 
 Start your punchline on Kubernetes :

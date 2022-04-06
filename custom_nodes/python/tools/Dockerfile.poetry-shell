@@ -1,0 +1,19 @@
+ARG PYTHON_VERSION_TAG="3.6.8-slim"
+FROM python:${PYTHON_VERSION_TAG}
+    # python:
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONHASHSEED=random \
+    PYTHONDONTWRITEBYTECODE=1 \
+    # pip:
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_DEFAULT_TIMEOUT=100
+RUN python3 -m venv venv &&\
+    venv/bin/pip install -U pip setuptools wheel &&\
+    venv/bin/pip install -U poetry
+COPY poetry.lock poetry.lock
+COPY pyproject.toml pyproject.toml
+COPY poetry.toml poetry.toml
+RUN venv/bin/poetry run pip install -U pip setuptools'<50' wheel &&\
+    venv/bin/poetry install
+ENV PATH=/venv/bin:${PATH}

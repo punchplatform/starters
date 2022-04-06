@@ -1,0 +1,55 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+###
+# User Configuration
+###
+
+# Information used to generate metadata.yml
+GROUP_ID ?= io.github.punchplatform
+ARTIFACT_ID ?= punchline-python-starter-kit
+VERSION ?= 1.0.0
+TIMESTAMP = $(shell date +%s)
+
+# Input and Generated files
+OUTPUT_DIR = $(shell pwd)/target
+METADATA_TEMPLATE_FILE = $(shell pwd)/metadata/metadata.yml
+OUTPUT_PEX_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.pex
+OUTPUT_METADATA_YML = ${OUTPUT_DIR}/metadata.yml
+OUTPUT_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.zip
+
+# Set python version
+# for example can be changed to: 3.9.7-slim-buster
+PYTHON_VERSION_TAG ?= "3.6.8-slim"
+
+# used to build pex (change this value to your desired root python module folder)
+SOURCES ?= custom_node
+NAME ?= ${ARTIFACT_ID}-${VERSION}
+
+# Tutorial
+PUNCHLINE ?= $(shell pwd)/punchline.yaml
+
+###
+# Images
+###
+
+ENGINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.0-dev
+TOOL_IMG = tool
+PEX_IMG = custom_node
+
+###
+# internal
+###
+
+CONTAINER_NAME ?= package_worker
+VENV = $(shell pwd)/.venv
+PIP = ${VENV}/bin/pip
+POETRY = ${VENV}/bin/poetry
+PEX = ${VENV}/bin/pex
+
+###
+# Makefile Configuration
+###
+
+.DEFAULT_GOAL := docker-build
+BUILDKIT_PROGRESS ?= plain
+DOCKER_BUILDKIT = 1
