@@ -2,7 +2,6 @@ apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
   name: lmr-in
-  namespace: mytenant
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '7772'
