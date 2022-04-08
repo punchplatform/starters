@@ -6,6 +6,8 @@ include tools/TUTORIAL
 
 export
 
+##@ Bare environment
+
 .PHONY: artifact
 
 artifact: clean metadata package ## Generate final archive with metadata and pex
@@ -15,6 +17,8 @@ artifact: clean metadata package ## Generate final archive with metadata and pex
 
 metadata: prerequisites ## Generate metadata.yml resolved based on INFO
 	envsubst < ${METADATA_TEMPLATE_FILE} > ${OUTPUT_METADATA_YML}
+
+##@ Dockerised environment
 
 .PHONY: lint
 

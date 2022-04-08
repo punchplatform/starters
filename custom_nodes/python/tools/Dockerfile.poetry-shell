@@ -14,6 +14,5 @@ RUN python3 -m venv venv &&\
 COPY poetry.lock poetry.lock
 COPY pyproject.toml pyproject.toml
 COPY poetry.toml poetry.toml
-RUN venv/bin/poetry run pip install -U pip setuptools'<50' wheel &&\
-    venv/bin/poetry install
+RUN venv/bin/poetry run pip install -U pip setuptools'<50' wheel
 ENV PATH=/venv/bin:${PATH}
