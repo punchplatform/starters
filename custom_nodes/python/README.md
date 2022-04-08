@@ -89,10 +89,6 @@ make lint # abuse it ! this will tidy your code and reveals potential bugs...
 
 ### You are a user
 
-```sh
-mvn docker-build # check target directory
-```
-
 Building the zip archive using your desired python version
 
 ```sh
