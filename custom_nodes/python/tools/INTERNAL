@@ -46,15 +46,6 @@ package: prerequisites venv
 	@$(POETRY) build
 	@$(PEX) . -o ${OUTPUT_PEX_ARCHIVE}
 
-.PHONY: clean
-
-clean: clean-package clean-pyc clean-test
-	rm -rf target
-	rm -rf .venv
-	rm -rf dist
-	rm -rf .cache
-	rm -rf .venv
-
 .PHONY: help
 
 help:

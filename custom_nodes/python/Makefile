@@ -11,14 +11,12 @@ export
 .PHONY: artifact
 
 artifact: clean metadata package ## Generate final archive with metadata and pex
-	zip ${OUTPUT_ARCHIVE} ${OUTPUT_PEX_ARCHIVE} ${OUTPUT_METADATA_YML} 
+	zip -j ${OUTPUT_ARCHIVE} ${OUTPUT_PEX_ARCHIVE} ${OUTPUT_METADATA_YML} 
 
 .PHONY: metadata
 
 metadata: prerequisites ## Generate metadata.yml resolved based on INFO
 	envsubst < ${METADATA_TEMPLATE_FILE} > ${OUTPUT_METADATA_YML}
-
-##@ Dockerised environment
 
 .PHONY: lint
 
@@ -33,6 +31,17 @@ lint: docker-clean ## Apply codestyle and lint code
 	@docker run --name "${CONTAINER_NAME}" "${TOOL_IMG}"
 	@docker cp "${CONTAINER_NAME}":/${SOURCES} .
 	@docker rm -f "${CONTAINER_NAME}"
+
+.PHONY: clean
+
+clean: clean-package clean-pyc clean-test ## Clean generated files in this repository
+	rm -rf target
+	rm -rf .venv
+	rm -rf dist
+	rm -rf .cache
+	rm -rf .venv
+
+##@ Dockerised environment
 
 .PHONY: docker-build
 
