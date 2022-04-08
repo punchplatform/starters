@@ -74,10 +74,6 @@ make artifact # check target directory
 
 ### You are a user
 
-```sh
-mvn docker-build # check target directory
-```
-
 Building the zip archive using your desired java jdk version
 
 ```sh
