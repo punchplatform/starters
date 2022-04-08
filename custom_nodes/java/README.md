@@ -1,8 +1,5 @@
 # Prerequisites
 
-For development phase, you should have:
-
-- Java 11
 - Docker install locally, or a Kubernetes cluster reachable
 - Clone this repository
 
