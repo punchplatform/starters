@@ -3,12 +3,11 @@ package io.github.starter.punchline.spark.udf;
 import org.apache.spark.sql.api.java.UDF1;
 
 /**
- * This class is intended to be used in a Spark Sql Query statement as a function.
+ * This class is intended to be used in a Spark Sql Query statement as a function. <br>
+ * Expected return type: <b>DataTypes.createArrayType(DataTypes.StringType)</b> <br>
  * <br>
- * Expected return type: <b>DataTypes.createArrayType(DataTypes.StringType)</b>
- * <br><br>
- * <b>USAGE:</b>
- * <br>
+ * <b>USAGE:</b> <br>
+ *
  * <pre>
  * 	Take as input a <b>STRING</b> and return a Scala <b>{@literal WrappedArray<String>}</b> object
  * <br>
@@ -25,15 +24,15 @@ import org.apache.spark.sql.api.java.UDF1;
  * @author jonathan yue chun
  */
 public class CustomUDF implements UDF1<String, String[]> {
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @Override
-    public String[] call(String tuple) {
-        String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
-        String[] result = new String[tupleValuesAsList.length];
-        for (int i = 0; i < tupleValuesAsList.length; i++) {
-            result[i] = tupleValuesAsList[i].replace(" ", "");
-        }
-        return result;
+  @Override
+  public String[] call(String tuple) {
+    String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
+    String[] result = new String[tupleValuesAsList.length];
+    for (int i = 0; i < tupleValuesAsList.length; i++) {
+      result[i] = tupleValuesAsList[i].replace(" ", "");
     }
+    return result;
+  }
 }

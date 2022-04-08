@@ -18,6 +18,16 @@ metadata: prerequisites ## Generate metadata.yml resolved based on INFO
 artifact: build metadata ## Generate final archive with metadata and pex
 	zip -j ${OUTPUT_ARCHIVE} ${OUTPUT_JAR_ARCHIVE} ${OUTPUT_METADATA_YML}
 
+.PHONY: lint
+
+lint: google-formatter ## format all java files to google code style: ignores ./build, .mvn directories: use GOOGLE_FORMATTER_ARGS=--dry-run to list files to lint
+	-JAVA_HOME=${JAVA_HOME} \
+	 FORMATTER_JAR_PATH=${FORMATTER_JAR_PATH} \
+		find . -name '*.java' \
+			! -path "./build/*" \
+			! -path "./.mvn/*" \
+			-exec $(GOOGLE_FORMATTER) ${GOOGLE_FORMATTER_ARGS} {} +
+
 .PHONY: clean
 
 clean: ## Clean this repository

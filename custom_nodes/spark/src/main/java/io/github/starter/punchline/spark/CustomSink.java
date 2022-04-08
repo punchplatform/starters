@@ -12,11 +12,11 @@ import io.github.punchplatform.api.punchline.spark.nodes.PunchProcessingNode;
  */
 public class CustomSink extends PunchProcessingNode {
 
-    @JsonProperty(value = "truncate")
-    public int truncate = 10;
+  @JsonProperty(value = "truncate")
+  public int truncate = 10;
 
-    @Override
-    public void execute(InputDataset input, OutputDataset output) {
-        input.getSingletonDataframe().ifPresent(rowDataset -> rowDataset.show(truncate));
-    }
+  @Override
+  public void execute(InputDataset input, OutputDataset output) {
+    input.getSingletonDataframe().ifPresent(rowDataset -> rowDataset.show(truncate));
+  }
 }

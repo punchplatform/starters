@@ -1,11 +1,10 @@
 package io.github.starter.punchline.java;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.punchplatform.api.exceptions.ConfigurationException;
 import io.github.punchplatform.api.punchline.java.Source;
+import java.io.IOException;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,27 +13,26 @@ import org.slf4j.LoggerFactory;
  *
  * @author Punch Team
  */
-
 public class CustomSource extends Source {
-    private static final Logger log = LoggerFactory.getLogger(CustomSource.class);
-    private Config config;
-    private long count;
+  private static final Logger log = LoggerFactory.getLogger(CustomSource.class);
+  private Config config;
+  private long count;
 
-    @Override
-    public void start() throws IOException, ConfigurationException {
-        config = new ObjectMapper().convertValue(settings, Config.class);
-        insert(out.get(0), Arrays.asList("astring", count, true), count++);
-    }
+  @Override
+  public void start() throws IOException, ConfigurationException {
+    config = new ObjectMapper().convertValue(settings, Config.class);
+    insert(out.get(0), Arrays.asList("astring", count, true), count++);
+  }
 
-    @Override
-    public void ack(Object msgId) {
-        if (config.print) {
-            log.info("ack {}", msgId);
-        }
+  @Override
+  public void ack(Object msgId) {
+    if (config.print) {
+      log.info("ack {}", msgId);
     }
+  }
 
-    @Override
-    public void fail(Object msgId) {
-        throw new RuntimeException("I want to fail");
-    }
+  @Override
+  public void fail(Object msgId) {
+    throw new RuntimeException("I want to fail");
+  }
 }

@@ -17,14 +17,16 @@ OUTPUT_JAR_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}-jar-with-dependenci
 OUTPUT_METADATA_YML = ${OUTPUT_DIR}/metadata.yml
 OUTPUT_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.zip
 
-# Set python version
-# for example can be changed to: 3.9.7-slim-buster
+# Set java version
 JAVA_VERSION_TAG ?= "jdk-11.0.14.1_1-alpine"
 MAVEN_LOCAL_REPOSITORY ?= "${HOME}"/.m2/repository
 
 # used to build jar (should not be changed)
 SOURCES = src
 NAME ?= ${ARTIFACT_ID}-${VERSION}
+
+# code formatting args
+GOOGLE_FORMATTER_ARGS ?= -r
 
 # Tutorial
 PUNCHLINE ?= $(shell pwd)/punchline.yaml
@@ -42,8 +44,15 @@ JAR_IMG = javaworker
 # internal
 ###
 
+## path
 CONTAINER_NAME ?= package_worker
+BUILD_DIR = $(shell pwd)/.build
+
+## Exec
+FORMATTER_JAR_PATH = ${BUILD_DIR}/google_formatter/googleformatter.jar
 MVN = $(shell pwd)/mvnw
+INSTALL_GOOGLE_FORMATTER = $(shell pwd)/tools/install_google_formatter.sh
+GOOGLE_FORMATTER = $(shell pwd)/tools/google_formatter.sh
 
 ###
 # Makefile Configuration

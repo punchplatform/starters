@@ -26,6 +26,9 @@ MAVEN_LOCAL_REPOSITORY ?= "${HOME}"/.m2/repository
 SOURCES = src
 NAME ?= ${ARTIFACT_ID}-${VERSION}
 
+# code formatting args
+GOOGLE_FORMATTER_ARGS ?= -r
+
 # Tutorial
 PUNCHLINE ?= $(shell pwd)/punchline.yaml
 ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload
@@ -42,8 +45,15 @@ JAR_IMG = javaworker
 # internal
 ###
 
+## path
 CONTAINER_NAME ?= package_worker
+BUILD_DIR = $(shell pwd)/.build
+
+## Exec
+FORMATTER_JAR_PATH = ${BUILD_DIR}/google_formatter/googleformatter.jar
 MVN = $(shell pwd)/mvnw
+INSTALL_GOOGLE_FORMATTER = $(shell pwd)/tools/install_google_formatter.sh
+GOOGLE_FORMATTER = $(shell pwd)/tools/google_formatter.sh
 
 ###
 # Makefile Configuration

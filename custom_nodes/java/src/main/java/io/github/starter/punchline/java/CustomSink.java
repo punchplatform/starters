@@ -13,22 +13,22 @@ import org.slf4j.LoggerFactory;
  * @author Punch Team
  */
 public class CustomSink extends Function {
-    private static final Logger log = LoggerFactory.getLogger(CustomSink.class);
-    private Config config;
+  private static final Logger log = LoggerFactory.getLogger(CustomSink.class);
+  private Config config;
 
-    @Override
-    public void execute(Row row) {
-        if (config.print) {
-            log.info("execute row {}", row.getValues().toString());
-        }
-        ack(row);
+  @Override
+  public void execute(Row row) {
+    if (config.print) {
+      log.info("execute row {}", row.getValues().toString());
     }
+    ack(row);
+  }
 
-    @Override
-    public void open() throws ConfigurationException {
-        config = new ObjectMapper().convertValue(settings, Config.class);
-        if (!out.isEmpty()) {
-            throw new ConfigurationException("the sample sink cannot output any row");
-        }
+  @Override
+  public void open() throws ConfigurationException {
+    config = new ObjectMapper().convertValue(settings, Config.class);
+    if (!out.isEmpty()) {
+      throw new ConfigurationException("the sample sink cannot output any row");
     }
+  }
 }

@@ -5,7 +5,7 @@ ARG MAVEN_LOCAL_REPOSITORY=/mvnhome/repository
 WORKDIR /starter
 RUN apk update &&\
     apk upgrade &&\
-    apk --update-cache add make gettext libintl zip bash zip &&\
+    apk --update-cache add make gettext libintl zip bash zip curl &&\
     rm -rf /var/cache/apk/* 
 COPY mvnw mvnw
 COPY INFO INFO

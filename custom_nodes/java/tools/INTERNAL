@@ -7,7 +7,7 @@ prerequisites:
 
 .PHONY: build
 
-build:
+build: lint
 	$(MVN) -Dmaven.repo.local=${MAVEN_LOCAL_REPOSITORY} -Drevision=${VERSION} clean install
 	$(MAKE) metadata
 
@@ -15,6 +15,14 @@ build:
 
 docker-clean:
 	@docker rm -f "${CONTAINER_NAME}" 2>/dev/null || true
+
+google-formatter: .build/google-formatter-install
+
+# Java Google Code Formatter
+.build/google-formatter-install:
+	mkdir -p ${BUILD_DIR}
+	$(INSTALL_GOOGLE_FORMATTER) ${FORMATTER_JAR_PATH}
+	touch $@
 
 .PHONY: help
 
