@@ -18,8 +18,15 @@ Changing *metadata.yml* information requires updating variables define in
 In case you desire to include your project in a CI, these variables can be updated inline by passing them as argument:
 
 ```sh
-make GROUP_ID="id" VERSION="unstable" artifact
+make VERSION="unstable" artifact
 ```
+
+**GROUP_ID** and **ARTIFACT_ID** value should match [pom.xml](pom.xml):
+
+- artifactId
+- groupId
+
+and directory hierarchy in `src/main/java/...`
 
 ## Note 2
 
