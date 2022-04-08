@@ -1,18 +1,21 @@
 #!/usr/bin/env bash -ec -o pipefail
 
+##@ Tutorial
+
 .PHONY: run
 
-run:
-	docker run --rm -it \
-        -v ${OUTPUT_PEX_ARCHIVE}:/usr/share/punch/extlib/${NAME}.pex \
-        -v ${PUNCHLINE}:/data/punchline.yaml \
-        ${ENGINE_IMG} \
-        /data/punchline.yaml
+run: ## Test your generated PEX with pyline engine using docker
+	docker run \
+		--rm -it \
+		-v ${OUTPUT_PEX_ARCHIVE}:/usr/share/punch/extlib/${NAME}.pex \
+		-v ${PUNCHLINE}:/data/punchline.yaml \
+		${ENGINE_IMG} \
+		/data/punchline.yaml
 
-.PHONY: apply
+.PHONY: upload-artifact
 
-apply:
-	curl -XPOST "http://artifacts-server.kooker:4245/v1/artifacts/upload" \
-        -F artifact=@${OUTPUT_ARCHIVE} \
-        -F override=true
-	kubectl apply -f ${PUNCHLINE}
+upload-artifact: ## Upload artifact to artifact server
+	curl \
+		-XPOST "${ARTIFACT_SERVER_UPLOAD_URL}" \
+		-F artifact="@${OUTPUT_ARCHIVE}" \
+		-F override=true

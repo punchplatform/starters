@@ -27,6 +27,7 @@ NAME ?= ${ARTIFACT_ID}-${VERSION}
 
 # Tutorial
 PUNCHLINE ?= $(shell pwd)/punchline.yaml
+ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload
 
 ###
 # Images

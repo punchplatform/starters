@@ -1,5 +1,7 @@
 ARG PYTHON_VERSION_TAG="3.6.8-slim"
+ARG WORKSPACE="/poetryshell"
 FROM python:${PYTHON_VERSION_TAG}
+WORKDIR ${WORKSPACE}
     # python:
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -15,4 +17,4 @@ COPY poetry.lock poetry.lock
 COPY pyproject.toml pyproject.toml
 COPY poetry.toml poetry.toml
 RUN venv/bin/poetry run pip install -U pip setuptools'<50' wheel
-ENV PATH=/venv/bin:${PATH}
+ENV PATH=${WORKSPACE}/venv/bin:${PATH}

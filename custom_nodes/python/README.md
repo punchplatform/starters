@@ -116,9 +116,7 @@ An archive is generated in `target/punchline-python-starter-kit-1.0.0-artifact.z
 Upload the archive on the Artifact Server:
 
 ```sh
-curl -XPOST "http://artifacts-server.kooker:4245/v1/artifacts/upload" \
-    -F artifact=@target/punchline-python-starter-kit-1.0.0-artifact.zip \
-    -F override=true
+make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
 Start your punchline on Kubernetes :
