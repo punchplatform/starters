@@ -24,15 +24,15 @@ import org.apache.spark.sql.api.java.UDF1;
  * @author jonathan yue chun
  */
 public class CustomUDF implements UDF1<String, String[]> {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Override
-  public String[] call(String tuple) {
-    String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
-    String[] result = new String[tupleValuesAsList.length];
-    for (int i = 0; i < tupleValuesAsList.length; i++) {
-      result[i] = tupleValuesAsList[i].replace(" ", "");
+    @Override
+    public String[] call(String tuple) {
+        String[] tupleValuesAsList = tuple.substring(1, tuple.length() - 1).split(",");
+        String[] result = new String[tupleValuesAsList.length];
+        for (int i = 0; i < tupleValuesAsList.length; i++) {
+            result[i] = tupleValuesAsList[i].replace(" ", "");
+        }
+        return result;
     }
-    return result;
-  }
 }

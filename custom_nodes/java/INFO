@@ -27,7 +27,9 @@ SOURCES = src
 NAME ?= ${ARTIFACT_ID}-${VERSION}
 
 # code formatting args
-GOOGLE_FORMATTER_ARGS ?= -r
+# https://github.com/google/google-java-format/blob/master/core/src/main/java/com/google/googlejavaformat/java/JavaFormatterOptions.java#L22
+# enforce gofmt concepts
+GOOGLE_FORMATTER_ARGS ?= -r --aosp 4
 
 # Tutorial
 PUNCHLINE ?= $(shell pwd)/punchline.yaml
