@@ -9,7 +9,7 @@ metadata:
 spec:
   containers:
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-java:8.0.0
+      image: ghcr.io/punchplatform/punchline-java:8.0-dev
       env:
         - name: JDK_JAVA_OPTIONS
           value: "-Xms100m -Xmx450m"

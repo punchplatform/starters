@@ -148,7 +148,7 @@ docker run -it \
     -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/com/mycompany/parsers/1.0.0/parsers-1.0.0.zip \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
     --network=host \
-    ghcr.io/punchplatform/punchline-java:8.0.0 \
+    ghcr.io/punchplatform/punchline-java:8.0-dev \
     /data/punchline.yaml
 ```
 
@@ -210,7 +210,7 @@ In another one, inject logs to your punchline:
 kubectl apply -f my_service.yaml  
 
 # Then we start a simulator inside the kubernetes cluster :
-cat simulator.json | kubectl run -i simulator --image ghcr.io/punchplatform/simulator:8.0.0 -- -c - --host my-parser-input.default
+cat simulator.json | kubectl run -i simulator --image ghcr.io/punchplatform/simulator:8.0-dev -- -c - --host my-parser-input.default
 ```
 
 Note: When you want to stop your simulator session, a '<ctrl>-c' will not be enough (it will just detach your console

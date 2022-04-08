@@ -6,9 +6,9 @@ metadata:
 spec:
   containers:
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-python:8.0.0
+      image: ghcr.io/punchplatform/punchline-python:8.0-dev
     resourcesInitContainer:
-      image: ghcr.io/punchplatform/resourcectl:8.0.0
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0

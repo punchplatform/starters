@@ -8,7 +8,7 @@ run: FORCE
 	docker run --rm -it \
 		-v ${PWD}/target/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-java-starter-kit-1.0.0-jar-with-dependencies.jar \
 		-v ${PWD}/punchline.yaml:/data/punchline.yaml \
-		ghcr.io/punchplatform/punchline-java:8.0.0 \
+		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/data/punchline.yaml
 
 apply: FORCE

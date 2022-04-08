@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-python:8.0.0
+      image: ghcr.io/punchplatform/punchline-python:8.0-dev
       imagePullPolicy: IfNotPresent
       env:
         - name: JDK_JAVA_OPTIONS

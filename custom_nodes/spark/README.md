@@ -51,7 +51,7 @@ or
 docker run -it --rm --entrypoint sparkctl-client \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
     -v $PWD/target/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar \
-    ghcr.io/punchplatform/punchline-spark:8.0.0 --job /data/punchline.yaml
+    ghcr.io/punchplatform/punchline-spark:8.0-dev --job /data/punchline.yaml
 ```
 
 ## Start your punchline in production mode with Kubernetes
