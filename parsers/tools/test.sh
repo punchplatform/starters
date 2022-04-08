@@ -66,7 +66,7 @@ function check_prerequisites() {
 }
 
 function main() {
-  	docker run -v $PWD:/workdir/ ghcr.io/punchplatform/puncher:8.0-dev -T /workdir
+  	docker run -v $PWD:/workdir/ ghcr.io/punchplatform/puncher:8.0.0 -T /workdir
   	exit $?
 }
 main $@

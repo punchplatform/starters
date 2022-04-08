@@ -1,4 +1,4 @@
-FROM ghcr.io/punchplatform/punchline-java:8.0-dev
+FROM ghcr.io/punchplatform/punchline-java:8.0.0
 
 COPY punchlets/print.punch /usr/share/punch/resources/print.punch
 COPY punchline/punchline.yaml /data/punchline.yaml

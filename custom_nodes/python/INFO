@@ -33,7 +33,7 @@ ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/u
 # Images
 ###
 
-ENGINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.0-dev
+ENGINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.0.0
 TOOL_IMG = tool
 PEX_IMG = custom_node
 

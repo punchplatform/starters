@@ -8,7 +8,7 @@ run: FORCE
 	docker run --rm -it --entrypoint sparkctl-client \
 		-v ${PWD}/target/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar \
 		-v ${PWD}/punchline.yaml:/data/punchline.yaml \
-		ghcr.io/punchplatform/punchline-spark:8.0-dev \
+		ghcr.io/punchplatform/punchline-spark:8.0.0 \
 		--job /data/punchline.yaml
 
 apply: FORCE
