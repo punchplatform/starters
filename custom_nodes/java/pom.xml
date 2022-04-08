@@ -24,7 +24,6 @@
     </dependencies>
 
     <build>
-        <!-- Build jar with dependencies and artifact zip -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

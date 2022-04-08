@@ -1,4 +1,4 @@
-type: additional-pex
+type: additional-jar
 group: ${GROUP_ID}
 logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
 version: ${VERSION}

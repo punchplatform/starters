@@ -38,6 +38,11 @@ make GROUP_ID="id" VERSION="unstable" artifact
 
 # Quick Start
 
+```sh
+# Read the doc
+make help
+```
+
 ## Package
 
 ### You are a developer

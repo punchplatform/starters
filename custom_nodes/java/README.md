@@ -1,7 +1,6 @@
 # Prerequisites
 
 - Docker install locally, or a Kubernetes cluster reachable
-- Clone this repository
 
 # Notes
 
@@ -67,6 +66,11 @@ To use SNAPSHOT versions, you have to add Maven Central Snapshot Repository to y
 
 # Quick Start
 
+```sh
+# Read the doc
+make help
+```
+
 ## Package
 
 ### You are a developer
@@ -81,7 +85,10 @@ make artifact # check target directory
 Building the zip archive using your desired java jdk version
 
 ```sh
-make docker-build JAVA_VERSION_TAG=jdk-11.0.14.1_1-alpine
+# build with defaults
+make
+# build with another java (not advised)
+make JAVA_VERSION_TAG=jdk-11.0.14.1_1-alpine
 ```
 
 ## Start your punchline in development mode with Docker
@@ -99,13 +106,14 @@ make run ENGINE_IMG=ghcr.io/punchplatform/punchline-java:8.0-latest
 
 A zip archive is generated as `target/punchline-java-starter-kit-1.0.0.zip`.
 
-You simply have to upload it to the Punch Artifacts Server using this command:
+You have to upload it to the Punch Artifacts Server using this command:
 
 ```sh
 make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
 Start your punchline on Kubernetes:
+
 ```sh
 kubectl apply -f punchline.yaml
 ```
