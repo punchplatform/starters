@@ -42,11 +42,6 @@ spec:
               type: string
             - name: _ppf_id
               type: string
-    - id: processing
-      type: punchlet_function
-      kind: function
-      settings:
-        punchlet_code: "{ print(root); }"
     - id: output
       kind: sink
       type: kafka_sink

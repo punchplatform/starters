@@ -75,7 +75,7 @@ spec:
       type: lumberjack_sink
       kind: function
       settings:
-        host: lmr-input-service.mytenant
+        host: lmr-input-service.default
         port: 9990
         compression: true
         keepalive_interval: 5

@@ -11,4 +11,4 @@ spec:
       targetPort: 9990
       name: lmr-input-service
   selector:
-    stormline-owner: lmr-in
+    punchline-name: lmr-in

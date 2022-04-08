@@ -1,0 +1,74 @@
+apiVersion: punchline.punchplatform.io/v2
+kind: StreamPunchline
+metadata:
+  name: lmc-elasticsearch
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '7773'
+
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.0-dev
+      env:
+        - name: JDK_JAVA_OPTIONS
+          value: "-Xms100m -Xmx450m"
+  dag:
+    - id: input
+      kind: source
+      type: kafka_source
+      load_control:
+        throughput: 10000
+        max_pending_row_number: 1000
+        row_timeout_secs: 30
+      settings:
+        bootstrap.servers: kafka-kafka-bootstrap.processing:9092
+        topics: ref-test-01-lmr
+        value.format: lumberjack
+        start_offset_strategy: last_committed
+      out:
+        - id: elasticsearch_sink
+          table: logs
+          columns:
+            - name: log
+              type: string
+            - name: _ppf_remote_host
+              type: string
+            - name: _ppf_remote_port
+              type: int
+            - name: _ppf_local_host
+              type: string
+            - name: _ppf_local_port
+              type: int
+            - name: _ppf_timestamp
+              type: string
+            - name: _ppf_id
+              type: string
+    - id: elasticsearch_sink
+      type: elasticsearch_sink
+      engine_settings:
+        tick_row_frequency_ms: 1000
+      kind: function
+      settings:
+        http_hosts:
+          - host: punchplatform-es-default.doc-store
+            port: 9200      
+            scheme: http 
+        security:
+          credentials:
+            password: elastic
+            username: elastic
+        bulk_size: 1000
+        request_timeout: 20s
+        index: 
+          type: daily
+          column: log
+          prefix: punchv8-
+        document:
+          id_column: _ppf_id
+          extra_fields:
+            - type: date
+              name: '@timestamp'
+              format: yyyy-MM-dd'T'HH:mm:ss.SSSZZ
+        bulk_failure_action: fail
+        document_failure_action: fail
