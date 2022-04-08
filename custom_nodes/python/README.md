@@ -43,6 +43,7 @@ make GROUP_ID="id" VERSION="unstable" artifact
 ### You are a developer
 
 ```sh
+# you are required to have python3 installed and configured
 make artifact # check target directory
 ```
 
@@ -111,7 +112,7 @@ make run ENGINE_IMG=ghcr.io/punchplatform/punchline-python:8.0-latest
 
 ### Using commands
 
-An archive is generated in `target/punchline-python-starter-kit-1.0.0-artifact.zip`.
+An zip archive is generated as `target/punchline-python-starter-kit-1.0.0.zip`.
 
 Upload the archive on the Artifact Server:
 
