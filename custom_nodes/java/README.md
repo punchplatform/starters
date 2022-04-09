@@ -34,35 +34,9 @@ their version changed.
 
 ## Note 3
 
-Currently, the Punch API is in 8.0-dev version.
+This project uses per based project maven settings with preconfigured settings for fetching internal dependencies.
 
-To use SNAPSHOT versions, you have to add Maven Central Snapshot Repository to your `~/.m2/settings.xml` :
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 http://maven.apache.org/xsd/settings-1.2.0.xsd"
-          xmlns="http://maven.apache.org/SETTINGS/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <profiles>
-        <profile>
-            <id>allow-snapshots</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>snapshots-repo</id>
-                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-</settings>
-```
+Edit [settings.xml](.mvn/settings.xml) if you need more customization.
 
 # Quick Start
 

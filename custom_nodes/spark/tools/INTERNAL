@@ -8,7 +8,10 @@ prerequisites:
 .PHONY: build
 
 build: lint
-	$(MVN) -Dmaven.repo.local=${MAVEN_LOCAL_REPOSITORY} -Drevision=${VERSION} clean install
+	$(MVN) \
+		--global-settings ${MAVEN_SETTINGS_XML} \
+		-Dmaven.repo.local=${MAVEN_LOCAL_REPOSITORY} \
+		-Drevision=${VERSION} clean install
 	$(MAKE) metadata
 
 .PHONY: docker-clean

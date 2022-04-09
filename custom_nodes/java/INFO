@@ -21,6 +21,7 @@ OUTPUT_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.zip
 # for example can be changed to: 3.9.7-slim-buster
 JAVA_VERSION_TAG ?= "jdk-11.0.14.1_1-alpine"
 MAVEN_LOCAL_REPOSITORY ?= "${HOME}"/.m2/repository
+MAVEN_SETTINGS_XML ?= $(shell pwd)/.mvn/settings.xml
 
 # used to build jar (should not be changed)
 SOURCES = src

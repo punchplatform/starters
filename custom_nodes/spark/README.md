@@ -34,6 +34,12 @@ make VERSION="unstable" artifact
 
 and directory hierarchy in `src/main/java/...`
 
+## Note 2
+
+This project uses per based project maven settings with preconfigured settings for fetching internal dependencies.
+
+Edit [settings.xml](.mvn/settings.xml) if you need more customization.
+
 ## Demonstration
 
 The UDF function in this repository takes as input a String which follows the following pattern:
