@@ -3,6 +3,7 @@
 .PHONY: prerequisites
 
 prerequisites:
+	@mkdir -p ${BUILD_DIR}
 	@mkdir -p ${OUTPUT_DIR}
 
 .PHONY: build

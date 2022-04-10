@@ -20,26 +20,27 @@ artifact: build metadata ## Generate final archive with metadata and pex
 
 .PHONY: lint
 
-lint: google-formatter ## format all java files to google code style: ignores ./build, .mvn directories: use GOOGLE_FORMATTER_ARGS=--dry-run to list files to lint
+lint: google-formatter ## Format all java files to google code style: ignores ./build, .mvn directories: use GOOGLE_FORMATTER_ARGS=--dry-run to list files to lint
 	-JAVA_HOME=${JAVA_HOME} \
 	 FORMATTER_JAR_PATH=${FORMATTER_JAR_PATH} \
 		find . -name '*.java' \
 			! -path "./build/*" \
 			! -path "./.mvn/*" \
+			! -path "./metadata/*" \
+			! -path "./tools/*" \
 			-exec $(GOOGLE_FORMATTER) ${GOOGLE_FORMATTER_ARGS} {} +
 
 .PHONY: clean
 
 clean: ## Clean this repository
 	$(MVN) -Drevision=${VERSION} clean
+	rm -rf ${OUTPUT_DIR} ${BUILD_DIR}
 
 ##@ Dockerised environment
 
 .PHONY: docker-build
 
 docker-build: clean docker-clean ## Generate a zip archive of this application using docker
-	@rm -rf target
-	@mkdir -p target
 	@docker build . \
 		-t "${JAR_IMG}" \
 		--build-arg "SOURCES=${SOURCES}" \
