@@ -56,7 +56,7 @@ make artifact # check target directory
 
 ```sh
 make venv
-source .venv/bin/activate
+source .venv-poetry/bin/activate
 poetry add requests
 ```
 

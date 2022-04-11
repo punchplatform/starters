@@ -34,8 +34,8 @@ lint: docker-clean ## Apply codestyle and lint code
 
 .PHONY: clean
 
-clean: clean-package clean-pyc clean-test ## Clean generated files in this repository
-	rm -rf target .venv dist .cache .venv .venv-poetry
+clean: clean-pyc ## Clean generated files in this repository
+	rm -rf ${OUTPUT_DIR} ${VENV} ${VENV_APP} dist .cache
 
 ##@ Dockerised environment
 

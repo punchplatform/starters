@@ -14,12 +14,6 @@ venv:
 	@$(POETRY) run pip install -U pip setuptools'<50' wheel
 	@$(POETRY) install
 
-.PHONY: clean-package
-
-clean-package:
-	rm -rf dist
-	rm -rf target
-
 .PHONY: clean-pyc
 
 clean-pyc:
@@ -27,13 +21,6 @@ clean-pyc:
 	-find . -name '*.pyo' -exec rm -f {} +
 	-find . -name '*~' -exec rm -f {} +
 	-find . -name '__pycache__' -exec rm -fr {} +
-
-.PHONY: clean-test
-
-clean-test:
-	rm -fr .tox/
-	rm -fr .coverage
-	rm -fr htmlcov/
 
 .PHONY: docker-clean
 
