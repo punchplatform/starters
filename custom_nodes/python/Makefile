@@ -35,19 +35,13 @@ lint: docker-clean ## Apply codestyle and lint code
 .PHONY: clean
 
 clean: clean-package clean-pyc clean-test ## Clean generated files in this repository
-	rm -rf target
-	rm -rf .venv
-	rm -rf dist
-	rm -rf .cache
-	rm -rf .venv
+	rm -rf target .venv dist .cache .venv .venv-poetry
 
 ##@ Dockerised environment
 
 .PHONY: docker-build
 
-docker-build: clean docker-clean ## Generate a zip archive of this application using docker
-	@rm -rf target
-	@mkdir -p target
+docker-build: prerequisites clean docker-clean ## Generate a zip archive of this application using docker
 	@docker build . \
 		-t "${PEX_IMG}" \
 		--build-arg "SOURCES=${SOURCES}" \

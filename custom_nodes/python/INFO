@@ -42,7 +42,7 @@ PEX_IMG = custom_node
 ###
 
 CONTAINER_NAME ?= package_worker
-VENV = $(shell pwd)/.venv
+VENV = $(shell pwd)/.venv-poetry
 PIP = ${VENV}/bin/pip
 POETRY = ${VENV}/bin/poetry
 PEX = ${VENV}/bin/pex
