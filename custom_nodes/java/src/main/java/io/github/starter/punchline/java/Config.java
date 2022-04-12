@@ -2,11 +2,7 @@ package io.github.starter.punchline.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Sample Node Config
- */
+/** Sample Node Config */
 public class Config {
-    @JsonProperty
-    boolean print;
+    @JsonProperty boolean print;
 }
-

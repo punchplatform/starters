@@ -4,4 +4,5 @@ target
 .java-version
 dist/
 .venv/
+.venv-poetry
 .vscode

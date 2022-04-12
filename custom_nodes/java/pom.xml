@@ -1,20 +1,16 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>io.github.starter</groupId>
     <artifactId>punchline-java-starter-kit</artifactId>
     <name>Punch Java Custom Node</name>
-    <version>1.0.0</version>
-
+    <version>${revision}</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <revision>VERSIONLESS</revision>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.github.punchplatform</groupId>
@@ -23,16 +19,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
     <build>
-        <!-- Render metadata template -->
-        <resources>
-            <resource>
-                <directory>metadata/</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <!-- Build jar with dependencies and artifact zip -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -48,19 +35,6 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>artifact-zip</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>true</appendAssemblyId>
-                            <descriptors>
-                                <descriptor>assembly/assembly-artifact.xml</descriptor>
-                            </descriptors>
                         </configuration>
                     </execution>
                 </executions>

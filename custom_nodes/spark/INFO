@@ -1,0 +1,66 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+###
+# User Configuration
+###
+
+# Information used to generate metadata.yml
+GROUP_ID ?= io.github.punchplatform
+ARTIFACT_ID ?= punchline-spark-starter-kit
+VERSION ?= 1.0.0
+TIMESTAMP = $(shell date +%s)
+
+# Input and Generated files
+OUTPUT_DIR = $(shell pwd)/target
+METADATA_TEMPLATE_FILE = $(shell pwd)/metadata/metadata.yml
+OUTPUT_JAR_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}-jar-with-dependencies.jar
+OUTPUT_METADATA_YML = ${OUTPUT_DIR}/metadata.yml
+OUTPUT_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.zip
+
+# Set java version
+JAVA_VERSION_TAG ?= "jdk-11.0.14.1_1-alpine"
+MAVEN_LOCAL_REPOSITORY ?= "${HOME}"/.m2/repository
+MAVEN_SETTINGS_XML ?= $(shell pwd)/.mvn/settings.xml
+
+# used to build jar (should not be changed)
+SOURCES = src
+NAME ?= ${ARTIFACT_ID}-${VERSION}
+
+# code formatting args
+# https://github.com/google/google-java-format/blob/master/core/src/main/java/com/google/googlejavaformat/java/JavaFormatterOptions.java#L22
+# enforce gofmt concepts
+GOOGLE_FORMATTER_ARGS ?= -r --aosp 4
+
+# Tutorial
+PUNCHLINE ?= $(shell pwd)/punchline.yaml
+ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload
+
+###
+# Images
+###
+
+ENGINE_IMG ?= ghcr.io/punchplatform/punchline-spark:8.0-dev
+TOOL_IMG = tool
+JAR_IMG = javaworker
+
+###
+# internal
+###
+
+## path
+CONTAINER_NAME ?= package_worker
+BUILD_DIR = $(shell pwd)/.build
+
+## Exec
+FORMATTER_JAR_PATH = ${BUILD_DIR}/google_formatter/googleformatter.jar
+MVN = $(shell pwd)/mvnw
+INSTALL_GOOGLE_FORMATTER = $(shell pwd)/tools/install_google_formatter.sh
+GOOGLE_FORMATTER = $(shell pwd)/tools/google_formatter.sh
+
+###
+# Makefile Configuration
+###
+
+.DEFAULT_GOAL := docker-build
+BUILDKIT_PROGRESS ?= plain
+DOCKER_BUILDKIT = 1

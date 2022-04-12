@@ -38,11 +38,17 @@ make GROUP_ID="id" VERSION="unstable" artifact
 
 # Quick Start
 
+```sh
+# Read the doc
+make help
+```
+
 ## Package
 
 ### You are a developer
 
 ```sh
+# you are required to have python3 installed and configured
 make artifact # check target directory
 ```
 
@@ -50,7 +56,7 @@ make artifact # check target directory
 
 ```sh
 make venv
-source .venv/bin/activate
+source .venv-poetry/bin/activate
 poetry add requests
 ```
 
@@ -88,10 +94,6 @@ make lint # abuse it ! this will tidy your code and reveals potential bugs...
 
 ### You are a user
 
-```sh
-mvn docker-build # check target directory
-```
-
 Building the zip archive using your desired python version
 
 ```sh
@@ -111,7 +113,7 @@ make run ENGINE_IMG=ghcr.io/punchplatform/punchline-python:8.0-latest
 
 ### Using commands
 
-An archive is generated in `target/punchline-python-starter-kit-1.0.0-artifact.zip`.
+An zip archive is generated as `target/punchline-python-starter-kit-1.0.0.zip`.
 
 Upload the archive on the Artifact Server:
 

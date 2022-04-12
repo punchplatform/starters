@@ -1,8 +1,5 @@
 package io.github.starter.punchline.spark.udf;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.expressions.MutableAggregationBuffer;
 import org.apache.spark.sql.expressions.UserDefinedAggregateFunction;
@@ -11,9 +8,10 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 
-/**
- * A custom UDAF taking integer ages as input and returning the average age.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+/** A custom UDAF taking integer ages as input and returning the average age. */
 public class CustomUDAF extends UserDefinedAggregateFunction {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +20,8 @@ public class CustomUDAF extends UserDefinedAggregateFunction {
     public StructType bufferSchema() {
         // buffer that spark will be using to keep track of aggregate result
         List<StructField> bufferFields = new ArrayList<>();
-        bufferFields.add(DataTypes.createStructField("current_sum_age", DataTypes.IntegerType, true));
+        bufferFields.add(
+                DataTypes.createStructField("current_sum_age", DataTypes.IntegerType, true));
         bufferFields.add(DataTypes.createStructField("num_of_row", DataTypes.IntegerType, true));
         return DataTypes.createStructType(bufferFields);
     }
@@ -41,7 +40,8 @@ public class CustomUDAF extends UserDefinedAggregateFunction {
 
     @Override
     public Integer evaluate(Row row) {
-        // called when processing is over and only one buffer left, will return the final aggregated result
+        // called when processing is over and only one buffer left, will return the final aggregated
+        // result
         int bufferSumAge = row.getInt(0);
         int bufferRowCount = row.getInt(1);
         return bufferSumAge / bufferRowCount;

@@ -3,13 +3,42 @@
 This repository is intended to be used as a starting point for developing your own Spark Nodes and UDF. These UDF can be used
 inside our PunchPlatform Sql Node.
 
-Note, although the UDF is coded using java, you should be able to use it within the pyspark provided by punch by
-installing a UDF jar with `install-dependencies` command.
-
-## Prerequisite
+# Prerequisite
 
 - Basic knowledge on Spark DataTypes/Scala DataTypes
 - Basic knowledge on Spark API: UDF
+- Docker install locally, or a Kubernetes cluster reachable
+
+# Notes
+
+## Note 1
+
+Changing *metadata.yml* information requires updating variables define in
+
+[INFO](./INFO) :
+
+- GROUP_ID
+- ARTIFACT_ID
+- VERSION
+
+In case you desire to include your project in a CI, these variables can be updated inline by passing them as argument:
+
+```sh
+make VERSION="unstable" artifact
+```
+
+**GROUP_ID** and **ARTIFACT_ID** value should match [pom.xml](pom.xml):
+
+- artifactId
+- groupId
+
+and directory hierarchy in `src/main/java/...`
+
+## Note 2
+
+This project uses per based project maven settings with preconfigured settings for fetching internal dependencies.
+
+Edit [settings.xml](.mvn/settings.xml) if you need more customization.
 
 ## Demonstration
 
@@ -24,68 +53,56 @@ this UDF produces as output:
 
 # Quick Start
 
-## Build
-
 ```sh
-make build
+# Read the doc
+make help
 ```
 
-or
+## Package
 
+### You are a developer
 
 ```sh
-mvn clean install
+# you are required to have openjdk11 installed and configured
+make artifact # check target directory
+```
+
+### You are a user
+
+Building the zip archive using your desired java jdk version
+
+```sh
+# build with defaults
+make
+# build with another java (not advised)
+make JAVA_VERSION_TAG=jdk-11.0.14.1_1-alpine
 ```
 
 ## Start your punchline in development mode with Docker
 
-To test the punchline above in foreground mode simply run :
+To test the punchline above in foreground mode run:
 
 ```sh
+# using latest-dev engine
 make run
-```
-
-or
-
-```sh
-docker run -it --rm --entrypoint sparkctl-client \
-    -v $PWD/punchline.yaml:/data/punchline.yaml \
-    -v $PWD/target/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar:/usr/share/punch/extlib/punchline-spark-starter-kit-1.0.0-jar-with-dependencies.jar \
-    ghcr.io/punchplatform/punchline-spark:8.0-dev --job /data/punchline.yaml
+# using latest-stable engine
+make run ENGINE_IMG=ghcr.io/punchplatform/punchline-spark:8.0-latest
 ```
 
 ## Start your punchline in production mode with Kubernetes
 
-### Using Makefile
-
-To upload your nodes and apply your punchline :
-
-```sh
-make apply
-```
-
-To check your logs :
-
-```sh
-make logs
-```
-
-To delete your punchline :
-
-```sh
-make delete
-```
-
 ### Using commands
 
-Maven generates `./target/punchline-spark-starter-kit-1.0.0-artifact.zip`.
+A zip archive is generated as `target/punchline-spark-starter-kit-1.0.0-artifact.zip`.
 
-You simply have to upload it to the Punch Artifacts Server using this command :
+You have to upload it to the Punch Artifacts Server using this command:
+
 ```sh
-curl -X POST "http://artifacts-server.kooker:4245/v1/artifacts/upload" -F artifact=@target/punchline-spark-starter-kit-1.0.0-artifact.zip -F override=true
+make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
-Start your punchline on Kubernetes :
+Start your punchline on Kubernetes:
+
 ```sh
 kubectl apply -f punchline.yaml
 ```

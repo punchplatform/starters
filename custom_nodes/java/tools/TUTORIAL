@@ -1,0 +1,21 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+##@ Tutorial
+
+.PHONY: run
+
+run: ## Test your generated PEX with pyline engine using docker
+	docker run \
+		--rm -it \
+		-v ${OUTPUT_JAR_ARCHIVE}:/usr/share/punch/extlib/${NAME}.jar \
+		-v ${PUNCHLINE}:/data/punchline.yaml \
+		${ENGINE_IMG} \
+		/data/punchline.yaml
+
+.PHONY: upload-artifact
+
+upload-artifact: ## Upload artifact to artifact server
+	curl \
+		-XPOST "${ARTIFACT_SERVER_UPLOAD_URL}" \
+		-F artifact="@${OUTPUT_ARCHIVE}" \
+		-F override=true
