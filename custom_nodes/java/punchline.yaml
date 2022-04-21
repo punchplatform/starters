@@ -9,7 +9,7 @@ spec:
       image: ghcr.io/punchplatform/punchline-java:8.0-dev
     resourcesInitContainer:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
-      resourcesProviderUrl: http://artifacts-server.punch-artifsacts:4245
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-jar:io.github.starter:punchline-java-starter-kit:1.0.0
   engineSettings: { }
