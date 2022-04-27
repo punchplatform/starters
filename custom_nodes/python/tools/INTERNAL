@@ -29,9 +29,15 @@ docker-clean:
 
 .PHONY: package
 
-package: prerequisites venv 
+package: prerequisites venv fetch-dependencies
 	@$(POETRY) build
-	@$(PEX) . -o ${OUTPUT_PEX_ARCHIVE}
+	@$(PEX) ${GENERATED_WHL} -o ${OUTPUT_PEX_ARCHIVE} --no-index -f ${OUTPUT_DIR}/downloaded
+
+.PHONY: fetch-dependencies
+
+fetch-dependencies:
+	@$(POETRY) export --without-hashes -f requirements.txt -o ${OUTPUT_DIR}/requirements.txt
+	@$(PIP) download -r ${OUTPUT_DIR}/requirements.txt -d target/downloaded
 
 .PHONY: help
 

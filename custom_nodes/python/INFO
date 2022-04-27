@@ -36,6 +36,7 @@ ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/u
 ENGINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.0-dev
 TOOL_IMG = tool
 PEX_IMG = custom_node
+GENERATED_WHL = $(shell pwd)/dist/*.whl
 
 ###
 # internal
