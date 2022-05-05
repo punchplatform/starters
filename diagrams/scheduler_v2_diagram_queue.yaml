@@ -1,0 +1,171 @@
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchApplicationModel
+metadata:
+  name: appmodel
+spec:
+  templateSpec:
+    jobSettings:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 5
+    containers:
+      applicationContainer:
+        image: busybox
+        env:
+          - name: JDK_JAVA_OPTIONS
+            value: "-Xms100m -Xmx450m"
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - "cat /userconf/file.yaml; exit 0;"
+        configMapMounts:
+          - name: myapp
+            mountPath: /userconf/
+            content:
+              file.yaml: |
+                # this content will be mounted on
+                # the pod container local filesystem at
+                # /userconf/file.yaml
+                test: hello world puncher at {{ .hello }}
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchPunchlineModel
+metadata:
+  name: bpunmodel
+spec:
+  templateSpec:
+    jobSettings:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 15
+    containers:
+      serviceAccount: admin-user
+      applicationContainer:
+        imagePullPolicy: IfNotPresent
+        image: ghcr.io/punchplatform/punchline-python:8.0-dev
+    dag:
+    - id: input
+      kind: source
+      type: generator_source
+      settings:
+        messages:
+        - [ "hello",  "world", "!" ]
+      out:
+      - id: print
+        table: data
+        columns:
+        - name: 0
+          type: string
+        - name: 1
+          type: string 
+        - name: 2
+          type: string 
+    - id: print
+      kind: sink
+      type: show_sink
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchlineModel
+metadata:
+  name: skpunmodel
+spec:
+  templateSpec:
+    jobSettings:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 15
+    containers:
+      serviceAccount: admin-user
+      applicationContainer:
+        imagePullPolicy: IfNotPresent
+        image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+    dag:
+    - id: input
+      kind: source
+      type: com.github.punchplatform.punchline.spark.nodes.GeneratorSource
+      settings:
+        messages:
+          - name: phil
+            age: 21
+      out:
+        - id: show
+    - id: show
+      kind: sink
+      type: com.github.punchplatform.punchline.spark.nodes.ShowSink    
+---
+# load controller
+# this is to prevent cluster getting of
+# out of resources problems
+apiVersion: workload.punchplatform.io/v2
+kind: WorkloadPriorityQueue
+metadata:
+  name: diskintensive
+spec:
+  parallel: 2
+---
+apiVersion: scheduler.punchplatform.io/v2
+kind: Diagram
+metadata:
+  name: diagram-sample
+spec:
+  queueRef:
+    kind: WorkloadPriorityQueue
+    name: diskintensive
+    priority: 10
+  workflow:
+    begin: 1
+    # steps[].layerId should be unique, i.e. not repeated
+    steps:
+      # execution will be made from index0 to len(workflow)
+      - layerId: 1
+        if:
+          # either rootNode1 && rootNode2 succeeded or rootNode1 && rootNode3 succeeded
+          operator: or
+          conditions: # setting this key will override base default condition nodes(*) == Succeeded
+            - operator: or
+              # we didn't put rootNode3 on purpose
+              # (default all nodes)
+              nodes: [rootNode1, rootNode2]
+            - operator: and
+              nodes: [rootNode1, rootNode3]
+        then: 
+          layerId: 2
+        else:
+          layerId: 1
+      - layerId: 2
+        then:
+          layerId: 3
+        else:
+          layerId: 2
+      - layerId: 3
+        else:
+          layerId: 3
+  layers:
+    - node: rootNode1
+      layerId: 1
+      modelRef:
+        name: appmodel
+        kind: BatchApplicationModel
+    - node: rootNode2
+      layerId: 1
+      modelRef:
+        name: bpunmodel
+        kind: BatchPunchlineModel
+    - node: rootNode3
+      layerId: 1
+      modelRef:
+        name: appmodel
+        kind: BatchApplicationModel
+    - node: middleNode
+      layerId: 2
+      modelRef:
+        name: skpunmodel
+        kind: SparkPunchlineModel
+    - node: leafNodeLeft
+      layerId: 3
+      modelRef:
+        name: appmodel
+        kind: BatchApplicationModel
+    - node: leafNodeRight
+      layerId: 3
+      modelRef:
+        name: appmodel
+        kind: BatchApplicationModel

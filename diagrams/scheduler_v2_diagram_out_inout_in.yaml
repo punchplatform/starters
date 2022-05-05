@@ -1,0 +1,133 @@
+apiVersion: metadata.punchplatform.io/v2
+kind: NameDateSuffix
+metadata:
+  name: file1
+spec:
+  prefix: "from-file-1-"
+  dateFormat: "2006-01-02"
+---
+apiVersion: metadata.punchplatform.io/v2
+kind: NameDateSuffix
+metadata:
+  name: file2
+spec:
+  prefix: "from-file-2-"
+  dateFormat: "2006-01-02"
+---
+apiVersion: metadata.punchplatform.io/v2
+kind: UniqueId
+metadata:
+  name: file3
+spec: {}  
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchApplicationModel
+metadata:
+  name: output
+spec:
+  templateSpec:
+    containers:
+      applicationContainer:
+        imagePullPolicy: IfNotPresent
+        image: busybox
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - |-
+              echo "from myself {{ .file1.node1 }}";
+              echo "generated UUID {{ .file3.node1 }}"
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchApplicationModel
+metadata:
+  name: inputoutput
+spec:
+  templateSpec:
+    containers:
+      applicationContainer:
+        imagePullPolicy: IfNotPresent
+        image: busybox
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - |-
+              echo "{{ .file1.node1 }}";
+              echo "{{ .file2.node2 }}";
+              echo "UUID from metadata file3[node1] {{ .file3.node1 }}";
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchApplicationModel
+metadata:
+  name: input
+spec:
+  templateSpec:
+    containers:
+      applicationContainer:
+        imagePullPolicy: IfNotPresent
+        image: busybox
+        command:
+          - "/bin/sh"
+          - "-c"
+        args:
+          - |-
+              echo "{{ .file1.node1 }}";
+              echo "{{ .file2.node2 }}";
+              echo "UUID from metadata file3[node1] {{ .file3.node1 }}";
+---
+apiVersion: scheduler.punchplatform.io/v2
+kind: Diagram
+metadata:
+  name: diagram-sample
+spec:
+  workflow:
+    begin: 1
+    steps:
+      - layerId: 1
+        then:
+          layerId: 2
+      - layerId: 2
+        then:
+          layerId: 3
+  layers:
+    - node: node1
+      layerId: 1
+      outputRefs:
+        - name: file1
+          kind: NameDateSuffix
+        - name: file3
+          kind: UniqueId
+      modelRef:
+        name: output
+        kind: BatchApplicationModel
+    - node: node2
+      layerId: 2
+      inputRefs:
+        - name: file1
+          kind: NameDateSuffix
+          node: node1
+        - name: file3
+          kind: UniqueId
+          node: node1
+      outputRefs:
+        - name: file2
+          kind: NameDateSuffix
+      modelRef:
+        name: inputoutput
+        kind: BatchApplicationModel
+    - node: node3
+      layerId: 3
+      inputRefs:
+        - name: file1
+          kind: NameDateSuffix
+          node: node1
+        - name: file2
+          kind: NameDateSuffix
+          node: node2
+        - name: file3
+          kind: UniqueId
+          node: node1          
+      modelRef:
+        name: input
+        kind: BatchApplicationModel        
