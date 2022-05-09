@@ -112,17 +112,12 @@ spec:
     priority: 10
   workflow:
     begin: 1
-    # steps[].layerId should be unique, i.e. not repeated
     steps:
-      # execution will be made from index0 to len(workflow)
       - layerId: 1
         if:
-          # either rootNode1 && rootNode2 succeeded or rootNode1 && rootNode3 succeeded
           operator: or
-          conditions: # setting this key will override base default condition nodes(*) == Succeeded
+          conditions:
             - operator: or
-              # we didn't put rootNode3 on purpose
-              # (default all nodes)
               nodes: [rootNode1, rootNode2]
             - operator: and
               nodes: [rootNode1, rootNode3]

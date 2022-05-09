@@ -3,7 +3,6 @@ kind: BatchApplicationModel
 metadata:
   name: appmodel
 spec:
-  hooks: {}
   templateSpec:
     jobSettings:
       backoffLimit: 0
@@ -29,44 +28,19 @@ spec:
                 # /userconf/file.yaml
                 test: hello world puncher at {{ .hello }}
 ---
-# BatchStatus
-# [Initializing, PendingDeployment, Deployed, Running,] Succeeded, Failed
-#
-# Allowed status should be only Terminal one's
-# Terminal status: Succeeded(0), Failed(1) 
-#
-#    [rootNode1, rootNode2, rootNode3] || (rootNode1,2,3 start at the sametime because .spec.workflow[0].layerId == 1)
-#    [middleNode] (when each element of .spec.workflow[0].when.conditions[] are evaluated to true THEN .spec.workflow[0].then.layerId == 2 )
-#    [leafNodeLeft, leafNodeRight] (when )
-#
-# Behavior:
-# - if all nodes of current layer reaches terminal status and there is no node(s) of the next layer that can be executed, the workflow will fail
-# - if all nodes of current layer reaches terminal status and there is no more layer left the workflow will succeed
-# - if .spec.workflow.steps.if.conditions does not resolve to true and no else is set, the workflow will fail
-# - a never ending for loop can be achieved using the .spec.workflow.steps.then/else to retry the same layer or retry from one of the previously succeeded layers
 apiVersion: scheduler.punchplatform.io/v2
 kind: Diagram
 metadata:
   name: diagram-sample
 spec:
-  # not mandatory but helps in exchanging (small) data sample between pods
-  # can be configuration file or dataModel that can be used for templating
-  # preExecution
-  # postExecution
-  # containers: {} # streamApplication configured by the operator
   workflow:
     begin: 1
-    # steps[].layerId should be unique, i.e. not repeated
     steps:
-      # execution will be made from index0 to len(workflow)
       - layerId: 1
         if:
-          # either rootNode1 && rootNode2 succeeded or rootNode1 && rootNode3 succeeded
           operator: or
-          conditions: # setting this key will override base default condition nodes(*) == Succeeded
+          conditions:
             - operator: or
-              # we didn't put rootNode3 on purpose
-              # (default all nodes)
               nodes: [rootNode1, rootNode2]
             - operator: and
               nodes: [rootNode1, rootNode3]
