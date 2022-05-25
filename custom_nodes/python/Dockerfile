@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION_TAG="3.6.8-slim"
+ARG PYTHON_VERSION_TAG="3.10.4-slim"
 FROM python:${PYTHON_VERSION_TAG} AS build-with-binaries
 WORKDIR /starter
 RUN DEBIAN_FRONTEND=noninteractive apt-get update &&\

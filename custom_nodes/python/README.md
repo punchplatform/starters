@@ -97,7 +97,7 @@ make lint # abuse it ! this will tidy your code and reveals potential bugs...
 Building the zip archive using your desired python version
 
 ```sh
-make docker-build PYTHON_VERSION_TAG=3.9.7-slim-buster
+make docker-build PYTHON_VERSION_TAG=3.10.4-slim
 ```
 
 ## Start your punchline in development mode with Docker

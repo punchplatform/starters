@@ -1,5 +1,5 @@
 ---
-apiVersion: punchline.punchplatform.io/v2
+apiVersion: punchline.gitlab.thalesdigital.io/v2
 kind: BatchPunchline
 metadata:
   name: custom-nodes-python
@@ -13,25 +13,20 @@ spec:
   dependencies:
     - additional-pex:io.github.punchplatform:punchline-python-starter-kit:1.0.0
   dag:
-    - type: custom_node.gendata
-      component: input
+    - id: generator
+      kind: source
+      type: custom_node.gendata
       settings:
         messages:
-          - [ 0.8 , 1.8 ]
-          - [ 0.0 , 1.0 ]
-          - [ 3.5 ,  4.5 ]
-          - [ 7.2 ,  8.2 ]
-          - [ 0.6 , 1.6 ]
-          - [ 2.5 ,  3.5 ]
-          - [ 7.9 ,  8.9 ]
-          - [ 0.0 , 1.0 ]
-          - [ 2.9 ,  3.9 ]
-          - [ 8.0 ,  2.9 ]
-      publish:
-        - stream: data
-
-    - type: show_sink
-      component: show
-      subscribe:
-        - stream: data
-          component: input
+          - data: My first message
+          - data: My second message
+          - data: My third one
+      out:
+        - id: show
+          table: default
+          columns:
+            - name: data
+              type: string
+    - id: show
+      kind: sink
+      type: show

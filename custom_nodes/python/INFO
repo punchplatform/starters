@@ -19,7 +19,7 @@ OUTPUT_ARCHIVE = ${OUTPUT_DIR}/${ARTIFACT_ID}-${VERSION}.zip
 
 # Set python version
 # for example can be changed to: 3.9.7-slim-buster
-PYTHON_VERSION_TAG ?= "3.6.8-slim"
+PYTHON_VERSION_TAG ?= "3.10.4-slim"
 
 # used to build pex (change this value to your desired root python module folder)
 SOURCES ?= custom_node
