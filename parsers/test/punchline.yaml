@@ -1,7 +1,8 @@
+---
 apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
-  name: my-parser
+  name: punch-parsers
 spec:
   containers:
     applicationContainer:
@@ -10,44 +11,46 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - punch-parsers:com.mycompany:parsers:1.0.0
-  engineSettings: {}
+    - punch-parsers:io.github.starter:parsers:1.0.0
   dag:
     - id: input
       kind: source
-      type: syslog_source
+      type: generator
       settings:
-        host: 0.0.0.0
-        port: 9902
+        messages:
+          - color=red city=Paris uri=https://punchplatform.com
+          - color=green city=Rome uri=https://punchplatform.com
+          - color=yellow city=New York uri=https://punchplatform.com
+          - color=black city=London uri=https://punchplatform.com
       out:
         - id: parser
           table: logs
           columns:
             - name: data
               type: string
+
     - id: parser
-      type: punchlet_function
       kind: function
+      type: punchlet
       settings:
         resources:
           - name: color_codes
             format: json
             type: file
-            url: com/mycompany/sample/resources/color_codes.json
+            url: sample/resources/color_codes.json
           - name: custom_groks
             type: file
             format: grok
-            url: com/mycompany/sample/groks
+            url: sample/groks
         punchlets:
-          - com/mycompany/sample/parser.punch
+          - sample/parser.punch
       out:
-        - id: print
+        - id: output
           table: logs
           columns:
             - name: log
               type: string
-    - id: print
-      type: punchlet_function
-      kind: function
-      settings:
-        punchlet_code: "{print(root);}"
+
+    - id: output
+      kind: sink
+      type: show

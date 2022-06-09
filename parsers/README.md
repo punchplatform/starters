@@ -16,24 +16,18 @@ with many parsers. Should you write your own, this project is for you.
 To create punch parsers, clone or download this repository, you will get the following layout:
 
 ```
-├── assembly
-│   └── assembly.xml
-├── pom.xml
-├── src
-│   └── com
-│       └── mycompany
-│           └── sample
-│               ├── MANIFEST.yml
-│               ├── groks
-│               │   └── pattern.grok
-│               ├── enrich.punch
-│               ├── parser.punch
-│               ├── resources
-│               │   └── color_codes.json
-│               └── test
-│                   ├── sample.txt
-│                   ├── unit_chain.json
-│                   └── unit_punchlet.json
+│── sample
+│   ├── MANIFEST.yml
+│   ├── groks
+│   │   └── pattern.grok
+│   ├── enrich.punch
+│   ├── parser.punch
+│   ├── resources
+│   │   └── color_codes.json
+│   └── test
+│       ├── sample.txt
+│       ├── unit_chain.json
+│       └── unit_punchlet.json
 └── tools
     └── test.sh
 ```
@@ -131,7 +125,7 @@ have docker installed before running this command
 Once your parser is ready, you can simply refer to them in your punchline. Remember a punchline is a log processing
 pipeline where you chain your parser.
 
-Check out the [punchline example](punchline.yaml).
+Check out the [punchline example](test/punchline.yaml).
 
 ## Run in foreground with docker
 
