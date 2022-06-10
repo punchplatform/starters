@@ -5,34 +5,24 @@ metadata:
 spec:
   containers:
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-starter:latest
+      image: ghcr.io/punchplatform/punchline-starter:dev
   dag:
   - id: input
+    type: generator
     kind: source
-    type: generator_source
-    exit_conditions:
-     success:
-        acks_greater_or_equal_to: 3
-        require_no_remaining_row_to_inject: true
-        require_no_pending_row: true
-     failure:
-        fails_greater_or_equal_to: 1
     settings:
-      expectation: none
-      acked:
       messages:
-        - "my first log"
-        - "My second message log"
-        - "And finally a third one"
-    out: 
+        - "This is"
+        - "a custom image"
+    out:
     - id: parser
       table: logs
       columns:
       - name: log
         type: string
   - id: parser
-    type: punchlet_function
+    type: punchlet
     kind: function
     settings:
-      punchlets: 
+      punchlets:
       - /usr/share/punch/resources/print.punch

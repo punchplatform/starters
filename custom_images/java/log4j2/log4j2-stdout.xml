@@ -6,8 +6,8 @@
     </properties>
     <Appenders>
         <!--
-          This file setups the logging output of the punchlinectl tool.
-          It sends the log to stdout so that foreground topology execution have their
+          This file setups the logging output of your punchline.
+          It sends the log to stdout so that foreground punchline execution have their
           logs directly to stdout.
         -->
         <Console name="STDOUT" target="SYSTEM_OUT">
@@ -21,14 +21,8 @@
           the punch info level only produce useful information.
           The debug level lets you understand the important actions.
           The trace level shows it all.
-         -->
+        -->
         <logger name="com.github.punchplatform" level="info"/>
-
-        <!--
-          these make it easy to track the log traversal. Use the trace level to see each
-          message going through
-
-       -->
 
         <!-- just in case you need it, not likely -->
         <logger name="org.apache" level="error"/>
@@ -37,6 +31,8 @@
         <logger name="org.apache.curator" level="error"/>
         <logger name="org.jtwig" level="error"/>
         <logger name="org.apache.spark" level="error"/>
+
+        <!-- Root log level -->
         <root level="info">
             <appender-ref ref="STDOUT"/>
         </root>

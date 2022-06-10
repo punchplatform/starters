@@ -16,6 +16,5 @@ spec:
     spec: 
       containers:
         - name: punchline
-          image: punchline-starter:latest
+          image: punchline-starter:dev
           imagePullPolicy: Always
-          args: ["resources/generator_print.yaml"]

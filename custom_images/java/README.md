@@ -20,19 +20,19 @@ The layout of this sample is as follows:
 ```
 ├── deploy
 │    └── deployment.yaml
-├── Dockerfile
 ├── log4j2
 │    └── log4j2-stdout.xml
 ├── punchlets
 │    └── print.punch
 ├── punchline
-│    └── generator_print.yaml
+│    └── punchline.yaml
+├── Dockerfile
 └── README.md
 ```
 
 To create your own custom punchline image, we suggest you first try with the examples as provided:
 
-* The [`generator_print.yaml`](punchline/punchline.yaml) punchline is an extra simple punchline that generates some
+* The [`punchline.yaml`](punchline/punchline.yaml) is an extra simple punchline that generates some
   sample data using the generator source.
 * The [`print.punch`](punchlets/print.punch) punchlet simply print the generated data.
 
@@ -50,13 +50,13 @@ First, create your docker image :
 docker build -t punchline-starter:dev .
 ```
 
-To run it as a simple docker application:
+Then, either run it as a simple docker application:
 
 ```sh
 docker run -it punchline-starter:dev
 ```
 
-To run it into your Kubernetes cluster :
+Or run it into your Kubernetes cluster (make sure to have your image loaded into your kubernetes cluster registry) :
 
 ```sh
 kubectl apply -f deploy/deployment.yaml 
