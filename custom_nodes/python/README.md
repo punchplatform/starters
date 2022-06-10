@@ -14,12 +14,6 @@ Building and packaging this application requires only:
 
 # Considerations
 
-## Note 1
-
-Renaming the root source python module from `custom_node` to `something_else`
-
-Requires updating in [INFO](./INFO) **SOURCES** variable to `something_else`
-
 ## Note 2
 
 Likewise as in *Note 1*, changing *metadata.yml* information requires updating variables define in
@@ -94,10 +88,10 @@ make lint # abuse it ! this will tidy your code and reveals potential bugs...
 
 ### You are a user
 
-Building the zip archive using your desired python version
+Building the zip archive
 
 ```sh
-make docker-build PYTHON_VERSION_TAG=3.10.4-slim
+make docker-build
 ```
 
 ## Start your punchline in development mode with Docker
