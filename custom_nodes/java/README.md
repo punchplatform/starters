@@ -51,18 +51,16 @@ make help
 
 ```sh
 # you are required to have openjdk11 installed and configured
-make artifact # check target directory
+make build # check target directory
 ```
 
 ### You are a user
 
-Building the zip archive using your desired java jdk version
+Building the zip archive
 
 ```sh
-# build with defaults
-make
-# build with another java (not advised)
-make JAVA_VERSION_TAG=jdk-11.0.14.1_1-alpine
+# build in a docker environment
+make docker-build # check target directory
 ```
 
 ## Start your punchline in development mode with Docker

@@ -12,7 +12,6 @@ spec:
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-jar:io.github.starter:punchline-java-starter-kit:1.0.0
-  engineSettings: { }
   dag:
     - id: input
       kind: source
@@ -47,7 +46,7 @@ spec:
               type: string
 
     - id: output
-      type: io.github.starter.punchline.java.CustomSink
       kind: sink
+      type: io.github.starter.punchline.java.CustomSink
       settings:
         print: true

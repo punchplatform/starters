@@ -2,13 +2,11 @@ package io.github.starter.punchline.java;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.github.punchplatform.api.exceptions.ConfigurationException;
 import io.github.punchplatform.api.punchline.java.Source;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -22,7 +20,7 @@ public class CustomSource extends Source {
     private long count;
 
     @Override
-    public void start() throws IOException, ConfigurationException {
+    public void start() {
         config = new ObjectMapper().convertValue(settings, Config.class);
         insert(out.get(0), Arrays.asList("astring", count, true), count++);
     }
