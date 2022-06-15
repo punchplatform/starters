@@ -1,11 +1,23 @@
-all: build run
-FORCE: ;
+#!/usr/bin/env bash -ec -o pipefail
 
-build: FORCE
-	docker build -t punchline-starter:dev .
+IMG ?= punchline-starter:dev
 
-run: FORCE
-	docker run -it punchline-starter:dev
+.PHONY: build
 
-apply: FORCE
+build:
+	docker build -t $(IMG) .
+
+.PHONY: run
+
+run:
+	docker run -it $(IMG)
+
+.PHONY: apply
+
+apply:
 	kubectl apply -f deploy/deployment.yaml
+
+.PHONY: delete
+
+delete:
+	kubectl delete -f deploy/deployment.yaml
