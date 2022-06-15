@@ -1,0 +1,48 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: custom-nodes-pyspark
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - additional-pex:io.github.starter:punchline-pyspark-starter-kit:1.0.0
+  engineSettings:
+    spark.kubernetes.authenticate.driver.serviceAccountName: admin-user
+  dag:
+    - id: input
+      kind: source
+      type: custom_nodes.custom_source
+      settings:
+        data:
+          - name: alice
+            age: 21
+          - name: bob
+            age: 22
+          - name: evan
+            age: 23
+      out:
+        - id: forward
+          table: generated_table
+
+    - id: forward
+      kind: function
+      type: custom_nodes.custom_function
+      settings:
+        show: true
+      out:
+        - id: output
+          table: printed_table
+
+    - id: output
+      kind: sink
+      type: custom_nodes.custom_sink
+      settings:
+        show: true

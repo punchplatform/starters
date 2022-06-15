@@ -1,0 +1,38 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+###
+# User Configuration
+###
+
+# Information used to generate metadata.yml
+GROUP_ID ?= io.github.starter
+ARTIFACT_ID ?= punchline-pyspark-starter-kit
+VERSION ?= 1.0.0
+
+###
+# internal
+###
+
+# Build
+BUILD_CONTAINER ?= build_container
+BUILD_IMG ?= build-image
+BUILD_TIMESTAMP = $(shell date +%s)
+
+# Output files
+OUTPUT_DIR = $(CURDIR)/target
+OUTPUT_METADATA = $(OUTPUT_DIR)/metadata.yml
+OUTPUT_FILE = $(OUTPUT_DIR)/$(ARTIFACT_ID)-$(VERSION).pex
+OUTPUT_ARCHIVE = $(OUTPUT_DIR)/$(ARTIFACT_ID)-$(VERSION).zip
+
+# Python
+VENV = $(CURDIR)/.venv-poetry
+PIP = $(VENV)/bin/pip
+POETRY = $(VENV)/bin/poetry
+PEX = $(VENV)/bin/pex
+
+# Run
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).pex
+
+# Upload
+ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload
