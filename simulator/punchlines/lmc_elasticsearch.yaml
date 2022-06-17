@@ -5,7 +5,6 @@ metadata:
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '7773'
-
 spec:
   containers:
     applicationContainer:
@@ -16,10 +15,10 @@ spec:
   dag:
     - id: input
       kind: source
-      type: kafka_source
-      load_control:
+      type: kafka
+      engine_settings:
         throughput: 10000
-        max_pending_row_number: 1000
+        queue_size: 1000
         row_timeout_secs: 30
       settings:
         bootstrap.servers: kafka-kafka-bootstrap.processing:9092
@@ -45,22 +44,22 @@ spec:
             - name: _ppf_id
               type: string
     - id: elasticsearch_sink
-      type: elasticsearch_sink
+      kind: sink
+      type: elasticsearch
       engine_settings:
         tick_row_frequency_ms: 1000
-      kind: function
       settings:
         http_hosts:
           - host: punchplatform-es-default.doc-store
-            port: 9200      
-            scheme: http 
+            port: 9200
+            scheme: http
         security:
           credentials:
             password: elastic
             username: elastic
         bulk_size: 1000
         request_timeout: 20s
-        index: 
+        index:
           type: daily
           column: log
           prefix: punchv8-

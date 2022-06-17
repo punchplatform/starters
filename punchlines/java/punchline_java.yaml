@@ -1,6 +1,6 @@
 ---
 apiVersion: punchline.punchplatform.io/v2
-kind: StreamPunchline
+kind: BatchPunchline
 metadata:
   name: punchline-java
 spec:

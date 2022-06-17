@@ -15,10 +15,10 @@ spec:
   dag:
     - id: input
       kind: source
-      type: kafka_source
-      load_control:
+      type: kafka
+      engine_settings:
         throughput: 100000
-        max_pending_row_number: 10000
+        queue_size: 10000
         row_timeout_secs: 0
       settings:
         bootstrap.servers: kafka-kafka-bootstrap.processing:9092
@@ -45,7 +45,7 @@ spec:
             - name: _ppf_id
               type: string
     - id: filter
-      type: filter_function
+      type: filter
       kind: function
       settings:
         blacklist:
@@ -72,8 +72,8 @@ spec:
             - name: _ppf_id
               type: string
     - id: output
-      type: lumberjack_sink
-      kind: function
+      type: lumberjack
+      kind: sink
       settings:
         host: lmr-input-service.default
         port: 9990

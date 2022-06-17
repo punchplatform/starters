@@ -1,5 +1,5 @@
 apiVersion: punchline.punchplatform.io/v2
-kind: StreamPunchline
+kind: BatchPunchline
 metadata:
   name: my-punchline
 spec:

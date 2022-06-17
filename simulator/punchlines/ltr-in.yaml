@@ -15,10 +15,10 @@ spec:
   dag:
     - id: input
       kind: source
-      type: syslog_source
-      load_control:
+      type: syslog
+      engine_settings:
         throughput: 100000
-        max_pending_row_number: 10000
+        queue_size: 10000
         row_timeout_secs: 0
       settings:
         proto: tcp
@@ -62,7 +62,7 @@ spec:
               type: string
     - id: output
       kind: sink
-      type: kafka_sink
+      type: kafka
       settings:
         format: lumberjack
         producer.acks: all
@@ -71,7 +71,7 @@ spec:
         bootstrap.servers: kafka-kafka-bootstrap.processing:9092
         topic: ref-test-01-ltr
     - id: processing
-      type: punchlet_function
+      type: punchlet
       kind: function
       settings:
         punchlet_code: "{ print(root); }"
