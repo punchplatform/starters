@@ -16,6 +16,7 @@ prepare: ## Prepare build
 	@$(PIP) install -U poetry pex
 	@$(POETRY) run pip install -U pip setuptools'<50' wheel
 	# Install and download custom node dependencies in .venv
+	@$(POETRY) update
 	@$(POETRY) install
 
 .PHONY: build
