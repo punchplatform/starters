@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import pandas
-from api.datasets import OutputDatasets
-from api.nodes import Source
+from punch_api.datasets import OutputDatasets
+from punch_api.nodes import Source
 
 __author__ = "RT"
 

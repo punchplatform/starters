@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from api.datasets import InputDatasets, OutputDatasets
-from api.nodes import Function
+from punch_api.datasets import InputDatasets, OutputDatasets
+from punch_api.nodes import Function
 
 __author__ = "RT"
 

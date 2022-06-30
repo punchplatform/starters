@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from api.datasets import InputDatasets, OutputDatasets
-from api.nodes import Function
+from punch_api.datasets import InputDatasets, OutputDatasets
+from punch_api.nodes import Function
+from pyspark.sql import DataFrame
 
 __author__ = "RT"
 
@@ -16,7 +17,7 @@ class CustomFunction(Function):
     def execute(self, input_datasets: InputDatasets, output_datasets: OutputDatasets) -> None:
         if self.show:
             for name, table in input_datasets.items():
-                df: Dataframe = table
+                df: DataFrame = table
                 print("Showing table " + name)
-                table.show()
+                df.show()
         output_datasets.put(input_datasets.get_first())
