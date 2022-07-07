@@ -1,0 +1,5 @@
+{
+     if (!grok2("%{SYSLOGPROG}").on([logs][log]).into([logs][sampleuri])) {
+     	raise("grok2 failed");
+     }
+}

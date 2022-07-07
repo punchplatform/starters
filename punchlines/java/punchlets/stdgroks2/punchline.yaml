@@ -14,7 +14,8 @@ spec:
         expectation: none
         acked:
         messages:
-          - "spoold[45]"
+          - "program[123]"
+          - "spoold[24]"
       out:
         - id: parser
           table: logs
@@ -26,12 +27,7 @@ spec:
       kind: function
       settings:
         resources:
-          - name: ecs-v1
-            url: /usr/share/punch/resources/ecs-v1
-            type: file
-            format: grok2
-          - name: custom_groks
-            url: /mypatterns.grok
+          - url: /usr/share/punch/resources/ecs-v1
             type: file
             format: grok2
         punchlets:
@@ -42,7 +38,7 @@ spec:
           columns:
             - name: log
               type: string
-            - name: process
+            - name: sampleuri
               type: string
     - id: print
       type: punchlet_function

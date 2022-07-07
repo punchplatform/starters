@@ -1,11 +1,3 @@
 {
-
-     // the expected input string is a key value format
-     // For example "color=red city=Rome uri=https://punchplatform.com"
-     // First convert it to a tuple
-     kv().on([logs][log]).into([logs][kv]);
-
-     // Then apply the custom grok pattern to the uri part and put the resulting
-     // fields (proto and host) directly under [logs][log]
-     grok("%{SAMPLEURI:[logs][sampleuri]}").on([logs][kv][uri]);
+     grok2("%{MYSYSLOGPROG}").on([logs][log]).into([logs]);
 }

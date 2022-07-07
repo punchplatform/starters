@@ -48,6 +48,15 @@ stdgroks:
 		ghcr.io/punchplatform/punchline-java:8.0-dev \
 		/punchline.yaml
 
+.PHONY: stdgroks2
+
+stdgroks2:
+	docker run -it --rm \
+		-v $(CURDIR)/stdgroks2/punchlet.punch:/punchlet.punch \
+		-v $(CURDIR)/stdgroks2/punchline.yaml:/punchline.yaml \
+		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		/punchline.yaml
+
 .PHONY: customgroks
 
 customgroks:
