@@ -28,12 +28,12 @@ spec:
         resources:
           - type: file
             format: geoipv4
-            url: /belgium4.csv.gz
+            url: /files/belgium4.csv.gz
           - type: file
             format: geoipv6
-            url: /belgium6.csv.gz
+            url: /files/belgium6.csv.gz
         punchlets:
-          - /punchlet.punch
+          - /files/punchlet.punch
       out:
         - id: print
           table: logs

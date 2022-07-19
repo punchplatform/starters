@@ -30,7 +30,7 @@ spec:
             type: file
             format: grok
         punchlets:
-          - /punchlet.punch
+          - /files/punchlet.punch
       out:
         - id: print
           table: logs

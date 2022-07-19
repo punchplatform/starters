@@ -27,11 +27,11 @@ spec:
       settings:
         resources:
           - name: color_codes
-            url: /color_codes.json
+            url: /files/color_codes.json
             type: file
             format: json
         punchlets:
-          - /punchlet.punch
+          - /files/punchlet.punch
       out:
         - id: print
           table: logs

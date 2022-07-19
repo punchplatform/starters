@@ -31,11 +31,11 @@ spec:
             type: file
             format: grok2
           - name: custom_groks
-            url: /mypatterns.grok
+            url: /files/mypatterns.grok
             type: file
             format: grok2
         punchlets:
-          - /punchlet.punch
+          - /files/punchlet.punch
       out:
         - id: print
           table: logs

@@ -16,6 +16,8 @@ To start any of these simply type in:
 make geoip
 ``` 
 
+You can use '<tab>' after typing `make ` to see the name of all tests you can run through the makefile.
+
 ## Punchlets or Parsers ?
 
 Punchlets are simple yet powerful. Parsers let you package industrial tested and versioned sets of punchlets. Once at
