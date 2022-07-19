@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "elastalert_core"
+version = "0.0.0"
+description = "Provides core pex for elastalert"
+authors = ["Punch <contact@punchplatform.com>"]
+maintainers = ["Punch <contact@punchplatform.com>"]
+homepage = "https://punchplatform.com"
+repository = "https://github.com/punchplatform"
+documentation = "https://doc.punchplatform.com"
+include = ["LICENSE","README.md","DESCRIPTION"]
+
+[tool.poetry.dependencies]
+python = "^3.10.4"
+elastalert2 = "^2.5.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+
+[tool.isort]
+profile = "black"
+force_single_line = true
+atomic = true
+include_trailing_comma = true
+lines_after_imports = 2
+lines_between_types = 1
+use_parentheses = true
+src_paths = ["elastalert_core", "tests"]
+skip_glob = ["*/setup.py"]
+filter_files = true
+known_first_party = "elastalert_core"
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | tests/.*/setup.py
+)/
+'''
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

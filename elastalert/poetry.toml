@@ -1,0 +1,6 @@
+# do not specify cache-dir with a relative path
+# it is a known bug and will cause invalid path exception: https://github.com/python-poetry/poetry/issues/3049
+
+[virtualenvs]
+create = true
+in-project = true

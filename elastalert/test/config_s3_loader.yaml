@@ -1,0 +1,42 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: StreamApplication
+metadata:
+  name: elastalertv2-s3-loader
+  labels:
+    bob: custom
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: punch-elastalert:latest 
+      imagePullPolicy: IfNotPresent
+      replicas: 1
+      args:
+      - '--config /example/config.yaml'
+      configMapMounts:
+        - name: elastalert
+          mountPath: /example/
+          content:
+            config.yaml: |
+            
+              es_host: punchplatform-es-default.doc-store
+              es_port: 9200
+              es_username: elastic
+              es_password: elastic
+              writeback_index: elastalert
+
+              # Scheduler
+              run_every:
+                minutes: 2
+              buffer_time:
+                minutes: 4
+              rules_loader: "elastalert_modules.rule_loader.s3_loader.S3Loader"
+
+
+              # Rule loader: S3
+              s3.endpoint: "http://minio.object-store:9002"
+              s3.bucket: "rules"
+              s3.rules_directory: "system"
+              s3.access_key: "minio"
+              s3.secret_key: "password"
