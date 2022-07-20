@@ -5,7 +5,7 @@ version: ${VERSION}
 artifact: ${ARTIFACT_ID}
 displayName: ${ARTIFACT_ID}
 createdAt: ${BUILD_TIMESTAMP}
-description: This package contains an example of a elastlert custom modules
+description: This package contains an example of an elastlert custom modules
 provider: # (optional)
   name: Punch Team
   email: contact@punchplatform.com

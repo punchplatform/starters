@@ -40,6 +40,19 @@ docker-build: ## Build artifact in a Docker environment
 	@docker run --name "$(BUILD_CONTAINER)" "$(BUILD_IMG)"
 	@docker cp "$(BUILD_CONTAINER)":/starter/target .
 	@docker rm -f "$(BUILD_CONTAINER)"
+##@ Tests 
+
+.PHONY: run
+
+run: upload
+	@# Ingest data and rules in doc-store
+	@$(TEST_DIR)/ingest.sh $(TEST_DIR)
+	@# Apply test crd
+	@kubectl apply -f $(TEST_DIR)/config_test.yaml
+	@# Check the result in kafka topics
+	@echo "\033[34mStarting...\033[m"
+	@kubectl -n processing exec -it kafka-kafka-0 -- /bin/bash -c "./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic suspect_name_alert"
+
 
 ##@ Clean
 
@@ -47,22 +60,20 @@ docker-build: ## Build artifact in a Docker environment
 
 clean: ## Clean this repository
 	rm -rf $(OUTPUT_DIR) $(VENV) .venv dist .cache
-	@docker rm -f "$(BUILD_CONTAINER)"
+	@-docker rm -f "$(BUILD_CONTAINER)"
 	-find . -name '*.pyc' -exec rm -f {} +
 	-find . -name '*.pyo' -exec rm -f {} +
 	-find . -name '*~' -exec rm -f {} +
 	-find . -name '__pycache__' -exec rm -fr {} +
 
+.PHONY: clean-run
+
+clean-run: 
+	kubectl delete -f $(TEST_DIR)/config_test.yaml --ignore-not-found
+	curl -u elastic:elastic -XDELETE "172.19.0.2:9200/customers" --silent -o /dev/null
+	curl -u elastic:elastic -XDELETE "172.19.0.2:9200/rules" --silent -o /dev/null
+
 ##@ Execute artifact
-
-.PHONY: run
-
-run: ## Test your artifact with java engine using docker
-	docker run --rm -it \
-        --entrypoint sparkctl-client \
-		-v $(OUTPUT_FILE):/usr/share/punch/$(DEPENDENCY_LOCATION) \
-		-v $(CURDIR)/test/punchline.yaml:/data/punchline.yaml \
-		$(PUNCHLINE_IMG) --job /data/punchline.yaml
 
 .PHONY: upload
 
@@ -72,17 +83,17 @@ upload: ## Upload artifact to artifact server
 .PHONY: apply
 
 apply: ## Apply test punchline to kube
-	kubectl apply -f test/punchline.yaml
+	kubectl apply -f test/from_doc_store/config_basic.yaml
 
 .PHONY: logs
 
 logs: ## View logs of test punchline
-	kubectl logs -f --tail -1 -l punchline-name=custom-nodes-pyspark
+	kubectl logs -f --tail -1 -l alerter=basic
 
 .PHONY: delete
 
 delete: ## Delete test punchline
-	kubectl delete -f test/punchline.yaml --ignore-not-found=true
+	kubectl delete -f test/from_doc_store/config_basic.yaml --ignore-not-found=true
 
 .PHONY: help
 

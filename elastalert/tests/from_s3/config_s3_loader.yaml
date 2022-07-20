@@ -6,20 +6,24 @@ metadata:
   labels:
     bob: custom
 spec:
+  dependencies:
+    - additional-pex:io.github.starter:elastalert-modules:1.0.0
   containers:
     serviceAccount: admin-user
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
     applicationContainer:
-      image: punch-elastalert:latest 
+      image: ghcr.io/punchplatform/punch-elastalert:8.0-dev
       imagePullPolicy: IfNotPresent
       replicas: 1
       args:
-      - '--config /example/config.yaml'
+      - '/example/config.yaml'
       configMapMounts:
         - name: elastalert
           mountPath: /example/
           content:
-            config.yaml: |
-            
+            config.yaml: |       
               es_host: punchplatform-es-default.doc-store
               es_port: 9200
               es_username: elastic
@@ -36,7 +40,7 @@ spec:
 
               # Rule loader: S3
               s3.endpoint: "http://minio.object-store:9002"
-              s3.bucket: "rules"
-              s3.rules_directory: "system"
+              s3.bucket: "default"
+              s3.rules_directory: "rules"
               s3.access_key: "minio"
               s3.secret_key: "password"

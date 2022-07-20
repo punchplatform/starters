@@ -6,7 +6,7 @@
 
 # Information used to generate metadata.yml
 GROUP_ID ?= io.github.starter
-ARTIFACT_ID ?= punchline-pyspark-starter-kit
+ARTIFACT_ID ?= elastalert-modules
 VERSION ?= 1.0.0
 
 ###
@@ -31,8 +31,9 @@ POETRY = $(VENV)/bin/poetry
 PEX = $(VENV)/bin/pex
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.0-dev
 DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).pex
+TEST_DIR= $(CURDIR)/tests/from_doc_store
 
 # Upload
-ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload
+ARTIFACT_SERVER_UPLOAD_URL ?= http://172.19.0.2:4245/v1/artifacts/upload

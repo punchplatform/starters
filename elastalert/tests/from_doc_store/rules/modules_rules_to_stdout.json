@@ -1,0 +1,15 @@
+{
+    "name": "Es rule stdout",
+    "@timestamp": "2020-09-23T14:47:02.448Z",
+    "es_host": "punchplatform-es-default.doc-store",
+    "es_port": 9200,
+    "index": "customers*",
+    "filter": [],
+    "type": "elastalert_modules.rules.suspect_name.SuspectName",
+    "suspect_names": ["Jeff Meza", "Chritiano Ronaldo", "Jack Mao"],
+    "match_enhancements": ["elastalert_modules.enhancement.discover_country.DiscoverCountry"],
+    "alert": "elastalert_modules.alerter.stdout.Stdout",
+    "stdout_command": true,
+    "start": "2020-09-23T14:47:02.448Z",
+    "hash": "12345678910"
+  }

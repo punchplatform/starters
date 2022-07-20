@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "elastalert_core"
+name = "elastalert_modules"
 version = "0.0.0"
 description = "Provides core pex for elastalert"
 authors = ["Punch <contact@punchplatform.com>"]
