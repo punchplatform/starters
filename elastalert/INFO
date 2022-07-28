@@ -33,7 +33,7 @@ PEX = $(VENV)/bin/pex
 # Run
 PUNCHLINE_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.0-dev
 DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).pex
-TEST_DIR= $(CURDIR)/tests/from_doc_store
+TEST_DIR= $(CURDIR)/tests/custom_test
 
 # Upload
 ARTIFACT_SERVER_UPLOAD_URL ?= http://172.19.0.2:4245/v1/artifacts/upload

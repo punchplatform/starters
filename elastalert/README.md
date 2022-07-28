@@ -2,7 +2,6 @@
 
 Developing, Building and packaging this application requires only:
 
-- Docker
 - bash
 - make
 - docker
@@ -37,29 +36,6 @@ make help
 ```sh
 # you are required to have docker installed 
 make docker-build 
-```
-
-**Generating** poetry.lock using docker
-
-**Usage**
-
-```sh
-# In terminal 1
-# activate docker-poetry
-make docker-poetry  # A CHANGER
-
-# add dependencies
-poetry add requests
-
-# In terminal 2
-make docker-poetry-commit
-
-# When finished
-# In terminal 1
-CTRL + D
-
-# Start a new build
-make docker-build
 ```
 
 ## Test

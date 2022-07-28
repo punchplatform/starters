@@ -44,9 +44,10 @@ docker-build: ## Build artifact in a Docker environment
 
 .PHONY: run
 
-run: upload
+run: clean-run upload
 	@# Ingest data and rules in doc-store
-	@$(TEST_DIR)/ingest.sh $(TEST_DIR)
+	@$(TEST_DIR)/push_data_to_es.sh $(TEST_DIR)/data/
+	@$(TEST_DIR)/push_rules_to_s3.sh $(TEST_DIR)/rules/
 	@# Apply test crd
 	@kubectl apply -f $(TEST_DIR)/config_test.yaml
 	@# Check the result in kafka topics

@@ -1,0 +1,24 @@
+# Alert when a suspect name is detected
+name: SuspectName
+
+# Where the data is 
+index: customers*
+es_host: punchplatform-es-default.doc-store
+es_port: 9200
+'@timestamp': '2020-09-23T14:47:02.448Z'
+
+## custom rule module
+type: elastalert_modules.rules.suspect_name.SuspectName
+filter: []
+suspect_names: ["Jeff Meza", "Chritiano Ronaldo", "Jack Mao"]
+
+## custom enhancement module
+match_enhancements: ["elastalert_modules.enhancement.discover_country.DiscoverCountry"]
+
+## core alerter module
+alert: elastalert_core.alerter.kafka_alerter.KafkaAlerter
+topic: suspect_name_alert
+bootstrap_servers: ["kafka-kafka-bootstrap.processing:9092"]
+close_timeout: 10
+flush_timeout: 10
+    
