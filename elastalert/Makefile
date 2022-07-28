@@ -56,12 +56,11 @@ run: clean-run upload
 
 
 ##@ Clean
-
 .PHONY: clean
 
 clean: ## Clean this repository
 	rm -rf $(OUTPUT_DIR) $(VENV) .venv dist .cache
-	@-docker rm -f "$(BUILD_CONTAINER)"
+	@docker rmi -f $(shell docker images -q $(BUILD_IMG))
 	-find . -name '*.pyc' -exec rm -f {} +
 	-find . -name '*.pyo' -exec rm -f {} +
 	-find . -name '*~' -exec rm -f {} +
@@ -72,7 +71,6 @@ clean: ## Clean this repository
 clean-run: 
 	kubectl delete -f $(TEST_DIR)/config_test.yaml --ignore-not-found
 	curl -u elastic:elastic -XDELETE "172.19.0.2:9200/customers" --silent -o /dev/null
-	curl -u elastic:elastic -XDELETE "172.19.0.2:9200/rules" --silent -o /dev/null
 
 ##@ Execute artifact
 

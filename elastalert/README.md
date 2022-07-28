@@ -46,7 +46,7 @@ As elastalert needs elasticsearch or OpenDashboard to actually works, We assume 
 
 Once your packaging stage is all good, you can easily test it using the provided example in the test directory as starting point
 
-So, In the test directory you can find a complete example including example data. This example uses all the custom modules present in the repository :
+In this test directory you will find a complete example including example data. This example uses all the custom modules present in the repository :
 - custom loader ("elastalert_modules.rule_loader.s3_loader.S3Loader")
 - custom rule ("elastalert_modules.rules.suspect_name.SuspectName")
 - custom enhancement ("elastalert_modules.enhancement.discover_country.DiscoverCountry")
