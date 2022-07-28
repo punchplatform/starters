@@ -31,8 +31,7 @@ POETRY = $(VENV)/bin/poetry
 PEX = $(VENV)/bin/pex
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.0-dev
-DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).pex
+ELASTALERT_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.0-dev
 TEST_DIR= $(CURDIR)/tests/custom_test
 
 # Upload
