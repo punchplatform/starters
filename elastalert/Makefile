@@ -82,17 +82,17 @@ upload: ## Upload artifact to artifact server
 .PHONY: apply
 
 apply: ## Apply test punchline to kube
-	kubectl apply -f test/from_doc_store/config_basic.yaml
+	kubectl apply -f tests/custom_test/config_test.yaml
 
 .PHONY: logs
 
 logs: ## View logs of test punchline
-	kubectl logs -f --tail -1 -l alerter=basic
+	kubectl logs -f --tail -1 -l alerter=custom
 
 .PHONY: delete
 
 delete: ## Delete test punchline
-	kubectl delete -f test/from_doc_store/config_basic.yaml --ignore-not-found=true
+	kubectl delete -f tests/custom_test/config_test.yaml --ignore-not-found=true
 
 .PHONY: help
 
