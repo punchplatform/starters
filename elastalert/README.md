@@ -42,6 +42,7 @@ Your custom code will be package with its dependencies as pex in docker using po
 
 ## Test
 
+## Run on kooker 
 As elastalert needs elasticsearch or OpenDashboard to actually works, We assume you have a Kooker up and running tu run the test.
 
 Once your packaging stage is all good, you can easily test it using the provided example in the test directory as starting point
@@ -59,7 +60,16 @@ make run
 ```
 Example data and rules will be upload respectively in elasticsearch and in S3. Furthermore, your builded custom artefact will be upload in the artefacts server.
 
+Finally, It will consume the kafka topic (i.e where the alert should be written) and print it on your console
+
+
+
+### Run on local
+
+This step assume you have an elasticsearch and S3 locally. 
+
+Run `config_basic.yaml` :
 ```sh
-#using latest-stable engine
-make run ELASTALERT_IMG=ghcr.io/punchplatform/punch-elastalert:8.0-latest
+
+PEX_SCRIPT=elastalert dist/punchplatform-elastalert-core.pex --config resources/config/local/config_basic.yaml
 ```
