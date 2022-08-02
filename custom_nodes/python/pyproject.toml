@@ -9,7 +9,7 @@ authors = ["Punch"]
 python = "^3.10.4"
 
 [tool.poetry.dev-dependencies]
-punch-api = "8.0.0"
+punch-api = "8.0.1"
 
 [build-system]
 requires = ["poetry>=0.12"]

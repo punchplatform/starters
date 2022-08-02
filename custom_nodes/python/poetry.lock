@@ -11,7 +11,7 @@ twisted = ["twisted"]
 
 [[package]]
 name = "punch-api"
-version = "8.0.0"
+version = "8.0.1"
 description = "Punch Python and PySpark Public API"
 category = "dev"
 optional = false
@@ -23,7 +23,7 @@ prometheus-client = ">=0.12.0,<0.13.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10.4"
-content-hash = "7a071b75b9a9c40e8eba40c007defee3c2b68aaf647bf25b6bae11ab03197ee1"
+content-hash = "6b9ee05533b02965e79e3157a80c7ba81f28ae916a1c5b7c6a5e9800e1bb461a"
 
 [metadata.files]
 prometheus-client = [
@@ -31,6 +31,6 @@ prometheus-client = [
     {file = "prometheus_client-0.12.0.tar.gz", hash = "sha256:1b12ba48cee33b9b0b9de64a1047cbd3c5f2d0ab6ebcead7ddda613a750ec3c5"},
 ]
 punch-api = [
-    {file = "punch_api-8.0.0-py3-none-any.whl", hash = "sha256:6848a317e73f0eff46fc53aa9f75337163e39f55df627c2cd2ffd940e9aea3a2"},
-    {file = "punch_api-8.0.0.tar.gz", hash = "sha256:088de21a61f8702fcb4f5c632daa16ef6e21e38d81b58ab42eab2a307aa93c62"},
+    {file = "punch_api-8.0.1-py3-none-any.whl", hash = "sha256:a5e0d01db239169c76d935706b2d564e021a51cf5607e2eeb68161103e010b78"},
+    {file = "punch_api-8.0.1.tar.gz", hash = "sha256:76fcd416f16857fc060330bcd4d8051d93f2f47a815e0f7de645d122a6853a8e"},
 ]

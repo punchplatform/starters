@@ -15,7 +15,7 @@
         <dependency>
             <groupId>io.github.punchplatform</groupId>
             <artifactId>punch-spark-api</artifactId>
-            <version>8.0-SNAPSHOT</version>
+            <version>8.0.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
