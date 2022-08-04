@@ -14,7 +14,7 @@ VERSION ?= 1.0.0
 # Build
 BUILD_CONTAINER ?= build_container
 BUILD_IMG ?= build-image
-BUILD_TIMESTAMP = $(shell date +%s)
+BUILD_TIMESTAMP = $(shell date +%s%3N)
 
 # Output files
 OUTPUT_DIR = $(CURDIR)/target
