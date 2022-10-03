@@ -31,6 +31,12 @@ unit test framework.
 
 Checkout out the [parsers](parsers) guide.
 
+## Model
+
+Mlflow model that can be used in a punchline
+
+Checkout out the [model](model) guide.
+
 ## Custom Functions Development
 
 You can write your own Java or Python functions using the punch SDK. Refer to the [custom_nodes](custom_nodes) guide.

@@ -1,0 +1,53 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: punch-model
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - model:io.github.starter:model:1.0.0
+  dag:
+    - id: input
+      kind: source
+      type: generator
+      settings:
+        messages:
+          - color: red
+          - color: blue
+          - color: green
+          - color: yellow
+          - color: black
+      out:
+        - id: sql
+          table: logs
+          columns:
+            - name: color
+              type: string
+
+    - id: sql
+      kind: function
+      type: sql
+      settings:
+        udfs:
+          - name: is_blue
+            model_name: io.github.starter:model:1.0.0
+            schema_ddl: String
+        statements:
+          - statement: SELECT is_blue(color) AS log FROM input_logs
+            output_table_name: result
+      out:
+        - id: output
+          table: result
+          columns:
+            - name: log
+              type: string
+
+    - id: output
+      kind: sink
+      type: show
