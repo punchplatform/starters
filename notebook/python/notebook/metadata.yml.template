@@ -1,0 +1,11 @@
+type: file
+group: ${GROUP_ID}
+logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
+version: ${NOTEBOOK_VERSION}
+artifact: ${NOTEBOOK_ARTIFACT_ID}
+displayName: ${NOTEBOOK_ARTIFACT_ID}
+createdAt: ${BUILD_TIMESTAMP}
+description: This artifact contains a notebook ready to prod.
+provider: # (optional)
+  name: Punch Team
+  email: contact@punchplatform.com

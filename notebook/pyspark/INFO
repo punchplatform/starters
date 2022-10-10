@@ -1,0 +1,51 @@
+#!/usr/bin/env bash -ec -o pipefail
+
+###
+# User Configuration
+###
+
+# Information used to generate artifacts
+GROUP_ID ?= io.github.starter
+PEX_ARTIFACT_ID ?= pex-starter-pyspark
+PEX_VERSION ?= 1.0.0
+NOTEBOOK_ARTIFACT_ID ?= notebook-starter-pyspark
+NOTEBOOK_VERSION ?= 1.0.0
+
+###
+# internal
+###
+
+# Build
+BUILD_CONTAINER ?= build_container
+BUILD_IMG ?= build-image
+BUILD_TIMESTAMP = $(shell date +%s%3N)
+
+# Output files
+OUTPUT_DIR = $(CURDIR)/target
+
+# Pex files
+PEX_DIR = $(CURDIR)/pex
+PEX_REQUIREMENTS = $(PEX_DIR)/requirements.txt
+PEX_OUTPUT_METADATA = $(PEX_DIR)/metadata.yml
+PEX_OUTPUT_FILE = $(PEX_DIR)/$(PEX_ARTIFACT_ID)-$(PEX_VERSION).pex
+PEX_OUTPUT_ARCHIVE = $(OUTPUT_DIR)/$(PEX_ARTIFACT_ID)-$(PEX_VERSION).zip
+
+# Notebook files
+NOTEBOOK_DIR = $(CURDIR)/notebook
+NOTEBOOK_FILE = $(NOTEBOOK_DIR)/notebook.ipynb
+NOTEBOOK_OUTPUT_METADATA = $(NOTEBOOK_DIR)/metadata.yml
+NOTEBOOK_OUTPUT_FILE = $(NOTEBOOK_DIR)/$(NOTEBOOK_ARTIFACT_ID)-$(NOTEBOOK_VERSION).ipynb
+NOTEBOOK_OUTPUT_ARCHIVE = $(OUTPUT_DIR)/$(NOTEBOOK_ARTIFACT_ID)-$(NOTEBOOK_VERSION).zip
+
+# Python
+VENV = $(CURDIR)/.venv
+PIP = $(VENV)/bin/pip
+PEX = $(VENV)/bin/pex
+
+# Run
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+RESOURCECTL_IMG ?= ghcr.io/punchplatform/resourcectl:8.0-dev
+PEX_DEPENDENCY_LOCATION = extlib/$(PEX_ARTIFACT_ID)-$(PEX_VERSION).pex
+NOTEBOOK_DEPENDENCY_LOCATION = artifacts/$(subst .,/,$(GROUP_ID))/$(NOTEBOOK_ARTIFACT_ID)/$(NOTEBOOK_VERSION)/$(NOTEBOOK_ARTIFACT_ID)-$(NOTEBOOK_VERSION).ipynb
+# Upload
+ARTIFACT_SERVER_UPLOAD_URL ?= http://artifacts-server.kooker:4245/v1/artifacts/upload

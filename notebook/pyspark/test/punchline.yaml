@@ -1,0 +1,66 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: punchline-pyspark-notebook
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+      imagePullPolicy: IfNotPresent
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - file:io.github.starter:notebook-starter-pyspark:1.0.0
+    - additional-pex:io.github.starter:pex-starter-pyspark:1.0.0
+  dag:
+    - id: data1
+      kind: source
+      type: generator
+      settings:
+        messages:
+        - data: My first message
+        - data: My second message
+        - data: My third one
+      out:
+        - id: notebook
+          table: table
+
+    - id: data2
+      kind: source
+      type: generator
+      settings:
+        messages:
+        - data: My first message
+        - data: My second message
+        - data: My third one
+      out:
+        - id: notebook
+          table: table
+
+    - id: notebook
+      kind: function
+      type: notebook
+      settings:
+        notebook: io.github.starter:notebook-starter-pyspark:1.0.0
+        inputs:
+          - from: data1_table
+            to: table1
+          - from: data2_table
+            to: table2
+        outputs:
+          - from: new_table
+            to: new_table
+        parameters:
+          name: Elisa
+          init: 7
+        print_code: false
+      out:
+        - id: output
+          table: new_table
+
+    - id: output
+      kind: sink
+      type: show
