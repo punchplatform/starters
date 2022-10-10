@@ -34,7 +34,7 @@ To create punch parsers, clone or download this repository, you will get the fol
 
 Where:
 
-* 'com/mycompany/parsers/sample' is a fully qualified name of your parsers. That will be the way to uniquely identify,
+* 'io/github/starter/parsers/sample' is a fully qualified name of your parsers. That will be the way to uniquely identify,
   and deploy your parsers on a production punch.
 * `parser.punch` and `enrich.punch` are sample punchlets. Check it out it illustrates the basics. This is where you
   write the actual logic of your log parsing or more generally data transformation.
@@ -56,10 +56,10 @@ drawback is that you might end up with many projects. Hence, the facility to dea
 of your parsers.
 
 Let us consider an example. First let us describe how you will refer to your punchlets in data pipeline. If you install
-the above com.mycompany.parsers:1.0.0 package to a punchplatform, you will be able to refer to
+the above io.github.starter.parsers:1.0.0 package to a punchplatform, you will be able to refer to
 
 ```sh
-  com/mycompany/sample/parser.punch
+  io/github/starter/sample/parser.punch
 ```
 
 in your data pipelines. As simple as that. That basic mechanism ensure your parsers will be worldwide unique.
@@ -71,10 +71,10 @@ that you might want to execute in front of after every other vendor specific fun
 the following chain of functions applied to each incoming 'cisco' log:
 
 ```sh
-  com/mycompany/common/header.punch
-  com/mycompany/cisco/parser.punch
-  com/mycompany/cisco/enrich.punch
-  com/mycompany/common/geoip.punch
+  io/github/starter/common/header.punch
+  io/github/starter/cisco/parser.punch
+  io/github/starter/cisco/enrich.punch
+  io/github/starter/common/geoip.punch
 ```
 
 To achieve that you can package in your parser archive two sub-parsers: one 'common', and one 'cisco'.
@@ -139,7 +139,7 @@ or
 
 ```sh
 docker run -it \
-    -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/com/mycompany/parsers/1.0.0/parsers-1.0.0.zip \
+    -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/io/github/starter/parsers/1.0.0/parsers-1.0.0.zip \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
     --network=host \
     ghcr.io/punchplatform/punchline-java:8.0-dev \
@@ -154,7 +154,7 @@ And in another terminal inject some data :
 
 ## Start your punchline in production mode on Kubernetes
 
-A zip archive containing your parsers and a metadata file can be build using maven : `parsers-1.0-SNAPSHOT-artifact.zip`
+A zip archive containing your parsers and a metadata file can be build using maven : `parsers-1.0.0-artifact.zip`
 
 ### Using Makefile
 
