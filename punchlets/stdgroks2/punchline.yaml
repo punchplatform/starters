@@ -27,7 +27,7 @@ spec:
       kind: function
       settings:
         resources:
-          - url: /usr/share/punch/resources/ecs-v1
+          - url: /opt/punch/resources/ecs-v1
             type: file
             format: grok2
         punchlets:

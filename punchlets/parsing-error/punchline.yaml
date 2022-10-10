@@ -29,7 +29,7 @@ spec:
       settings:
         resources:
           - name: standard_groks
-            url: /usr/share/punch/resources/patterns
+            url: /opt/punch/resources/patterns
             format: grok
             type: file
         punchlets:
