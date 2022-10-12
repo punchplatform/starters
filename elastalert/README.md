@@ -38,7 +38,7 @@ make help
 make docker-build 
 ```
 
-Your custom code will be package with its dependencies as pex in docker using poetry.
+Your custom code will be packaged with its dependencies as pex in docker using poetry.
 
 ## Test
 
@@ -58,15 +58,20 @@ to run this example simply type :
 #Include uploading step 
 make run
 ```
-Example data and rules will be upload respectively in elasticsearch and in S3. Furthermore, your builded custom artefact will be upload in the artefacts server.
+Example data and rules will be uploaded respectively in elasticsearch and in S3. Furthermore, your built custom artefact will be uploaded in the artifact server.
 
-Finally, It will consume the kafka topic (i.e where the alert should be written) and print it on your console
+Finally, It will consume the kafka topic (i.e. where the alert should be written) and print it on your console
 
 
 
 ### Run on local
 
-This step assume you have an elasticsearch and S3 locally. 
+To build the package locally :
+```sh
+make build
+```
+
+This step assumes you have an elasticsearch and S3 locally. 
 
 Run `config_basic.yaml` :
 ```sh

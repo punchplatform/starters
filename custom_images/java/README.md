@@ -65,10 +65,5 @@ kubectl apply -f deploy/deployment.yaml
 You can run all this commands using the provided `Makefile` :
 
 ```sh
-make build
-make run
-make apply
-
-# Or simply
-make all
+make build run apply
 ```

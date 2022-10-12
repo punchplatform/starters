@@ -7,11 +7,11 @@ This folder provides easy spark punchlines examples. The Makefile lets you start
 To start any of these simply type in:
 
 ```sh
-make spark
+make run
 ```
 
-To start them all, simply type in :
-
+For further available commands:
 ```sh
-make all
+# Read the doc
+make help
 ```

@@ -2,7 +2,8 @@
 
 For development phase, you should have:
 
-- Docker install locally and an access to a Kubernetes cluster
+- Docker installed locally
+- A reachable Kubernetes cluster
 
 Building and packaging this application requires only:
 
@@ -14,9 +15,9 @@ Building and packaging this application requires only:
 
 # Considerations
 
-## Note 2
+## Note
 
-Likewise as in *Note 1*, changing *metadata.yml* information requires updating variables define in
+Changing *metadata.yml* information requires updating variables define in
 
 [INFO](./INFO) :
 
@@ -27,7 +28,7 @@ Likewise as in *Note 1*, changing *metadata.yml* information requires updating v
 In case you desire to include your project in a CI, these variables can be updated inline by passing them as argument:
 
 ```sh
-make GROUP_ID="id" VERSION="unstable" artifact
+make GROUP_ID="id" VERSION="unstable" build
 ```
 
 # Quick Start
@@ -43,47 +44,15 @@ make help
 
 ```sh
 # you are required to have python3 installed and configured
-make artifact # check target directory
+make build # check target directory
 ```
 
 **Generating** poetry.lock using venv
 
 ```sh
-make venv
+python3 -m venv .venv-poetry
 source .venv-poetry/bin/activate
 poetry add requests
-```
-
-**Generating** poetry.lock using docker
-
-**Usage**
-
-```sh
-# In terminal 1
-# activate docker-poetry
-make docker-poetry
-
-# add dependencies
-poetry add requests
-
-# In terminal 2
-make docker-poetry-commit
-
-# When finished
-# In terminal 1
-CTRL + D
-
-# Start a new build
-make docker-build
-
-# test
-make run
-```
-
-**During development phase**
-
-```sh
-make lint # abuse it ! this will tidy your code and reveals potential bugs...
 ```
 
 ### You are a user
@@ -102,7 +71,7 @@ To test the punchline above in foreground mode simply run :
 # using latest-dev engine
 make run
 # using latest-stable engine
-make run ENGINE_IMG=ghcr.io/punchplatform/punchline-pyspark:8.0-latest
+make run PUNCHLINE_IMG=ghcr.io/punchplatform/punchline-pyspark:8.0-latest
 ```
 
 ### Using commands
@@ -112,10 +81,10 @@ An zip archive is generated as `target/punchline-pyspark-starter-kit-1.0.0.zip`.
 Upload the archive on the Artifact Server:
 
 ```sh
-make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
+make upload ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
 Start your punchline on Kubernetes :
 ```sh
-kubectl apply -f punchline.yaml
+kubectl apply -f test/punchline.yaml
 ```

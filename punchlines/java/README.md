@@ -7,15 +7,15 @@ This folder provides easy java punchlines examples. The Makefile lets you start 
 To start any of these simply type in:
 
 ```sh
-make java
+make run
 ```
 
-To start them all, simply type in :
-
+For further available commands:
 ```sh
-make all
+# Read the doc
+make help
 ```
 
 ## Punchlets
 
-Some java punchline examples using punchlets are provided. Check the [punchlets](punchlets) guide for more information.
+Some java punchline examples using punchlets are provided. Check the [punchlets](../../punchlets) guide for more information.

@@ -24,7 +24,7 @@ Changing *metadata.yml* information requires updating variables define in
 In case you desire to include your project in a CI, these variables can be updated inline by passing them as argument:
 
 ```sh
-make VERSION="unstable" artifact
+make GROUP_ID="id" VERSION="unstable" build
 ```
 
 **GROUP_ID** and **ARTIFACT_ID** value should match [pom.xml](pom.xml):
@@ -78,17 +78,6 @@ make
 make JAVA_VERSION_TAG=jdk-11.0.14.1_1-alpine
 ```
 
-## Start your punchline in development mode with Docker
-
-To test the punchline above in foreground mode run:
-
-```sh
-# using latest-dev engine
-make run
-# using latest-stable engine
-make run ENGINE_IMG=ghcr.io/punchplatform/punchline-spark:8.0-latest
-```
-
 ## Start your punchline in production mode with Kubernetes
 
 ### Using commands
@@ -98,7 +87,7 @@ A zip archive is generated as `target/punchline-spark-starter-kit-1.0.0-artifact
 You have to upload it to the Punch Artifacts Server using this command:
 
 ```sh
-make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
+make upload ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
 Start your punchline on Kubernetes:

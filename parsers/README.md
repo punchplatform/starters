@@ -108,13 +108,7 @@ spec:
 
 To test your parsers with your unit tests file simply run :
 ```sh
-make build
-```
-
-or
-
-```sh
-mvn clean install
+make test
 ```
 
 It will launch a punch tool called `puncher` in a docker container which is in charge of running your tests. Be sure to
@@ -149,7 +143,7 @@ docker run -it \
 And in another terminal inject some data :
 
 ```sh
-./simulate.sh
+(cd ../simulator && ./simulate.sh)
 ```
 
 ## Start your punchline in production mode on Kubernetes

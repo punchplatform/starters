@@ -7,11 +7,11 @@ This folder provides easy python punchlines examples. The Makefile lets you star
 To start any of these simply type in:
 
 ```sh
-make python
+make run
 ```
 
-To start them all, simply type in :
-
+For further available commands:
 ```sh
-make all
+# Read the doc
+make help
 ```

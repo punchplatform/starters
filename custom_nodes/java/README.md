@@ -71,7 +71,7 @@ To test the punchline above in foreground mode run:
 # using latest-dev engine
 make run
 # using latest-stable engine
-make run ENGINE_IMG=ghcr.io/punchplatform/punchline-java:8.0-latest
+make run PUNCHLINE_IMG=ghcr.io/punchplatform/punchline-java:8.0-latest
 ```
 
 ### Using commands
@@ -81,7 +81,7 @@ A zip archive is generated as `target/punchline-java-starter-kit-1.0.0.zip`.
 You have to upload it to the Punch Artifacts Server using this command:
 
 ```sh
-make upload-artifact ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
+make upload ARTIFACT_SERVER_UPLOAD_URL="http://artifacts-server.kooker:4245/v1/artifacts/upload"
 ```
 
 Start your punchline on Kubernetes:
