@@ -22,7 +22,7 @@ else
     --rm \
     --network=host \
     -v "$(realpath ${FILE}):/punch/${FILE}" "${IMG}" \
-    -c "${FILE}" "$@" )
+    -c "/punch/${FILE}" "$@" )
 
 fi
 
