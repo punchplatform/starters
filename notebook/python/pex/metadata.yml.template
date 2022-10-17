@@ -1,0 +1,11 @@
+type: additional-pex
+group: ${GROUP_ID}
+logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
+version: ${PEX_VERSION}
+artifact: ${PEX_ARTIFACT_ID}
+displayName: ${PEX_ARTIFACT_ID}
+createdAt: ${BUILD_TIMESTAMP}
+description: This pex contains dependencies needed by the notebook.
+provider: # (optional)
+  name: Punch Team
+  email: contact@punchplatform.com
