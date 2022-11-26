@@ -1,0 +1,63 @@
+# Punch Artifact Hub package metadata file
+type: punch-parsers
+group: ${GROUP_ID}
+logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
+version: ${VERSION}
+artifact: ${ARTIFACT_ID}
+displayName: ${ARTIFACT_ID}
+createdAt: ${BUILD_TIMESTAMP}
+description: This package provides an ECS compliant sample parser
+keywords: # (optional)
+  - Punch
+  - ECS
+  - Parsers
+links: # (optional)
+  - name: Punch documentation
+    url: https://doc.punchplatform.com
+  - name: ECS documentation
+    url: https://www.elastic.co/guide/en/ecs/current/index.html
+  - name: punchlang documentation
+    url: https://punch-1.gitbook.io/punch-doc/punchlang/overview
+  - name: ECS apache blog
+    url: https://www.elastic.co/blog/introducing-the-elastic-common-schema
+  - name: Kooker documentation
+    url: https://github.com/punchplatform/kooker
+
+readme: | # (optional)
+  This parser is a minimal example; based on the well-known apache log.
+  You can start from it to create your own parser. 
+  
+  In the general case, a parser is simply a single 'parser.punch' 
+  function that takes
+  care of extracting the normalising the input logs into an ECS compliant 
+  document ready to be inserted into Elasticsearch or Opensearch.
+  
+  The punchlang programming language provides many advanced functions
+  to benefit from grok, key values, csv, and lots of conversions methods
+  to easily deal with the most common log fields. In particular
+  the sample shown here illustrates how to enrich your documents on the fly using
+  external JSON (or CSV) files. 
+  
+  In addition the punchplatform SDK and tooling helps you to unit test then package
+  your parser to make it available onto your running platform.  
+  
+  The goal of all this is simply to let parser developers focus on writing
+  robust and well-tested parser, ensuring they produce the correct ECS
+  output format, and let the platform administrator deploy these parser in the adequate
+  pipelines. 
+  
+  If you work with kooker, simply type in make upload to upload your packaged platform
+  onto the kooker artifact server. You can then execute the sample punchline to
+  see it in action. 
+
+changelog: # (optional)
+  - 1.0.0 first import from old version
+  - 2.0.0 revamp to illustrate apache parsing
+maintainers: # (optional)
+  - name: punch team
+    email: contact@punchplatform.com
+provider: # (optional)
+  name: Punchplatform
+  email: contact@punchplatform.com  
+punchVersionCompatible: # (optional)
+  - 8.0.3

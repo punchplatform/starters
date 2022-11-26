@@ -1,3 +1,0 @@
-color=red city=Rome uri=https://punchplatform.com
-color=green city=Paris uri=https://punchplatform.com
-color=yellow city="San Jose" uri=https://punchplatform.com

@@ -11,39 +11,37 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.0-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - punch-parsers:io.github.starter:parsers:1.0.0
+    - punch-parsers:com.analytics.web:apache:2.0.0
   dag:
     - id: input
       kind: source
       type: generator
       settings:
         messages:
-          - color=red city=Paris uri=https://punchplatform.com
-          - color=green city=Rome uri=https://punchplatform.com
-          - color=yellow city=New York uri=https://punchplatform.com
-          - color=black city=London uri=https://punchplatform.com
+          - "10.42.42.42 - - [07/Dec/2018:11:05:07 +0100] \"GET /blog HTTP/1.1\" 200 2571 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36\""
       out:
         - id: parser
           table: logs
           columns:
             - name: data
               type: string
-
     - id: parser
       kind: function
       type: punchlet
       settings:
+        columns_only: true
+        debug: true
         resources:
-          - name: color_codes
+          - name: http_codes
             format: json
             type: file
-            url: sample/resources/color_codes.json
-          - name: custom_groks
-            type: file
-            format: grok
-            url: sample/groks
+            url: com/analytics/web/apache/http_codes.json
+          - type: file
+            format: grok2
+            url: /opt/punch/resources/ecs-v1
         punchlets:
-          - sample/parser.punch
+          - com/analytics/web/apache/parser.punch
+          - com/analytics/web/apache/enrichment.punch
       out:
         - id: output
           table: logs

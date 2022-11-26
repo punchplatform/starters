@@ -1,0 +1,16 @@
+{
+
+    // Extract the input log from one of the standard place holder.
+    String rawLogs = 
+    	getFirstOf([log][event][original], [data], [raw_logs])
+    	.asString("the incoming log does not appear in any standard field");
+
+    if (grok2("%{HTTPD_COMBINEDLOG}").on(rawLogs).into([log])) {
+        [log][source][ip] = [log][source][address];
+        [log][event][dataset] = "apache.access";
+    }
+
+    // the debug instruction has no effect in production.
+    // It is however automatically activated when running tests.
+    debug(root);
+}

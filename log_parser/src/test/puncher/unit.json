@@ -1,0 +1,44 @@
+{
+  "debug": true,
+  "resources": [
+    {
+      "url": "/opt/punch/resources/ecs-v1",
+      "type": "file",
+      "format": "grok2"
+    },
+    {
+      "url": "com/analytics/web/apache/http_codes.json",
+      "type": "file",
+      "format": "json",
+      "name": "http_codes"
+    }
+  ],
+  "punchlets": [
+    "com/analytics/web/apache/parser.punch",
+    "com/analytics/web/apache/enrichment.punch"
+  ],
+  "input": {
+    "log" : {
+      "event": {
+        "original": "10.42.42.42 - - [07/Dec/2018:11:05:07 +0100] \"GET /blog HTTP/1.1\" 200 2571 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36\""
+      }
+    }
+  },
+  "output": {
+    "includes": {
+      "log": {
+        "event": {
+          "dataset": "apache.access"
+        },
+        "source": {
+          "ip": "10.42.42.42"
+        },
+        "http": {
+          "request": {
+            "method": "GET"
+          }
+        }
+      }
+    }
+  }
+}
