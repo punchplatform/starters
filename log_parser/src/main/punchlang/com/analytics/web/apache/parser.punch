@@ -3,7 +3,7 @@
     // Extract the input log from one of the standard place holder.
     String rawLogs = 
     	getFirstOf([log][event][original], [data], [raw_logs])
-    	.asString("the incoming log does not appear in any standard field");
+    	.asString();
 
     if (grok2("%{HTTPD_COMBINEDLOG}").on(rawLogs).into([log])) {
         [log][source][ip] = [log][source][address];
