@@ -41,7 +41,7 @@ spec:
       serviceAccount: admin-user
       applicationContainer:
         imagePullPolicy: IfNotPresent
-        image: ghcr.io/punchplatform/punchline-python:8.0-dev
+        image: ghcr.io/punchplatform/punchline-python:8.1-dev
     dag:
     - id: input
       kind: source
@@ -76,7 +76,7 @@ spec:
       serviceAccount: admin-user
       applicationContainer:
         imagePullPolicy: IfNotPresent
-        image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+        image: ghcr.io/punchplatform/punchline-spark:8.1-dev
     dag:
     - id: input
       kind: source

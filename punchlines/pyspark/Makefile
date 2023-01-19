@@ -6,7 +6,7 @@ run: ## Run punchline in docker
 	docker run -it --rm \
 		--entrypoint sparkctl-client \
 		-v $(CURDIR)/punchline_pyspark.yaml:/punchline.yaml \
-		ghcr.io/punchplatform/punchline-pyspark:8.0-dev \
+		ghcr.io/punchplatform/punchline-pyspark:8.1-dev \
 		--job /punchline.yaml
 
 .PHONY: apply

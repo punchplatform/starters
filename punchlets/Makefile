@@ -5,7 +5,7 @@ xall: fileresource arkoon geoip stdgroks customgroks stdgroks2
 fileresource:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: arkoon
@@ -13,7 +13,7 @@ fileresource:
 arkoon:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: parsing-error
@@ -21,7 +21,7 @@ arkoon:
 parsing-error:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: geoip
@@ -29,7 +29,7 @@ parsing-error:
 geoip:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: stdgroks
@@ -37,7 +37,7 @@ geoip:
 stdgroks:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: stdgroks2
@@ -45,7 +45,7 @@ stdgroks:
 stdgroks2:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 .PHONY: customgroks
@@ -53,5 +53,5 @@ stdgroks2:
 customgroks:
 	docker run -it --rm \
 		-v $(CURDIR)/$@:/files \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml

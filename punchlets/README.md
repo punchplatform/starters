@@ -35,7 +35,7 @@ For example, here is the command launched for the arkoon sample:
 ```sh
 	docker run -it --rm \
 		-v ${PWD}/arkoon:/files/ \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/files/punchline.yaml
 
 ```

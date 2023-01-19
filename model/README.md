@@ -36,7 +36,7 @@ docker run -it \
     -v $PWD/sample:/usr/share/punch/artifacts/io/github/starter/model/1.0.0 \
     -v $PWD/punchline.yaml:/data/punchline.yaml \
     --network=host \
-    ghcr.io/punchplatform/punchline-pyspark:8.0-dev \
+    ghcr.io/punchplatform/punchline-pyspark:8.1-dev \
     /data/punchline.yaml
 ```
 

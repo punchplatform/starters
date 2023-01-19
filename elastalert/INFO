@@ -31,7 +31,7 @@ POETRY = $(VENV)/bin/poetry
 PEX = $(VENV)/bin/pex
 
 # Run
-ELASTALERT_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.0-dev
+ELASTALERT_IMG ?= ghcr.io/punchplatform/punch-elastalert:8.1-dev
 TEST_DIR= $(CURDIR)/tests/custom_test
 
 # Upload

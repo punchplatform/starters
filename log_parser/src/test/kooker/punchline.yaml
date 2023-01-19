@@ -6,9 +6,9 @@ metadata:
 spec:
   containers:
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-java:8.0-dev
+      image: ghcr.io/punchplatform/punchline-java:8.1-dev
     resourcesInitContainer:
-      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - punch-parsers:com.analytics.web:apache:2.0.0

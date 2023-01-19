@@ -21,7 +21,7 @@ OUTPUT_FILE = $(OUTPUT_DIR)/$(ARTIFACT_ID)-$(VERSION).zip
 OUTPUT_ARCHIVE = $(OUTPUT_DIR)/$(ARTIFACT_ID)-$(VERSION)-artifact.zip
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.1-dev
 DEPENDENCY_LOCATION = artifacts/io/github/starter/$(ARTIFACT_ID)/$(VERSION)
 
 # Upload

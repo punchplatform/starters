@@ -19,7 +19,7 @@ GROUP_PATH= $(subst $(DOT),$(DASH),$(GROUP_ID))
 all: $(TARGET_ARTIFACT)
 
 $(TARGET_TEST): $(SRCS)
-	docker run -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.0-dev -v -T /workdir
+	docker run -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.1-dev -v -T /workdir
 	@mkdir -p $(TARGET_DIR)
 	touch $(TARGET_TEST)
 
@@ -39,7 +39,7 @@ package: $(TARGET_ARTIFACT)
 
 .PHONY: test
 test: ## Recursively executes all unit and log files tests you included in your repository.
-	docker run -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.0-dev -T /workdir
+	docker run -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.1-dev -T /workdir
 
 .PHONY: clean ## Clean the repository
 clean:
@@ -51,7 +51,7 @@ upload:  ## Upload the generated parser artifact to the default kooker artifact 
 
 .PHONY: interactive
 interactive: ## Start the puncher image in interactive mode for you to check the content of the puncher image.
-	docker run -it --entrypoint /bin/bash -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.0-dev
+	docker run -it --entrypoint /bin/bash -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.1-dev
 
 .PHONY: local-install
 local-install: ## Install the artifact locally. This will require the 'usr/share/punch/artifacts' root folder be created already.

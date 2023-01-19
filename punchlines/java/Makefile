@@ -5,7 +5,7 @@
 run: ## Run punchline in docker
 	docker run -it --rm \
 		-v $(CURDIR)/punchline_java.yaml:/punchline.yaml \
-		ghcr.io/punchplatform/punchline-java:8.0-dev \
+		ghcr.io/punchplatform/punchline-java:8.1-dev \
 		/punchline.yaml
 
 .PHONY: apply

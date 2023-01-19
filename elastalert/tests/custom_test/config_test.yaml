@@ -11,10 +11,10 @@ spec:
   containers:
     serviceAccount: admin-user
     resourcesInitContainer:
-      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
     applicationContainer:
-      image: ghcr.io/punchplatform/punch-elastalert:8.0-dev
+      image: ghcr.io/punchplatform/punch-elastalert:8.1-dev
       imagePullPolicy: IfNotPresent
       replicas: 1
       args: ["elastalert/config.yaml", "--start", "2020-09-23T23:59:59.448Z"]

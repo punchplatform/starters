@@ -7,10 +7,10 @@ spec:
   containers:
     serviceAccount: admin-user
     applicationContainer:
-      image: ghcr.io/punchplatform/punchline-spark:8.0-dev
+      image: ghcr.io/punchplatform/punchline-spark:8.1-dev
       imagePullPolicy: IfNotPresent
     resourcesInitContainer:
-      image: ghcr.io/punchplatform/resourcectl:8.0-dev
+      image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - additional-jar:io.github.starter:punchline-spark-starter-kit:1.0.0

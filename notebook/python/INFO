@@ -43,8 +43,8 @@ PIP = $(VENV)/bin/pip
 PEX = $(VENV)/bin/pex
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.0-dev
-RESOURCECTL_IMG ?= ghcr.io/punchplatform/resourcectl:8.0-dev
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-python:8.1-dev
+RESOURCECTL_IMG ?= ghcr.io/punchplatform/resourcectl:8.1-dev
 PEX_DEPENDENCY_LOCATION = extlib/$(PEX_ARTIFACT_ID)-$(PEX_VERSION).pex
 NOTEBOOK_DEPENDENCY_LOCATION = artifacts/$(subst .,/,$(GROUP_ID))/$(NOTEBOOK_ARTIFACT_ID)/$(NOTEBOOK_VERSION)/$(NOTEBOOK_ARTIFACT_ID)-$(NOTEBOOK_VERSION).ipynb
 # Upload

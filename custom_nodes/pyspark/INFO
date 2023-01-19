@@ -31,7 +31,7 @@ POETRY = $(VENV)/bin/poetry
 PEX = $(VENV)/bin/pex
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.0-dev
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-pyspark:8.1-dev
 DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).pex
 
 # Upload

@@ -27,7 +27,7 @@ MAVEN_LOCAL_REPOSITORY ?= "$(HOME)"/.m2/repository
 MAVEN_DOCKER_REPOSITORY ?= /mvnhome
 
 # Run
-PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-java:8.0-dev
+PUNCHLINE_IMG ?= ghcr.io/punchplatform/punchline-java:8.1-dev
 DEPENDENCY_LOCATION = extlib/$(ARTIFACT_ID)-$(VERSION).jar
 
 # Upload
