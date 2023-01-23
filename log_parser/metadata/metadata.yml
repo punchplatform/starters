@@ -24,7 +24,7 @@ links: # (optional)
     url: https://github.com/punchplatform/kooker
 
 readme: | # (optional)
-  This parser is a minimal example; based on the well-known apache log.
+  This parser is a minimal example based on the well-known apache log.
   You can start from it to create your own parser. 
   
   In the general case, a parser is simply a single 'parser.punch' 
@@ -46,13 +46,14 @@ readme: | # (optional)
   output format, and let the platform administrator deploy these parser in the adequate
   pipelines. 
   
-  If you work with kooker, simply type in make upload to upload your packaged platform
-  onto the kooker artifact server. You can then execute the sample punchline to
-  see it in action. 
+  If you work with Kooker, simply type `make upload` to upload your packaged platform
+  onto the Artifact Server. You can then execute the sample punchline to
+  see it in action with `kubectl apply -f src/test/punchline/punchline.yaml`
 
 changelog: # (optional)
   - 1.0.0 first import from old version
   - 2.0.0 revamp to illustrate apache parsing
+  - 3.0.0 adapt to punchlang 8.1
 maintainers: # (optional)
   - name: punch team
     email: contact@punchplatform.com
@@ -60,4 +61,4 @@ provider: # (optional)
   name: Punchplatform
   email: contact@punchplatform.com  
 punchVersionCompatible: # (optional)
-  - 8.0.3
+  - 8.1.0

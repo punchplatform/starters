@@ -1,16 +1,16 @@
 {
-
+    // Put raw value into a dedicated tuple.
+    // Indeed, root tuple will evolve during parsing.
+    [data][unparsed_data] = root.asString();
+    
     // Extract the input log from one of the standard place holder.
-    String rawLogs = 
-    	getFirstOf([log][event][original], [data], [raw_logs])
-    	.asString();
-
-    if (grok2("%{HTTPD_COMBINEDLOG}").on(rawLogs).into([log])) {
+    if (grok2("%{MY_HTTPD_COMBINEDLOG}").on([data][unparsed_data]).into([log])) {
         [log][source][ip] = [log][source][address];
         [log][event][dataset] = "apache.access";
     }
-
-    // the debug instruction has no effect in production.
-    // It is however automatically activated when running tests.
+    
+    // The debug instruction has no effect in production.
+    // You can activate it with `debug: true` in your punchline.
+    // However, it is automatically activated when running tests.
     debug(root);
 }

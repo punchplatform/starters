@@ -1,0 +1,71 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchPunchline
+metadata:
+  name: punch-parsers
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.1-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.1-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - punch-parsers:com.analytics.web:apache:3.0.0
+  dag:
+
+    # INPUT
+    - id: input
+      kind: source
+      type: generator
+      settings:
+        messages_size: 3
+        messages:
+          - '10.42.42.42 - - [07/Dec/2018:11:05:07 +0100] "GET /blog HTTP/1.1" 200 2571 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"'
+          - '10.42.42.42 clientident authuser [15/Jul/2020:20:48:32 +0000] "GET /content HTTP/1.1" 200 2571 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"'
+          - '172.3.122.11 - - [15/Jul/2020:20:48:32 +0000] "GET /content HTTP/1.1" 200 2571 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"'
+      out:
+        - id: parser
+          table: logs
+          columns:
+            - name: data
+              type: string
+
+    # PARSER
+    - id: parser
+      kind: function
+      type: punchlet
+      settings:
+        root_tuple_column: data
+        #debug: true
+        resources:
+          # json enrichment
+          - url: com/analytics/web/apache/http_codes.json
+            type: file
+            format: json
+            name: http_codes
+          # basic grok resources
+          - url: /opt/punch/resources/ecs-v1
+            type: file
+            format: grok2
+          # custom grok resources
+          - name: httpd_groks
+            url: com/analytics/web/apache/groks2
+            type: file
+            format: grok2
+        punchlets:
+          - com/analytics/web/apache/parser.punch
+          - com/analytics/web/apache/enrichment.punch
+      out:
+        - id: output
+          table: logs
+          columns:
+            - name: data
+              type: string
+
+    # OUTPUT
+    - id: output
+      kind: sink
+      type: show
+      settings:
+        title: "Showing the node rvrefeferfrefesult: \n"

@@ -1,0 +1,32 @@
+debug: true
+resources:
+  # json enrichment
+  - url: com/analytics/web/apache/http_codes.json
+    type: file
+    format: json
+    name: http_codes
+  # basic grok resources
+  - url: /opt/punch/resources/ecs-v1
+    type: file
+    format: grok2
+  # custom grok resources
+  - name: httpd_groks
+    url: com/analytics/web/apache/groks2
+    type: file
+    format: grok2
+punchlets:
+  - com/analytics/web/apache/parser.punch
+  - com/analytics/web/apache/enrichment.punch
+input:
+  data:
+    unparsed_data: 10.41.42.43 - - [07/Dec/2018:11:05:07 +0100] "GET /blog HTTP/1.1" 200 2571 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36"
+output:
+  includes:
+    log:
+      event:
+        dataset: apache.access
+      source:
+        ip: 10.41.42.43
+      http:
+        request:
+          method: GET

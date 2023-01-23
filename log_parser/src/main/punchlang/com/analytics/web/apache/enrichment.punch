@@ -1,3 +1,6 @@
 {
+  // world: tuple references punchline context.
+  // [resources] is the resources section in the punchlet node.
+  // [http_codes] is the name of the resource containing JSON to enrich logs.
   [http][response][action] = world:[resources][http_codes][%{[http][response][status_code]}];
 }

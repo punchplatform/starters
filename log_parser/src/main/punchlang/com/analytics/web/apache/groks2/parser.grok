@@ -1,0 +1,12 @@
+# Basic Grok patterns are already included in Punchlang binaries
+
+# Specific Grok patterns required for this example
+MY_HTTPDUSER %{EMAILADDRESS}|%{USER}
+MY_HTTPDERROR_DATE %{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}
+
+# Log formats
+MY_HTTPD_COMMONLOG %{IPORHOST:[source][address]} (?:-|%{MY_HTTPDUSER:[apache][access][user][identity]}) (?:-|%{MY_HTTPDUSER:[user][name]}) \[%{HTTPDATE:timestamp}\] "(?:%{WORD:[http][request][method]} %{NOTSPACE:[url][original]}(?: HTTP/%{NUMBER:[http][version]})?|%{DATA})" (?:-|%{INT:[http][response][status_code]:int}) (?:-|%{INT:[http][response][body][bytes]:int})
+# :long - %{INT:[http][response][body][bytes]:int}
+MY_HTTPD_COMBINEDLOG %{MY_HTTPD_COMMONLOG} "(?:-|%{DATA:[http][request][referrer]})" "(?:-|%{DATA:[user_agent][original]})"
+
+

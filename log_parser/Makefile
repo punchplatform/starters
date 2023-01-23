@@ -6,9 +6,11 @@ TMP_DIR := $(TARGET_DIR)/tmp
 TMP_METADATA = $(TMP_DIR)/metadata.yml
 TMP_DATA = $(TMP_DIR)/$(ARTIFACT_ID)-$(VERSION).zip
 SRC_DIRS := $(CURDIR)/src/main
+TEST_DIRS := $(CURDIR)/src/test
 TARGET_ARTIFACT = $(TARGET_DIR)/$(ARTIFACT_ID)-$(VERSION)-artifact.zip
 TARGET_METADATA := metadata/metadata.yml
 SRCS := $(shell find $(SRC_DIRS) -type f)
+TESTS := $(shell find $(TEST_DIRS) -type f)
 TARGET_TEST := $(TARGET_DIR)/.tested
 GROUP_PATH := $(shell echo ${GROUP_ID//./\/})
 DOT:= .
@@ -18,7 +20,7 @@ GROUP_PATH= $(subst $(DOT),$(DASH),$(GROUP_ID))
 .PHONY: all
 all: $(TARGET_ARTIFACT)
 
-$(TARGET_TEST): $(SRCS)
+$(TARGET_TEST): $(SRCS) $(TESTS)
 	docker run -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.1-dev -v -T /workdir
 	@mkdir -p $(TARGET_DIR)
 	touch $(TARGET_TEST)
@@ -47,7 +49,7 @@ clean:
 
 .PHONY: upload
 upload:  ## Upload the generated parser artifact to the default kooker artifact server. Check the INFO file.
-	curl -XPOST "$(ARTIFACT_SERVER_URL)/v1/artifacts/upload" -F artifact="@$(TARGET_ARTIFACT)" -F override=true
+	curl -XPOST "$(ARTIFACT_SERVER_URL)/v1/artifacts/upload" -F artifact="@$(TARGET_ARTIFACT)" -F override=true; echo
 
 .PHONY: interactive
 interactive: ## Start the puncher image in interactive mode for you to check the content of the puncher image.
