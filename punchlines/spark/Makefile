@@ -1,18 +1,20 @@
 #!/usr/bin/env bash -ec -o pipefail
 
+PUNCHLINE?=punchline_spark.yaml
+
 .PHONY: run
 
 run: ## Run punchline in docker
 	docker run -it --rm \
 		--entrypoint sparkctl-client \
-		-v $(CURDIR)/punchline_spark.yaml:/punchline.yaml \
+		-v $(CURDIR)/$(PUNCHLINE):/punchline.yaml \
 		ghcr.io/punchplatform/punchline-spark:8.1-dev \
 		--job /punchline.yaml
 
 .PHONY: apply
 
 apply: ## Apply punchline to kube
-	kubectl apply -f punchline_spark.yaml
+	kubectl apply -f $(PUNCHLINE)
 
 .PHONY: logs
 
@@ -22,4 +24,4 @@ logs: ## View logs of punchline in kube
 .PHONY: delete
 
 delete: ## Delete punchline in kube
-	kubectl delete -f punchline_spark.yaml --ignore-not-found=true
+	kubectl delete -f $(PUNCHLINE) --ignore-not-found=true

@@ -1,0 +1,88 @@
+---
+apiVersion: punchline.punchplatform.io/v2
+kind: SparkPunchline
+metadata:
+  name: punchline-spark
+spec:
+  containers:
+    serviceAccount: admin-user
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-spark:8.1-dev
+      imagePullPolicy: IfNotPresent
+  engineSettings:
+    spark.hadoop.fs.s3a.access.key: "minio"
+    spark.hadoop.fs.s3a.aws.credentials.provider: "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
+    spark.hadoop.fs.s3a.endpoint: "http://minio.object-store:9002"
+    spark.hadoop.fs.s3a.path.style.access: "True"
+    spark.hadoop.fs.s3a.secret.key: "password"
+  dag:
+    - id: input
+      kind: source
+      type: generator
+      settings:
+        messages:
+          - app: app1
+            visits: 20
+          - app: app2
+            visits: 50
+          - app: app2
+            visits: 0
+          - app: app1
+            visits: 10000
+          - app: app3
+            visits: 100
+      out:
+        - id: elastic
+        - id: kafka
+        - id: minio_csv
+        - id: minio_json
+        - id: minio_parquet
+
+    - id: elastic
+      kind: sink
+      type: elasticsearch
+      settings:
+        http_hosts:
+        - host: punchplatform-es-default.doc-store
+          port: 9200
+          scheme: http
+        index:
+          type: constant
+          value: index-spark
+        security:
+          credentials:
+            password: elastic
+            username: elastic
+
+    - id: kafka
+      kind: sink
+      type: kafka
+      settings:
+        kafka.bootstrap.servers: kafka-kafka-bootstrap.processing:9092
+        topic: topic-spark
+
+    - id: minio_csv
+      kind: sink
+      type: file
+      settings:
+        format: csv
+        options:
+          header: true
+        path: s3a://default/spark/csv
+        save_mode: Overwrite
+
+    - id: minio_parquet
+      kind: sink
+      type: file
+      settings:
+        format: parquet
+        path: s3a://default/spark/parquet
+        save_mode: Overwrite
+
+    - id: minio_json
+      kind: sink
+      type: file
+      settings:
+        format: json
+        path: s3a://default/spark/json
+        save_mode: Overwrite
