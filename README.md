@@ -35,7 +35,11 @@ and a way to package everything so that your parsers can be easily deployed on a
 The parser SDK provides you with a toolkit to handle of all these packaging issues. It also provides you with a
 unit test framework.
 
-Checkout out the sample [log_parser](log_parser) folder.
+Checkout out the sample [parser](parser) folder.
+
+## Sigma Detection Rules
+
+Checkout out the sample [sigma_rule](sigma_rules) folder.
 
 ## Model
 
@@ -56,4 +60,4 @@ To include these in your path type in:
 . activate.sh
 ```
 
-You can now inject logs by simply calling `simulate.sh` from anywhere in the starters' repository.
+You can now inject logs by simply executing `simulate.sh` from anywhere in the starters' repository.

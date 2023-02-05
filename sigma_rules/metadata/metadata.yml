@@ -1,0 +1,34 @@
+# Punch Artifact Hub package metadata file
+type: file
+group: ${GROUP_ID}
+logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
+version: ${VERSION}
+artifact: ${ARTIFACT_ID}
+displayName: ${ARTIFACT_ID}
+createdAt: ${BUILD_TIMESTAMP}
+description: This package detection rules from sigma
+keywords:
+  - Punch
+  - Rule
+  - Sigma
+  - Detection
+links:
+  - name: Punch documentation
+    url: https://doc.punchplatform.com
+  - name: Punch Parsers documentation
+    url: https://gitlab.thalesdigital.io/punch/parsers
+readme: |
+  ## Description
+  
+  This package provides some sigma rule sample compiled to run on a Punch.  
+
+changelog:
+  - 1.0.0 initial release
+maintainers:
+  - name: Punch team
+    email: contact@punchplatform.com
+provider:
+  name: Punch team
+  email: contact@punchplatform.com
+punchVersionCompatible:
+  - 8.1

@@ -1,0 +1,89 @@
+apiVersion: punchline.punchplatform.io/v2
+kind: BatchPunchline
+metadata:
+  name: test-punchline
+spec:
+  containers:
+    applicationContainer:
+      image: ghcr.io/punchplatform/punchline-java:8.1-dev
+    resourcesInitContainer:
+      image: ghcr.io/punchplatform/resourcectl:8.1-dev
+      resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
+  dependencies:
+    - file:com.thalesgroup.punchplatform:sigmarule-sample:1.0.0
+
+  dag:
+    - id: input
+      type: generator_source
+      kind: source
+      settings:
+        messages_size: 1
+        messages:
+          - '{ "dns": { "answers": { "type": "TXT", "name": "test/cmd.exe"}}}'
+      out:
+        - id: alert
+          table: logs
+          columns:
+            - name: data
+              type: string
+
+    - id: alert
+      type: punchlet
+      kind: function
+      settings:
+        root_tuple_column: data
+        punchlets:
+          - net_dns_susp_txt_exec_strings.punch
+      out:
+        - id: enrich
+          table: logs
+          columns:
+            - name: data
+              type: string
+
+    - id: enrich
+      type: punchlet
+      kind: function
+      settings:
+        root_tuple_column: data
+        resources:
+          - name: net_dns_susp_txt_exec_strings
+            url: net_dns_susp_txt_exec_strings.yml
+            type: file
+            format: yaml
+        punchlets:
+          - '{
+                if ([alerts].exists()) {
+                    for (String ruleName : [alerts].asStringArray()) {
+
+                        Tuple ruleData = getResourceTuple(ruleName);
+
+                        [alerts][${ruleName}][title] = ruleData:[title];
+                        [alerts][${ruleName}][id] = ruleData:[id];
+                        [alerts][${ruleName}][status] = ruleData:[status];
+                        [alerts][${ruleName}][description] = ruleData:[description];
+                        [alerts][${ruleName}][references] = ruleData:[references];
+                        [alerts][${ruleName}][author] = ruleData:[author];
+                        [alerts][${ruleName}][date] = ruleData:[date];
+                        [alerts][${ruleName}][modified] = ruleData:[modified];
+                        [alerts][${ruleName}][tags] = ruleData:[tags];
+                        [alerts][${ruleName}][logsource] = ruleData:[logsource];
+                        [alerts][${ruleName}][falsepositives] = ruleData:[falsepositives];
+                        [alerts][${ruleName}][level] = ruleData:[level];
+                    }
+                }
+              }'
+      out:
+        - id: sink
+          table: logs
+          columns:
+            - name: data
+              type: string
+
+    - id: sink
+      type: punchlet
+      kind: function
+      settings:
+        debug: true
+        punchlets:
+          - "{ debug(root:[logs][data][alerts]); }"

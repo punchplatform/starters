@@ -1,0 +1,21 @@
+name: global mapping
+priority: 20
+transformations:
+- id: mapping
+  type: field_name_mapping
+  mapping:
+    # All Logs Applied Mapping & Taxonomy
+    dst:
+      - destination.address
+      - destination.ip
+    dst_ip:
+      - destination.address
+      - destination.ip
+    dst_port: destination.port
+    src:
+      - source.address
+      - source.ip
+    src_ip:
+      - source.address
+      - source.ip
+    src_port: source.port
