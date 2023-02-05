@@ -12,6 +12,5 @@ make run
 
 For further available commands:
 ```sh
-# Read the doc
 make help
 ```

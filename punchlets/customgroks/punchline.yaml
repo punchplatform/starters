@@ -48,5 +48,6 @@ spec:
       type: punchlet_function
       kind: function
       settings:
-        punchlet_code: "{print(root);}"
+        punchlets: 
+        - "{print(root);}"
 

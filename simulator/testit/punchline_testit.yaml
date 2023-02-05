@@ -26,7 +26,7 @@ spec:
         port: 8880
         delimiter: eol
       out:
-        - id: output
+        - id: print
           table: logs
           columns:
             - name: log
@@ -43,35 +43,9 @@ spec:
               type: long
             - name: _ppf_id
               type: string
-        - id: processing
-          table: logs
-          columns:
-            - name: log
-              type: string
-            - name: _ppf_remote_host
-              type: string
-            - name: _ppf_remote_port
-              type: int
-            - name: _ppf_local_host
-              type: string
-            - name: _ppf_local_port
-              type: int
-            - name: _ppf_timestamp
-              type: long
-            - name: _ppf_id
-              type: string
-    - id: output
-      kind: sink
-      type: kafka
-      settings:
-        format: lumberjack
-        producer.acks: all
-        producer.batch.size: 16384
-        producer.linger.ms: 5
-        bootstrap.servers: kafka-kafka-bootstrap.processing:9092
-        topic: ref-test-01-ltr
-    - id: processing
+    - id: print
       type: punchlet
       kind: function
       settings:
-        punchlet_code: "{ print(root); }"
+        punchlets: 
+        - "{ print(root); }"

@@ -1,10 +1,10 @@
 apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
-  name: ltr-out
+  name: remote_collector
   annotations:
     prometheus.io/scrape: 'true'
-    prometheus.io/port: '7771'
+    prometheus.io/port: '7770'
 spec:
   containers:
     applicationContainer:
@@ -15,44 +15,16 @@ spec:
   dag:
     - id: input
       kind: source
-      type: kafka
+      type: syslog
       engine_settings:
         throughput: 100000
         queue_size: 10000
         row_timeout_secs: 0
       settings:
-        bootstrap.servers: kafka-kafka-bootstrap.processing:9092
-        group.id: ltr_out
-        topics: ref-test-01-ltr
-        value.format: lumberjack
-        start_offset_strategy: last_committed
-      out:
-        - id: filter
-          table: logs
-          columns:
-            - name: log
-              type: string
-            - name: _ppf_remote_host
-              type: string
-            - name: _ppf_remote_port
-              type: int
-            - name: _ppf_local_host
-              type: string
-            - name: _ppf_local_port
-              type: int
-            - name: _ppf_timestamp
-              type: string
-            - name: _ppf_id
-              type: string
-    - id: filter
-      type: filter
-      kind: function
-      settings:
-        blacklist:
-          column: _ppf_remote_host
-          values:
-            - '10.0.0.0/8'
-            - '172.16.0.0/1'
+        proto: tcp
+        host: 0.0.0.0
+        port: 8880
+        delimiter: eol
       out:
         - id: output
           table: logs
@@ -68,16 +40,39 @@ spec:
             - name: _ppf_local_port
               type: int
             - name: _ppf_timestamp
+              type: long
+            - name: _ppf_id
               type: string
+        - id: processing
+          table: logs
+          columns:
+            - name: log
+              type: string
+            - name: _ppf_remote_host
+              type: string
+            - name: _ppf_remote_port
+              type: int
+            - name: _ppf_local_host
+              type: string
+            - name: _ppf_local_port
+              type: int
+            - name: _ppf_timestamp
+              type: long
             - name: _ppf_id
               type: string
     - id: output
-      type: lumberjack
       kind: sink
+      type: kafka
       settings:
-        host: lmr-input-service.default
-        port: 9990
-        compression: true
-        keepalive_interval: 5
-        keepalive_timeout: 10
-   
+        format: lumberjack
+        producer.acks: all
+        producer.batch.size: 16384
+        producer.linger.ms: 5
+        bootstrap.servers: kafka-kafka-bootstrap.processing:9092
+        topic: ref-test-01-ltr
+    - id: processing
+      type: punchlet
+      kind: function
+      settings:
+        punchlets: 
+        - "{ print(root); }"

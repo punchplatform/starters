@@ -2,7 +2,7 @@
 
 .PHONY: run
 
-run: ## Run punchline in docker
+run: ## execute the punchline in docker
 	docker run -it --rm \
 		-v $(CURDIR)/punchline_java.yaml:/punchline.yaml \
 		ghcr.io/punchplatform/punchline-java:8.1-dev \
@@ -10,15 +10,20 @@ run: ## Run punchline in docker
 
 .PHONY: apply
 
-apply: ## Apply punchline to kube
+apply: ## Start (apply) the punchline to your kubernetes cluster
 	kubectl apply -f punchline_java.yaml
 
 .PHONY: logs
 
-logs: ## View logs of punchline in kube
+logs: ## View the kubernetes punchline logs
 	kubectl logs -f --tail -1 -l punchline-name=punchline-java
 
 .PHONY: delete
 
-delete: ## Delete punchline in kube
+delete: ## Stop (delete) the punchline in kubernetes
 	kubectl delete -f punchline_java.yaml --ignore-not-found=true
+
+.PHONY: help
+help:
+	@awk 'BEGIN {FS = ":.*##"; printf "\033[36m\033[0m\n"} /^[0-9a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-28s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@echo

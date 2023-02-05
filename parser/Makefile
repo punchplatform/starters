@@ -56,9 +56,9 @@ interactive: ## Start the puncher image in interactive mode for you to check the
 	docker run -it --entrypoint /bin/bash -v $(CURDIR):/workdir/ ghcr.io/punchplatform/puncher:8.1-dev
 
 .PHONY: local-install
-local-install: ## Install the artifact locally. This will require the 'usr/share/punch/artifacts' root folder be created already.
-	mkdir -p /usr/share/punch/artifacts/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
-	cp target/*.zip /usr/share/punch/artifacts/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
+local-install: ## Install the artifact locally. This uses the localuser  .m2/repository folder.
+	mkdir -p ~/.m2/repository/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
+	cp $(TMP_DATA) ~/.m2/repository/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
 
 .PHONY: version 
 version: ## Get artifact version

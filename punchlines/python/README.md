@@ -9,9 +9,7 @@ To start any of these simply type in:
 ```sh
 make run
 ```
-
 For further available commands:
 ```sh
-# Read the doc
 make help
 ```

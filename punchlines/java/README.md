@@ -1,21 +1,17 @@
-# Punchlets Starters
+# Java Punchline
 
-This folder provides easy java punchlines examples. The Makefile lets you start the java punchline :
+Java punchlines leverage a lightweight single process java runtime.
+The punchline shown here is the simplest example, a generator source 
+generates some data, followed by a print function.
 
-* *java* : A simple generator and print.
-
-To start any of these simply type in:
+Try 
 
 ```sh
 make run
 ```
-
-For further available commands:
+or 
 ```sh
-# Read the doc
 make help
 ```
 
-## Punchlets
-
-Some java punchline examples using punchlets are provided. Check the [punchlets](../../punchlets) guide for more information.
+Punchlines are frequently used with punchlets. To be familiar with punchlets, check the [punchlets](../../punchlets) guide.

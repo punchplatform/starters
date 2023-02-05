@@ -1,7 +1,7 @@
 apiVersion: punchline.punchplatform.io/v2
 kind: StreamPunchline
 metadata:
-  name: lmc-elasticsearch
+  name: central_indexer
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port: '7773'

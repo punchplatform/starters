@@ -5,18 +5,18 @@ and see the effect of various punchlang use cases.
 
 * *artifact* : demonstrates the loading of resources from a punch artifact.
 * *arkoon* : demonstrates the use of grok and kv punchlang operators to parse arkoon logs.
-* *standardgrok* : shows a more basic grok example.
-* *customgroks* : illustrates the use of custom grok patterns.
+* *stdgroks2* : shows a more basic grok2 example.
+* *customgroks* : illustrates the use of custom grok2 patterns.
 * *geoip* : illustrates log enrichment using the geoip punchlang built-in function.
 * *fileresource* : illustrates the use of JSON resource tuples.
 
+To start them all simply type in make.
 To start any of these simply type in:
-
 ```sh
 make geoip
 ``` 
 
-You can use '<tab>' after typing `make ` to see the name of all tests you can run through the makefile.
+On linux, you can use '<tab>' after typing `make ` to see the name of all tests you can run through the makefile.
 
 ## Punchlets or Parsers ?
 

@@ -1,0 +1,13 @@
+---
+# Service to receive logs at the remote site collection point
+apiVersion: v1
+kind: Service
+metadata:
+  name: remote_receiver_service
+spec:
+  ports:
+    - port: 9990
+      targetPort: 9990
+      name: remote_receiver_service
+  selector:
+    punchline-name: remote_receiver

@@ -16,35 +16,60 @@ with many parsers. Should you write your own, this project is for you.
 To create punch parsers, clone or download this repository, you will get the following layout:
 
 ```
-│── sample
-│   ├── MANIFEST.yml
-│   ├── groks
-│   │   └── pattern.grok
-│   ├── enrich.punch
-│   ├── parser.punch
-│   ├── resources
-│   │   └── color_codes.json
-│   └── test
-│       ├── sample.txt
-│       ├── unit_chain.json
-│       └── unit_punchlet.json
-└── tools
-    └── test.sh
+.
+├── INFO
+├── Makefile
+├── README.md
+├── metadata
+│   └── metadata.yml
+├── src
+│   ├── main
+│   │   └── punchlang
+│   │       └── com
+│   │           └── analytics
+│   │               └── web
+│   │                   └── apache
+│   │                       ├── enrichment.punch
+│   │                       ├── groks2
+│   │                       │   └── parser.grok
+│   │                       ├── http_codes.json
+│   │                       └── parser.punch
+│   └── test
+│       ├── puncher
+│       │   └── unit.yaml
+│       └── punchline
+│           └── punchline.yaml
+└── target
+    ├── apache-3.0.0-artifact.zip
+    └── tmp
+        ├── apache-3.0.0.zip
+        └── metadata.yml
 ```
 
 Where:
 
-* 'io/github/starter/parsers/sample' is a fully qualified name of your parsers. That will be the way to uniquely identify,
-  and deploy your parsers on a production punch.
-* `parser.punch` and `enrich.punch` are sample punchlets. Check it out it illustrates the basics. This is where you
-  write the actual logic of your log parsing or more generally data transformation.
-* `groks/pattern.grok` is a sample grok pattern. The punch comes with many patterns directly loaded, but here is how you
+* 'src/main/punchlang' is the root folder containing your parser, patterns and resource files. 
+* `parser.punch` and `enrichment.punch` are sample punchlets. They illustrate the basics. This is where you
+  write the actual logic of your log parsing.
+* `groks2/pattern.grok` is a sample grok pattern. The punch comes with many patterns directly loaded, but here is how you
   can add your own.
-* `resources/color_code.json` is a sample resource files. In this sample it is used to add a numerical color code from a
-  color string value ('red' or 'green').
-* `test/unit_chain.json` and `test/unit_punchlet.json` are punch unit test files. That lets you define unit tests to
-  ensure each punchlet or a sequence of punchlets behave exactly as you expect.
-* `test/sample.txt` is an example a sample log file. These can be used to test a large number of logs.
+* `http_codes.json` is a sample resource files. Check how it is used in the enrichment.punch punchlet.
+
+Tests are provided in the 'src/test' folder. In there:
+* puncher is the root folder for unit test executed using the punch provided puncher tool.
+* punchline is optional. It simply provides a sample punchline that illustrate how to deploy yoru parser. This file is typically helpful for the support or customer in charge of deploying your parser to his production platform.
+
+You must conform to the src/main/punchlang and src/test/puncher root folders. 
+
+## Test Your Parsers
+
+To test your parsers with your unit tests file simply run :
+```sh
+make test
+```
+
+It will launch a punch tool called `puncher` in a docker container which is in charge of running your tests. Be sure to
+have docker installed.
 
 ## Understand Punch Parsers Archives
 
@@ -56,10 +81,10 @@ drawback is that you might end up with many projects. Hence, the facility to dea
 of your parsers.
 
 Let us consider an example. First let us describe how you will refer to your punchlets in data pipeline. If you install
-the above io.github.starter.parsers:1.0.0 package to a punchplatform, you will be able to refer to
+the above com.analytics.web:3.0.0 package to a punchplatform, you will be able to refer to
 
 ```sh
-  io/github/starter/sample/parser.punch
+  com.analytics.web:3.0.0:com/analytics/web/apache/parser.punch
 ```
 
 in your data pipelines. As simple as that. That basic mechanism ensure your parsers will be worldwide unique.
@@ -71,84 +96,41 @@ that you might want to execute in front of after every other vendor specific fun
 the following chain of functions applied to each incoming 'cisco' log:
 
 ```sh
-  io/github/starter/common/header.punch
-  io/github/starter/cisco/parser.punch
-  io/github/starter/cisco/enrich.punch
-  io/github/starter/common/geoip.punch
+  com/analytics/common/header.punch
+  com/analytics/cisco/parser.punch
+  com/analytics/cisco/enrich.punch
+  com/analytics/common/geoip.punch
 ```
 
 To achieve that you can package in your parser archive two sub-parsers: one 'common', and one 'cisco'.
 
-Whatever you decide to do, each parser (in the above example 'sample', or 'cisco or 'common' in our last example)
-is defined using a 'MANIFEST.yaml' file.
+Whatever you decide to do, each parser (in the above example  'cisco or 'common')
+is defined using a [INFO](./INFO) file.
 
 That file defines the essential information about the parser. Here the sample MANIFEST.yaml generated above:
 
 ```yaml
 apiVersion: 1.0
-kind: PunchParserArchive
-metadata:
-  name: "sample punch parser"
-  labels:
-    description: "a sample parser for you to easily start coding your own"
-    category: sample
-    author: "punch team"
-    performance: 3000
-    vendor: punchplatform
-spec:
-  punchlets:
-    - parser.punch
-  resources:
-    - resources/color_codes.json
-  groks:
-    - groks/pattern.grok
+GROUP_ID ?= com.analytics.web
+ARTIFACT_ID ?= apache
+VERSION ?= 3.0.0
+BUILD_TIMESTAMP = $(shell date '+%Y-%m-%d %H:%M')
+ARTIFACT_SERVER_URL ?= http://artifacts-server.kooker:4245
 ```
-
-## Test Your Parsers
-
-To test your parsers with your unit tests file simply run :
-```sh
-make test
-```
-
-It will launch a punch tool called `puncher` in a docker container which is in charge of running your tests. Be sure to
-have docker installed before running this command
 
 ## Using Your Parsers
 
-Once your parser is ready, you can simply refer to them in your punchline. Remember a punchline is a log processing
-pipeline where you chain your parser.
+Once your parser is ready, you can simply refer to them in your punchline. Remember a punchline is a log processing pipeline where you chain your parser. Check out the [punchline example](src/test/punchline/punchline.yaml).
 
-Check out the [punchline example](test/punchline.yaml).
-
-## Run in foreground with docker
-
-To test the example punchline in foreground mode simply run :
+On a production platform, you lust yet upload your parser to make it available to punchlines. That is achieved by publishing the packaged parser to Punch Artifacts Server. If you have kooker on your laptop you can type in
 
 ```sh
-make run
+make upload
 ```
 
-or
+See the section above for various option to play with a kubernetes cluster. 
 
-```sh
-docker run -it \
-    -v $PWD/target/parsers-1.0.0.zip:/usr/share/punch/artifacts/io/github/starter/parsers/1.0.0/parsers-1.0.0.zip \
-    -v $PWD/punchline.yaml:/data/punchline.yaml \
-    --network=host \
-    ghcr.io/punchplatform/punchline-java:8.1-dev \
-    /data/punchline.yaml
-```
-
-And in another terminal inject some data :
-
-```sh
-(cd ../simulator && ./simulate.sh)
-```
-
-## Start your punchline in production mode on Kubernetes
-
-A zip archive containing your parsers and a metadata file can be build using maven : `parsers-1.0.0-artifact.zip`
+## HowTos Use with Kubernetes or Kooker
 
 ### Using Makefile
 

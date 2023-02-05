@@ -3,13 +3,12 @@
 This repository is a software development kit for Punch developers. It provides easy-to-start-with samples for various
 use cases, implemented using java, python and punchlang functions.
 
-The punch online documentation is available here: https://punch-1.gitbook.io/punch-doc/. The sample starters illustrates
-several ways to use or configure you punchplatform.
+The punch online documentation is available here: https://doc.punchplatform.com. 
 
 The starter examples use either docker or a kubernetes cluster equipped with the
 punch services. 
 
-With docker you only need docker to be installed and ready on your laptop. 
+With docker you only need docker to be installed on your laptop. 
 If your work with a target kubernetes cluster, make sure you installed 
 'kubectl' and have a valid '.kube/config' file. 
  
