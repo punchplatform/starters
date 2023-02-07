@@ -15,12 +15,10 @@ keywords:
 links:
   - name: Punch documentation
     url: https://doc.punchplatform.com
-  - name: Punch Parsers documentation
-    url: https://gitlab.thalesdigital.io/punch/parsers
 readme: |
   ## Description
   
-  This package provides some sigma rule sample compiled to run on a Punch.  
+  This package provides a sigmarule sample compiled to run on a Punch.  
 
 changelog:
   - 1.0.0 initial release
