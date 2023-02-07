@@ -35,7 +35,7 @@ Where:
 * `sigmarule` is the artifact identifier.
 
 You can put your rules in the `src/main/group_id/artifact_id` folder in any folder tree. The same tree will be produced in the artifact.  
-You also need to put mapping files at same level as the rules with `mapping` keywork in the file names. Note that you can put multiple mapping files.
+You also need to put mapping files at same level as the rules with `mapping` keyword in the file names. Note that you can put multiple mapping files.
 
 Tests are provided in the `src/test` folder. In there:
 * `punchline` folder simply provides a sample punchline that illustrate how to deploy your sigmarule artifact.
