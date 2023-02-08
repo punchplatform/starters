@@ -10,7 +10,7 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - file:com.thalesgroup.punchplatform:sigmarule-sample:1.0.0
+    - file:com.github.punchplatform:sigmarule:1.0.0
 
   dag:
     - id: input

@@ -13,23 +13,22 @@ TARGET_TEST := $(TARGET_DIR)/.tested
 DOT:= .
 DASH:= /
 GROUP_PATH= $(subst $(DOT),$(DASH),$(GROUP_ID))
-
 DATA_DIR = $(TARGET_DIR)/data/${GROUP_PATH}/${ARTIFACT_ID}
-
-CONVERTER := bin/sigmarule-converter.pex
 
 .PHONY: all
 all: clean package
 
 .PHONY: clean
 clean: ## Clean the repository
-	@rm -rf target
+	@rm -rf $(TARGET_DIR)
 	@echo Working directory successfully cleaned.
 
+## Prepare artifact metadata
 $(TMP_METADATA): $(METADATA) INFO
 	@mkdir -p $(TMP_DIR)
 	@envsubst < $(TARGET_METADATA) > $(TMP_METADATA)
 
+## Convert sigmarule to punchrule
 $(DATA_DIR):
 	@mkdir -p $(DATA_DIR)
 	@docker run \
@@ -38,6 +37,7 @@ $(DATA_DIR):
 		ghcr.io/punchplatform/punch-sigmarule-converter:1.0-dev \
 		--input_folder /rules/input/ --output_folder /rules/output/
 
+## Prepare artifact data
 $(TMP_DATA): $(DATA_DIR)
 	@mkdir -p $(TMP_DIR)
 	@cd $(DATA_DIR); zip -qq -r $(TMP_DATA) *; cd - > /dev/null
@@ -53,7 +53,7 @@ upload:  ## Upload the generated parser artifact to the default kooker artifact 
 	@echo Artifact successfully uploaded.
 
 .PHONY: local-install
-local-install: ## Install the artifact locally. This will require the 'usr/share/punch/artifacts' root folder be created already.
+local-install: ## Install the artifact locally.
 	@mkdir -p ~/.m2/repository/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
 	@cp $(TMP_DATA) ~/.m2/repository/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}
 	@echo Artifact successfully installed locally.
