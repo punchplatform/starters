@@ -11,7 +11,7 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - punch-parsers:com.analytics.web:apache:3.0.0
+    - punch-parsers:com.github.sample:web:3.0.0
   dag:
 
     # INPUT
@@ -40,22 +40,20 @@ spec:
         #debug: true
         resources:
           # json enrichment
-          - url: com/analytics/web/apache/http_codes.json
+          - url: apache/http_codes.json
             type: file
             format: json
             name: http_codes
-          # basic grok resources
           - url: /opt/punch/resources/ecs-v1
             type: file
             format: grok2
-          # custom grok resources
           - name: httpd_groks
-            url: com/analytics/web/apache/groks2
+            url: apache/groks2
             type: file
             format: grok2
         punchlets:
-          - com/analytics/web/apache/parser.punch
-          - com/analytics/web/apache/enrichment.punch
+          - apache/parser.punch
+          - apache/enrichment.punch
       out:
         - id: output
           table: logs
@@ -65,7 +63,9 @@ spec:
 
     # OUTPUT
     - id: output
-      kind: sink
-      type: show
+      kind: function
+      type: punchlet
       settings:
-        title: "Showing the node rvrefeferfrefesult: \n"
+        debug: true
+        punchlets: 
+          - "{ debug(\"parser result\", root);}"

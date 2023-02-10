@@ -4,8 +4,8 @@
 # These information are used both for naming the target artifact but also
 # to generate the used complete metadata.yml descriptor file.
 
-GROUP_ID ?= com.github.punchplatform
-ARTIFACT_ID ?= apache
+GROUP_ID ?= com.github.sample
+ARTIFACT_ID ?= web
 VERSION ?= 3.0.0
 BUILD_TIMESTAMP = $(shell date '+%Y-%m-%d %H:%M')
 ARTIFACT_SERVER_URL ?= http://artifacts-server.kooker:4245
