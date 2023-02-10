@@ -10,14 +10,13 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - file:com.thalesgroup.punchplatform:sigmarule-sample:1.0.0
+    - file:com.github.punchplatform:sigmarule:1.0.0
 
   dag:
     - id: input
       type: generator_source
       kind: source
       settings:
-        messages_size: 1
         messages:
           - '{ "dns": { "answers": { "type": "TXT", "name": "test/cmd.exe"}}}'
       out:
@@ -35,45 +34,6 @@ spec:
         punchlets:
           - net_dns_susp_txt_exec_strings.punch
       out:
-        - id: enrich
-          table: logs
-          columns:
-            - name: data
-              type: string
-
-    - id: enrich
-      type: punchlet
-      kind: function
-      settings:
-        root_tuple_column: data
-        resources:
-          - name: net_dns_susp_txt_exec_strings
-            url: net_dns_susp_txt_exec_strings.yml
-            type: file
-            format: yaml
-        punchlets:
-          - '{
-                if ([alerts].exists()) {
-                    for (String ruleName : [alerts].asStringArray()) {
-
-                        Tuple ruleData = getResourceTuple(ruleName);
-
-                        [alerts][${ruleName}][title] = ruleData:[title];
-                        [alerts][${ruleName}][id] = ruleData:[id];
-                        [alerts][${ruleName}][status] = ruleData:[status];
-                        [alerts][${ruleName}][description] = ruleData:[description];
-                        [alerts][${ruleName}][references] = ruleData:[references];
-                        [alerts][${ruleName}][author] = ruleData:[author];
-                        [alerts][${ruleName}][date] = ruleData:[date];
-                        [alerts][${ruleName}][modified] = ruleData:[modified];
-                        [alerts][${ruleName}][tags] = ruleData:[tags];
-                        [alerts][${ruleName}][logsource] = ruleData:[logsource];
-                        [alerts][${ruleName}][falsepositives] = ruleData:[falsepositives];
-                        [alerts][${ruleName}][level] = ruleData:[level];
-                    }
-                }
-              }'
-      out:
         - id: sink
           table: logs
           columns:
@@ -85,5 +45,6 @@ spec:
       kind: function
       settings:
         debug: true
+        root_tuple_column: data
         punchlets:
-          - "{ debug(root:[logs][data][alerts]); }"
+          - "{ debug(\"LOGS\", root); }"
