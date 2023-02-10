@@ -11,6 +11,7 @@ spec:
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - file:com.github.punchplatform:sigmarule:1.0.0
+    - punch-parsers:com.thalesgroup.punchplatform:core:3.0.4
 
   dag:
     - id: input
@@ -40,50 +41,46 @@ spec:
           columns:
             - name: data
               type: string
+            - name: alerts
+              type: string
 
     - id: enrich
       type: punchlet
       kind: function
       settings:
-        root_tuple_column: data
         resources:
           - name: net_dns_susp_txt_exec_strings
             url: net_dns_susp_txt_exec_strings.yml
             type: file
             format: yaml
         punchlets:
-          - '{
-                if ([alerts].exists()) {
-                    for (String ruleName : [alerts].asStringArray()) {
-
-                        Tuple ruleData = getResourceTuple(ruleName);
-
-                        [alerts][${ruleName}][title] = ruleData:[title];
-                        [alerts][${ruleName}][id] = ruleData:[id];
-                        [alerts][${ruleName}][status] = ruleData:[status];
-                        [alerts][${ruleName}][description] = ruleData:[description];
-                        [alerts][${ruleName}][references] = ruleData:[references];
-                        [alerts][${ruleName}][author] = ruleData:[author];
-                        [alerts][${ruleName}][date] = ruleData:[date];
-                        [alerts][${ruleName}][modified] = ruleData:[modified];
-                        [alerts][${ruleName}][tags] = ruleData:[tags];
-                        [alerts][${ruleName}][logsource] = ruleData:[logsource];
-                        [alerts][${ruleName}][falsepositives] = ruleData:[falsepositives];
-                        [alerts][${ruleName}][level] = ruleData:[level];
-                    }
-                }
-              }'
+          - alerter.punch
       out:
-        - id: sink
+        - id: sink-logs
           table: logs
           columns:
             - name: data
               type: string
+        - id: sink-alerts
+          table: alerts
+          columns:
+            - name: data
+              type: string
 
-    - id: sink
+    - id: sink-logs
       type: punchlet
       kind: function
       settings:
         debug: true
+        root_tuple_column: data
         punchlets:
-          - "{ debug(root:[logs][data][alerts]); }"
+          - "{ debug(\"LOGS\", root); }"
+
+    - id: sink-alerts
+      type: punchlet
+      kind: function
+      settings:
+        debug: true
+        root_tuple_column: data
+        punchlets:
+          - "{ debug(\"ALERTS\", root); }"
