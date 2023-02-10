@@ -11,14 +11,12 @@ spec:
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
     - file:com.github.punchplatform:sigmarule:1.0.0
-    - punch-parsers:com.thalesgroup.punchplatform:core:3.0.4
 
   dag:
     - id: input
       type: generator_source
       kind: source
       settings:
-        messages_size: 1
         messages:
           - '{ "dns": { "answers": { "type": "TXT", "name": "test/cmd.exe"}}}'
       out:
@@ -36,38 +34,13 @@ spec:
         punchlets:
           - net_dns_susp_txt_exec_strings.punch
       out:
-        - id: enrich
+        - id: sink
           table: logs
           columns:
             - name: data
               type: string
-            - name: alerts
-              type: string
 
-    - id: enrich
-      type: punchlet
-      kind: function
-      settings:
-        resources:
-          - name: net_dns_susp_txt_exec_strings
-            url: net_dns_susp_txt_exec_strings.yml
-            type: file
-            format: yaml
-        punchlets:
-          - alerter.punch
-      out:
-        - id: sink-logs
-          table: logs
-          columns:
-            - name: data
-              type: string
-        - id: sink-alerts
-          table: alerts
-          columns:
-            - name: data
-              type: string
-
-    - id: sink-logs
+    - id: sink
       type: punchlet
       kind: function
       settings:
@@ -75,12 +48,3 @@ spec:
         root_tuple_column: data
         punchlets:
           - "{ debug(\"LOGS\", root); }"
-
-    - id: sink-alerts
-      type: punchlet
-      kind: function
-      settings:
-        debug: true
-        root_tuple_column: data
-        punchlets:
-          - "{ debug(\"ALERTS\", root); }"
