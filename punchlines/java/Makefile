@@ -10,7 +10,7 @@ run: ## execute the punchline in docker
 
 .PHONY: apply
 
-apply: ## Start (apply) the punchline to your kubernetes cluster
+apply: ## Start (apply) the punchline into your kubernetes cluster
 	kubectl apply -f punchline_java.yaml
 
 .PHONY: logs
