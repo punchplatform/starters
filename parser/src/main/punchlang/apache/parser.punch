@@ -8,9 +8,8 @@
         [log][source][ip] = [log][source][address];
         [log][event][dataset] = "apache.access";
     }
-    raise("oops");
     // The debug instruction has no effect in production.
     // You can activate it with `debug: true` in your punchline.
     // However, it is automatically activated when running tests.
-    debug(root);
+    debug("apache parser output",root);
 }

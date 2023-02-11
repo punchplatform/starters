@@ -52,8 +52,8 @@ spec:
             type: file
             format: grok2
         punchlets:
-          - apache/parser.punch
-          - apache/enrichment.punch
+          - punch-parsers:com.github.sample:web:3.0.0:apache/parser.punch
+          - punch-parsers:com.github.sample:web:3.0.0:apache/enrichment.punch
       out:
         - id: output
           table: logs
