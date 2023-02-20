@@ -5,7 +5,7 @@
 # to generate the used complete metadata.yml descriptor file.
 
 GROUP_ID ?= com.github.punchplatform
-ARTIFACT_ID ?= sigmarule
+ARTIFACT_ID ?= sample
 VERSION ?= 1.0.0
 BUILD_TIMESTAMP = $(shell date '+%Y-%m-%d %H:%M')
 ARTIFACT_SERVER_URL ?= http://artifacts-server.kooker:4245

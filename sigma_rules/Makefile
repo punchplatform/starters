@@ -13,7 +13,7 @@ TARGET_TEST := $(TARGET_DIR)/.tested
 DOT:= .
 DASH:= /
 GROUP_PATH= $(subst $(DOT),$(DASH),$(GROUP_ID))
-DATA_DIR = $(TARGET_DIR)/data/${GROUP_PATH}/${ARTIFACT_ID}
+DATA_DIR = $(TARGET_DIR)/data
 
 .PHONY: all
 all: clean package
@@ -32,7 +32,7 @@ $(TMP_METADATA): $(METADATA) INFO
 $(DATA_DIR):
 	@mkdir -p $(DATA_DIR)
 	@docker run \
-		-v $(SRC_DIRS)/${GROUP_PATH}/${ARTIFACT_ID}:/rules/input \
+		-v $(SRC_DIRS):/rules/input \
 		-v $(DATA_DIR):/rules/output \
 		ghcr.io/punchplatform/punch-sigmarule-converter:1.0-dev \
 		--input_folder /rules/input/ --output_folder /rules/output/
@@ -44,6 +44,7 @@ $(TMP_DATA): $(DATA_DIR)
 
 .PHONY: package
 package: $(TMP_METADATA) $(TMP_DATA) ## Package metadata and data into an artifact
+
 	@cd $(TMP_DIR); rm -f $(TARGET_ARTIFACT) ; zip -qq -r $(TARGET_ARTIFACT) *; cd - > /dev/null
 	@echo Artifact successfully created.
 

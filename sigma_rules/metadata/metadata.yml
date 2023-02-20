@@ -1,16 +1,16 @@
 # Punch Artifact Hub package metadata file
-type: file
+type: punch-sigma-rules
 group: ${GROUP_ID}
 logo: https://punchplatform.com/wp-content/uploads/2020/01/logos_png_logo_punch_color2019_marge.png
 version: ${VERSION}
 artifact: ${ARTIFACT_ID}
 displayName: ${ARTIFACT_ID}
 createdAt: ${BUILD_TIMESTAMP}
-description: This package detection rules from sigma
+description: Sigma Rules sample
 keywords:
   - Punch
-  - Rule
   - Sigma
+  - Rule
   - Detection
 links:
   - name: Punch documentation
@@ -18,7 +18,7 @@ links:
 readme: |
   ## Description
   
-  This package provides a sigmarule sample compiled to run on a Punch.  
+  This package provides a sample of Sigma Rules compiled to run on a Punch.  
 
 changelog:
   - 1.0.0 initial release
