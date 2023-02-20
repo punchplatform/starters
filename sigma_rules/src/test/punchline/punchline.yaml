@@ -10,7 +10,7 @@ spec:
       image: ghcr.io/punchplatform/resourcectl:8.1-dev
       resourcesProviderUrl: http://artifacts-server.punch-artifacts:4245
   dependencies:
-    - file:com.github.punchplatform:sigmarule:1.0.0
+    - punch-sigma-rules:com.github.punchplatform:sample:1.0.0
 
   dag:
     - id: input
@@ -27,17 +27,19 @@ spec:
               type: string
 
     - id: alert
-      type: punchlet
       kind: function
+      type: sigma_rule
       settings:
         root_tuple_column: data
+        rules:
+          - punch-sigma-rules:com.github.punchplatform:sample:1.0.0
         punchlets:
-          - net_dns_susp_txt_exec_strings.punch
+          - "{ ; }"
       out:
         - id: sink
           table: logs
           columns:
-            - name: data
+            - name: alerts
               type: string
 
     - id: sink
@@ -45,6 +47,5 @@ spec:
       kind: function
       settings:
         debug: true
-        root_tuple_column: data
         punchlets:
-          - "{ debug(\"LOGS\", root); }"
+          - "{ debug(root); }"

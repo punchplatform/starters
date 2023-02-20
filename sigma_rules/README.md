@@ -1,10 +1,10 @@
-# Punch Sigma Rule Starter
+# Punch Sigma Rules Starter
 
-Quickstart example to create your sigmarule artifact. 
+Quickstart example to create your Sigma Rules artifact. 
 
 ## Layout
 
-The layout for detection rules is straightfowrward:
+The layout is straightfowrward:
 
 ```
 .
@@ -12,19 +12,15 @@ The layout for detection rules is straightfowrward:
 ├── LICENSE
 ├── Makefile
 ├── metadata
-│   └── metadata.yml
+│   └── metadata.yml
 ├── README.md
 └── src
     ├── main
-    │   └── com
-    │       └── github
-    │           └── punchplatform
-    │               └── sigmarule
-    │                   └── network
-    │                       └── dns
-    │                           ├── mapping_dns.yml
-    │                           ├── mapping_global.yml
-    │                           └── net_dns_susp_txt_exec_strings.yml
+    │   └── network
+    │       └── dns
+    │           ├── mapping_dns.yml
+    │           ├── mapping_global.yml
+    │           └── net_dns_susp_txt_exec_strings.yml
     └── test
         └── punchline
             └── punchline.yaml
@@ -34,16 +30,16 @@ Where:
 * `com/github/punchplatform` is the group identifier.
 * `sigmarule` is the artifact identifier.
 
-You can put your rules in the `src/main/group_id/artifact_id` folder in any folder tree. The same tree will be produced in the artifact.  
-You also need to put mapping files at same level as the rules with `mapping` keyword in the file names. Note that you can put multiple mapping files.
+You can put your rules in `src/main` with the file structure you want. The same file tree will be created in the artifact.  
+You must put at least one mapping file per folder containing rules, but you can put more than one. To be considered mapping files, they must contain the keyword `mapping` in the file name.
 
 Tests are provided in the `src/test` folder. In there:
-* `punchline` folder simply provides a sample punchline that illustrate how to deploy your sigmarule artifact.
-This file is typically helpful for the support or customer in charge of deploying your sigmarule to his production platform.
+* `punchline` folder simply provides a sample punchline that illustrate how to use your Sigma Rules.
+This file is typically helpful for the support or customer in charge of deploying your Sigma Rules to his production platform.
 
-## Create Your Sigmarule Artifact
+## Create Your Sigma Rules Artifact
 
-To convert your rule to Punchlang and package them into an artifact just run the bellow command.
+To convert your Sigma rules to Punchlang and package them into an artifact just run the bellow command.
 
 ```sh
 make
