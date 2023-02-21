@@ -30,7 +30,6 @@ spec:
       kind: function
       type: sigma_rule
       settings:
-        root_tuple_column: data
         rules:
           - punch-sigma-rules:com.github.punchplatform:sample:1.0.0
         punchlets:
