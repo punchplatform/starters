@@ -34,7 +34,8 @@ $(DATA_DIR):
 	@docker run \
 		-v $(SRC_DIRS):/rules/input \
 		-v $(DATA_DIR):/rules/output \
-		ghcr.io/punchplatform/punch-sigmarule-converter:1.0-dev \
+		--user=root \
+		$(IMG_SIGMARULE_CONVERTER) \
 		--input_folder /rules/input/ --output_folder /rules/output/
 
 ## Prepare artifact data

@@ -8,4 +8,10 @@ GROUP_ID ?= com.github.punchplatform
 ARTIFACT_ID ?= sample
 VERSION ?= 1.0.0
 BUILD_TIMESTAMP = $(shell date '+%Y-%m-%d %H:%M')
-ARTIFACT_SERVER_URL ?= http://artifacts-server.kooker:4245
+ARTIFACT_SERVER_URL ?= http://artifacts-server.punch:8080
+
+# Sigma rule converter
+REGISTRY_DOCKER = ghcr.io/punchplatform
+VERSION_SIGMARULE_CONVERTER ?= 8.1-dev
+
+IMG_SIGMARULE_CONVERTER ?= $(REGISTRY_DOCKER)/punch-sigmarule-converter:$(VERSION_SIGMARULE_CONVERTER)
