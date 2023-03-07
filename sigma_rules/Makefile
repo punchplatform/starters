@@ -2,10 +2,13 @@ include INFO
 export
 
 TARGET_DIR := $(CURDIR)/target
+DATA_DIR = $(TARGET_DIR)/data
 TMP_DIR := $(TARGET_DIR)/tmp
 TMP_METADATA = $(TMP_DIR)/metadata.yml
 TMP_DATA = $(TMP_DIR)/$(ARTIFACT_ID)-$(VERSION).zip
 SRC_DIRS := $(CURDIR)/src/main
+RULES_DIR := $(SRC_DIRS)/rules
+PIPELINES_DIR := $(SRC_DIRS)/pipelines
 TARGET_ARTIFACT = $(TARGET_DIR)/$(ARTIFACT_ID)-$(VERSION)-artifact.zip
 TARGET_METADATA := metadata/metadata.yml
 SRCS := $(shell find $(SRC_DIRS) -type f)
@@ -13,7 +16,6 @@ TARGET_TEST := $(TARGET_DIR)/.tested
 DOT:= .
 DASH:= /
 GROUP_PATH= $(subst $(DOT),$(DASH),$(GROUP_ID))
-DATA_DIR = $(TARGET_DIR)/data
 
 .PHONY: all
 all: clean package
@@ -32,11 +34,11 @@ $(TMP_METADATA): $(METADATA) INFO
 $(DATA_DIR):
 	@mkdir -p $(DATA_DIR)
 	@docker run \
-		-v $(SRC_DIRS):/rules/input \
-		-v $(DATA_DIR):/rules/output \
-		--user=root \
+		-v $(RULES_DIR):/tmp/rules \
+		-v $(PIPELINES_DIR):/tmp/pipelines \
+		-v $(DATA_DIR):/tmp/output \
 		$(IMG_SIGMARULE_CONVERTER) \
-		--input_folder /rules/input/ --output_folder /rules/output/
+		--rules /tmp/rules --pipelines /tmp/pipelines --output /tmp/output
 
 ## Prepare artifact data
 $(TMP_DATA): $(DATA_DIR)
