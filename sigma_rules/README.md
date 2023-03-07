@@ -16,11 +16,15 @@ The layout is straightfowrward:
 ├── README.md
 └── src
     ├── main
-    │   └── network
-    │       └── dns
-    │           ├── mapping_dns.yml
-    │           ├── mapping_global.yml
-    │           └── net_dns_susp_txt_exec_strings.yml
+    │   ├── pipelines
+    │   │   └── network
+    │   │       └── dns
+    │   │           ├── mapping_dns.yml
+    │   │           └── mapping_global.yml
+    │   └── rules
+    │       └── network
+    │           └── dns
+    │               └── net_dns_susp_txt_exec_strings.yml
     └── test
         └── punchline
             └── punchline.yaml
