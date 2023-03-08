@@ -17,10 +17,9 @@ The layout is straightfowrward:
 └── src
     ├── main
     │   ├── pipelines
-    │   │   └── network
-    │   │       └── dns
-    │   │           ├── mapping_dns.yml
-    │   │           └── mapping_global.yml
+    │   │   ├── dns
+    │   │   │   └── mapping_dns.yml
+    │   │   └── mapping_global.yml
     │   └── rules
     │       └── network
     │           └── dns
@@ -31,8 +30,10 @@ The layout is straightfowrward:
 ```
 
 Source are provided in the `src/main` folder. In there:
-* You can put your rules in `rules` with the file structure you want.  
-* You can put your pipelines in `pipelines` with the same file structure as rules.  
+* You can put your rules in `rules` with the file tree you want.  
+* You can put your pipelines in `pipelines` with the file tree you want.  
+
+Note that file tree is only visual, all rules will use all pipelines.
 
 Tests are provided in the `src/test` folder. In there:
 * `punchline` folder simply provides a sample punchline that illustrate how to use your sigma rules.
