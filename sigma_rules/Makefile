@@ -22,7 +22,7 @@ all: clean package
 
 .PHONY: clean
 clean: ## Clean the repository
-	@rm -rf $(TARGET_DIR)
+	@sudo rm -rf $(TARGET_DIR)
 	@echo Working directory successfully cleaned.
 
 ## Prepare artifact metadata
@@ -34,6 +34,7 @@ $(TMP_METADATA): $(METADATA) INFO
 $(DATA_DIR):
 	@mkdir -p $(DATA_DIR)
 	@docker run \
+	    -u root:root \
 		-v $(RULES_DIR):/tmp/rules \
 		-v $(PIPELINES_DIR):/tmp/pipelines \
 		-v $(DATA_DIR):/tmp/output \
