@@ -66,7 +66,7 @@ run: ## Test your artifact with python engine using docker
 
 .PHONY: run-dev
 
-run-dev: build ## Test your artifact with python engine using docker
+run-dev: build ## Test and develop your artifact in DevContainer. Check file documentation README.md on folder .devcontainer. 
 	mkdir -p /usr/share/punch/extlib/
 	cp $(OUTPUT_FILE) /usr/share/punch/$(DEPENDENCY_LOCATION) 
 	cp $(CURDIR)/test/punchline.yaml /data/punchline.yaml 

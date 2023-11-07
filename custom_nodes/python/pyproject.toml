@@ -7,7 +7,6 @@ authors = ["Punch"]
 
 [tool.poetry.dependencies]
 python = "^3.10.4"
-
 [tool.poetry.dev-dependencies]
 punch-api = "8.0.1"
 
