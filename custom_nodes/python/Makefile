@@ -57,11 +57,20 @@ clean: ## Clean this repository
 
 .PHONY: run
 
-run: ## Test your artifact with java engine using docker
+run: ## Test your artifact with python engine using docker
 	docker run --rm -it \
 		-v $(OUTPUT_FILE):/usr/share/punch/$(DEPENDENCY_LOCATION) \
 		-v $(CURDIR)/test/punchline.yaml:/data/punchline.yaml \
 		$(PUNCHLINE_IMG) /data/punchline.yaml
+
+
+.PHONY: run-dev
+
+run-dev: build ## Test and develop your artifact in DevContainer. Check file documentation README.md on folder .devcontainer. 
+	mkdir -p /usr/share/punch/extlib/
+	cp $(OUTPUT_FILE) /usr/share/punch/$(DEPENDENCY_LOCATION) 
+	cp $(CURDIR)/test/punchline.yaml /data/punchline.yaml 
+	bash /start.sh /workspaces/starters/custom_nodes/python/test/punchline.yaml
 
 .PHONY: upload
 

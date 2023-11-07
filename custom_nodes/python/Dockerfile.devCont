@@ -1,0 +1,9 @@
+# Build
+FROM ghcr.io/punchplatform/punchline-python:8.1-dev
+USER root
+RUN  apt-get update &&  apt-get install -y --no-install-recommends make &&  apt-get -y install sudo &&  apt-get -y install git && apt-get -y install gettext-base && apt-get -y install zip
+#RUN useradd --create-home punch
+ARG VERSION
+ARG POETRY_USERNAME
+ARG POETRY_PASSWORD
+
